@@ -12,7 +12,7 @@ def customerLoginView(request):
 
         if login_user is not None:
             login(request, login_user)
-            return redirect('accounts:customerInfoModify')
+            return redirect('customer:main')
 
         else:
             messages.error(request,'ID 혹은 비밀번호 오류입니다.')
