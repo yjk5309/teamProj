@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">
+{% endblock head %}
+
+{% block title %}
+alleybookstore | 사용자 회원가입
+{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center align-items-center">
+        <div style="margin-top:100px;">
+        <div class="card">
+          <h4 class="card-header">사용자 회원가입</h4>
+        <div class="card-body">
+        <div class="text-center">
+          <img class="" src="">
+        </div>
+        <form class="mt-3" method="post" action='{% url "accounts:customerRegister" %}'>{% csrf_token %}
+            <div class="form-group">
+              <input type="text" class="form-control" id="name" name="name" placeholder="성명">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" id="user_id" name="user_id" placeholder="사용자 ID">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" id="user_pw" name="user_pw" placeholder="비밀번호">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" id="user_2nd_pw" name="user_2nd_pw" placeholder="비밀번호 재입력">
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control" id="e_mail" name="e_mail" placeholder="E-Mail">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" id="p_number" name="p_number" placeholder="휴대전화 ('-'제외)">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" id="address" name="address" placeholder="주소">
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="">회원가입</button>
+        </form>
+        </div>
+        </div>
+            {% if messages %}
+            <div>
+                {% for message in messages %}
+                    {{message.message}}
+                {% endfor %}
+            </div>
+            {% endif %}
+        <div class="card mt-2">
+        <div class="text-center mt-3">
+          <p>이미 계정이 있으신가요? <a href='{% url "accounts:customerLogin" %}'>로그인</a></p>
+        </div>
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
