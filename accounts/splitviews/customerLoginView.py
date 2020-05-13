@@ -15,5 +15,5 @@ def customerLoginView(request):
             return redirect('customer:main')
 
         else:
-            messages.error(request,'ID 혹은 비밀번호 오류입니다.')
+            messages.error(request,'ID 또는 비밀번호 오류입니다.')
             return redirect('accounts:customerLogin')
