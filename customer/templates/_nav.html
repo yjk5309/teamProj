@@ -22,9 +22,9 @@
           <li><a href="{% url 'customer:main' %}" title="" class="active">Home</a></li>
           <li><a href="#" title="">책 검색</a></li>
           <li><a href="#" title="">서점 검색</a></li>
-          <li><a href="#" title="">로그인</a></li>
-          <li><a href="#" title="">회원가입</a></li>
-          <li><a href="#" title="">마이페이지</a></li>
+          <li><a href="{% url 'accounts:customerLogin' %}" title="">로그인</a></li>
+          <li><a href="{% url 'accounts:customerRegister' %}" title="">회원가입</a></li>
+          <li><a href="{% url 'accounts:customerInfoModify' %}" title="">마이페이지</a></li>
           <li><a href="#" title="">장바구니</a></li>
           <li>
             <p>
