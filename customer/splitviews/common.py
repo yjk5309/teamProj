@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,HttpResponse
 from django.db import connection
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
-from django.contrib.auth.models import User
+from accounts.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
