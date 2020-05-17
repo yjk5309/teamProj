@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 {% load static %}
 {% block head %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">
@@ -6,6 +7,10 @@
 {% block title %}
 alleybookstore | 사용자 로그인
 {% endblock title %}
+
+{% block _nav %}
+  {% include '_nav.html' %}
+{% endblock _nav %}
 
 {% block body %}
 <div class="container">

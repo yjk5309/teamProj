@@ -15,6 +15,7 @@
     background-color: #fafafa;
     width:500px;
     height: auto;
+    margin: 0 auto;
 }
 .profile_img{
     border-radius: 50%;
@@ -25,4 +26,7 @@
 }
 .custom-file{
     margin-bottom: 10px;
+}
+.card-header{
+    text-align: center;
 }
