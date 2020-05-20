@@ -28,8 +28,10 @@
             <li><a href="{% url 'accounts:customerLogin' %}" title="">로그인</a></li>
             <li><a href="{% url 'accounts:customerRegister' %}" title="">회원가입</a></li>
           {% endif %}
-          <li><a href="{% url 'accounts:customerInfoModify' %}" title="">마이페이지</a></li>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'accounts:customerPasswordCheck' %}" title="">마이페이지</a></li>
           <li><a href="#" title="">장바구니</a></li>
+          {% if user.is_authenticated %}
           <li>
             <p>
               <a href="./download.html" class="btn btn-primary navbar-btn" title="">Download</a>

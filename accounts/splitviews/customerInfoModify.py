@@ -22,4 +22,4 @@ def customerInfoModify(request):
 
         user.save()
 
-        return redirect('accounts:customerInfoModify')
+        return redirect('customer:main')
