@@ -9,4 +9,7 @@ urlpatterns = [
     re_path(r'^customerInfoModify/$', customerInfoModify, name='customerInfoModify'),
     re_path(r'^customerPasswordModify/$', customerPasswordModify, name='customerPasswordModify'),
     re_path(r'^customerLogout/$', customerLogout, name='customerLogout'),
+    re_path(r'^customerMypage/$', customerMypage, name='customerMypage'),
+    re_path(r'^customerPasswordCheck/$', customerPasswordCheck, name='customerPasswordCheck'),
+    re_path(r'^customerUserDelete/$', customerUserDelete, name='customerUserDelete'),
 ]

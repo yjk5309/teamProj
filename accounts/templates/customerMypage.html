@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">
+{% endblock head %}
+
+{% block title %}
+alleybookstore | 마이페이지
+{% endblock title %}
+
+{% block _nav %}
+  {% include '_nav.html' %}
+{% endblock _nav %}
+
+{% block body %}
+<div class="container">
+<div class="tab_wrap">
+  <div class="tab_menu_container">
+    <button class="tab_menu_btn on" type="button">회원정보 수정</button>
+    <button class="tab_menu_btn" type="button">비밀번호 수정</button>
+    <button class="tab_menu_btn" type="button">회원탈퇴</button>
+  </div> <!-- tab_menu_container e -->
+
+  <div class="tab_box_container">
+    <div class="tab_box on">{% include 'customer_info_modify.html' %}</div>
+    <div class="tab_box">{% include 'customerPasswordModify.html' %}</div>
+    <div class="tab_box">{% include 'customerUserDelete.html' %}</div>
+  </div> <!-- tab_box_container e -->
+</div> <!-- tab_wrap e -->
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $('.tab_menu_btn').on('click',function(){
+  //버튼 색 제거,추가
+  $('.tab_menu_btn').removeClass('on');
+  $(this).addClass('on')
+
+  //컨텐츠 제거 후 인덱스에 맞는 컨텐츠 노출
+  var idx = $('.tab_menu_btn').index(this);
+
+  $('.tab_box').hide();
+  $('.tab_box').eq(idx).show();
+});
+</script>
+
+{% endblock body %}
+

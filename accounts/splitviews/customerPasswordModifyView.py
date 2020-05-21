@@ -30,5 +30,5 @@ def customerPasswordModify(request):
 
         else:
             messages.error(request, "현재 비밀번호가 일치하지 않습니다.")
-            return redirect('accounts:customerPasswordModify')
+            return redirect('accounts:customerLogout')
 
