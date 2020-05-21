@@ -21,7 +21,7 @@
         <ul class="nav navbar-nav navbar-right">
           <li><a href="{% url 'customer:main' %}" title="" class="active">Home</a></li>
           <li><a href="#" title="">책 검색</a></li>
-          <li><a href="#" title="">서점 검색</a></li>
+          <li><a href="{% url 'customer:search_store' %}" title="">서점 검색</a></li>
           {% if user.is_authenticated %}
             <li><a href="{% url 'accounts:customerLogout' %}" title="">로그아웃</a></li>
           {% else %}
