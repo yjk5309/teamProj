@@ -13,4 +13,5 @@ def customerPasswordCheck(request):
         if user.check_password(password):
             return redirect('accounts:customerMypage')
         else:
-            return redirect('accounts:customerPasswordCheck')
+            messages.error(request, '비밀번호가 일치하지 않습니다.')
+            return redirect('accounts:customerPasswordCheck',)
