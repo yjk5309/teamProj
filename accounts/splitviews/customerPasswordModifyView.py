@@ -15,6 +15,7 @@ def customerPasswordModify(request):
         if user.check_password(current_password):
             if user.check_password(new_password):
                 messages.error(request, "새로운 비밀번호는 이전 비밀번호와 다르게 설정해주세요.")
+                return redirect('accounts:customerMypage')
 
             else:
                 if new_password == check_new_password:
@@ -22,13 +23,13 @@ def customerPasswordModify(request):
                     user.save()
 
                     messages.success(request, "비밀번호 변경이 완료되었습니다. 다시 로그인해주세요.")
-                    return redirect('accounts:customerLogin')
+                    return redirect('accounts:customerLogout')
 
                 else:
                     messages.error(request, "새로운 비밀번호가 서로 일치하지 않습니다.")
-                    return redirect('accounts:customerPasswordModify')
+                    return redirect('accounts:customerMypage')
 
         else:
             messages.error(request, "현재 비밀번호가 일치하지 않습니다.")
-            return redirect('accounts:customerLogout')
+            return redirect('accounts:customerMypage')
 

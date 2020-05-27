@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/search_store.css' %}">
+{% endblock head %}
+
+{% block title %}
+서점 검색 페이지 | alleybookstore
+{% endblock title %}
+
+{% block _nav %}
+  {% include '_nav.html' %}
+{% endblock _nav %}
+
+{% block body %}
+<div class="container">
+    <div class="aside">
+
+    </div>
+
+    <div class="content">
+
+<div class="section-container border-section-container">
+    <div class="container">
+            <div class="row">
+                <div class="col-md-12 section-container-spacer">
+                    <div class="text-center">
+                        <h2>검색 결과</h2>
+                        <p> 검색어<br>
+                        제목 : {{search_keyword.title}} | 지은이 : {{search_keyword.author}} | 출판사 : {{search_keyword.publisher}}
+                        </p>
+                        {% if result == 0 %}
+                        <h3>해당하는 검색 결과가 없습니다.</h3>
+                        {% endif %}
+                    </div>
+                </div>
+                {% for search_list in search_list %}
+                <div class="col-md-4">
+                    <div class="fa-container">
+                        <i aria-hidden="true"> {{ search_list.book_name }} </i>
+                    </div>
+                    <div class="text-center">
+                        <h3><img src="{{ search_list.book_img }}"></h3>
+                    </div>
+                    <div>
+                        <p>지은이 : {{ search_list.author }}<br>
+                           출판사 : {{ search_list.publisher }}<br>
+                           가격 : {{ search_list.price }}<br>
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+
+
+            </div>
+    </div>
+</div>
+
+    </div>
+</div>
+
+<footer>
+    <div class="section-container footer-container">
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-4">
+                        <h4>About us</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet consectetur dolor</p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h4>Do you like ? Share this !</h4>
+                        <p>
+                            <a href="https://facebook.com/" class="social-round-icon white-round-icon fa-icon" title="">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                          </a>
+                          <a href="https://twitter.com/" class="social-round-icon white-round-icon fa-icon" title="">
+                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                          </a>
+                          <a href="https://www.linkedin.com/" class="social-round-icon white-round-icon fa-icon" title="">
+                            <i class="fa fa-linkedin" aria-hidden="true"></i>
+                          </a>
+                        </p>
+                        <p><small>© Untitled | Website created with <a href="http://www.mashup-template.com/" class="link-like-text" title="Create website with free html template">Mashup Template</a>/<a href="http://www.unsplash.com/" class="link-like-text" title="Beautiful Free Images">Unsplash</a></small></p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h4>Subscribe to newsletter</h4>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control footer-input-text">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-primary btn-newsletter ">OK</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+{% endblock body %}
