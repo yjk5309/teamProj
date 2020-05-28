@@ -61,3 +61,10 @@ button {
 .tab_box.on {
   display:block;
 }
+
+footer {
+    margin-top : 300px;
+}
+.pw_footer {
+    margin-top : 450px;
+}
