@@ -5,7 +5,7 @@ def SearchStoreView (request):
 
     try:
         cursor = connection.cursor()
-        result = cursor.execute(strSql, (request,))
+        result = cursor.execute(strSql)
         storedata = cursor.fetchall()
         connection.commit()
 
@@ -19,4 +19,6 @@ def SearchStoreView (request):
                }
         bookstores.append(row)
 
-    return HttpResponse(json.dumps({'bookstores': bookstores}), content_type="application/json")
+    import json
+    bookstores = json.dumps(bookstores)
+    return render(request, 'search_store.html', context={'bookstores': bookstores})
