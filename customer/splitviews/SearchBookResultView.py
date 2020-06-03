@@ -31,8 +31,14 @@ def SearchBookResultView(request):
     connection.commit()
     connection.close()
 
-    result = 1
+    result = 1  # 검색결과가 있을 때와 없을 때 구분
     if len(search_list) == 0:
         result = 0
 
-    return render(request, 'search_book_result.html', {'search_list':search_list, 'search_keyword':search_keyword,'result':result})
+    # 검색키워드가 아무것도 입력되지 않았을 때
+    if title == "" and author == "" and publisher == "":
+        messages.error(request, '검색 키워드를 하나 이상 입력해주세요.')
+        return redirect('customer:searchBook')
+
+    return render(request, 'search_book_result.html', {'search_list': search_list, 'search_keyword': search_keyword,
+                                                       'result': result})
