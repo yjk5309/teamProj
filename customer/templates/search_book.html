@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/search_store.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/search_book.css' %}">
 {% endblock head %}
 
 {% block title %}
@@ -29,15 +29,31 @@
 
             <label>출판사</label>
             <input type="text" class="form-control" id="publisher" name="publisher" placeholder=""><br>
+            {% if messages %}
+                {% for message in messages %}
+                  <p style="color:red"> {{message.message}} </p>
+                {% endfor %}
+            {% endif %}
             <button type="submit" class="btn btn-primary" onclick="">찾기</button>
         </form><br>
     </div>
 
-    <div class="content">
+    <div class="search_book">
+    <div class="white-text-container background-image-container" style="background-image: url('{% static 'images/book_search.jpg' %}')">
+        <div class="opacity"></div>
+            <div class="container">
+                <div class="row">
 
+                    <div class="col-md-6">
+                        <h2>#Alley Book Store</h2>
+                        <h3>#앨리북스토어</h3>
+                    </div>
 
-
+             </div>
+        </div>
     </div>
+    </div>
+
 </div>
 
 {% block footer %}
