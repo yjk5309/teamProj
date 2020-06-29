@@ -4,6 +4,8 @@
             <input type="text" class="form-control" id="search_store" name="search_store" placeholder="찾고싶은 서점을 검색하세요.">
             <button type="submit" class="btn btn-primary" onclick="">검색</button>
         </form>
+
+
     </div>
 
     <div class="content">
@@ -25,28 +27,24 @@
 
     var positions = [];
 
-    var row = {};
+    var bookstores = {{bookstores|safe}}
 
-    for (var i = 0; i < bookstores.length; i ++){
+    for (var i = 0; i < bookstores.length ; i ++){
 
     // 주소로 좌표를 검색합니다
-    geocoder.addressSearch(bookstores[i]['address'], function(result, status) {
+    geocoder.addressSearch(bookstores[i].address, function(result, status) {
 
         // 정상적으로 검색이 완료됐으면
          if (status === kakao.maps.services.Status.OK) {
-
             coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
+            console.log(coords);
         }
     });
 
-    row ={
-        title : bookstores[i]['store_name'],
-        latlng : coords,
-    }
-    positions.append(row)
+    positions.push({title : bookstores[i].store_name, latlng : coords});
 
     }
+
     // 마커 이미지의 이미지 주소입니다
     var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
@@ -66,7 +64,11 @@
             image : markerImage // 마커 이미지
         });
     }
-
+    console.log(positions.length);
+    console.log(positions[10].title);
+    console.log(bookstores[10].address);
+    console.log(positions[0].latlng);
     </script>
+
     </div>
 </div>
