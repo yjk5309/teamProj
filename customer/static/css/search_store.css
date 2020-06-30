@@ -10,9 +10,10 @@
 
 .content {
   float: right;
+  margin-right: 150px;
 }
 
-.search_book {
-    float: right;
-    width: 700px;
+.tab_box_container {
+    float: left;
+    width: 200px;
 }
