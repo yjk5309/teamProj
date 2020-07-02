@@ -6,6 +6,7 @@ from accounts.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 import string
 import random

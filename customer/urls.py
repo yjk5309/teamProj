@@ -9,4 +9,5 @@ urlpatterns = [
     re_path(r'^searchBook/$', SearchBookView, name='searchBook'),
     re_path(r'^searchBookResult/$', SearchBookResultView, name='searchBookResult'),
     re_path(r'^mypage/$', mypageView, name='mypage'),
+    re_path(r'^ajax_get_region2/$', AjaxGetRegion2View, name='ajax_get_region2'),
 ]
