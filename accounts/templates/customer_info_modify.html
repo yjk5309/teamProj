@@ -28,9 +28,21 @@
             <div class="form-group">
               <input type="text" class="form-control" id="address" name="address" value="{{ user.address }}">
             </div>
-            <button type="submit" class="btn btn-primary" onclick="confirm('정보수정을 완료하시겠습니까?')">수정 완료</button>
+            <button type="submit" class="btn btn-primary" onclick="user_info_modify()">수정 완료</button>
         </form>
         </div>
         </div>
         </div>
     </div>
+
+<script type="text/javascript">
+function user_info_modify(){
+    if (confirm("입력한 정보를 수정하시겠습니까?") == true){
+        alert('수정이 완료되었습니다.');
+        document.form.submit();
+    }else{
+        alert('취소되었습니다.');
+        event.preventDefault();
+    }
+}
+</script>

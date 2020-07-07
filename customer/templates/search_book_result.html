@@ -14,51 +14,51 @@
 
 {% block body %}
 <div class="container">
-    <div class="aside">
+    <div class="text-center mt-3">
+        <h3>검색 결과</h3>
+        <div align="center">
+            <table width="100">
+                <tr>
+                    <td><b>제목</b></td>
+                    <td style="color:magenta">{{search_keyword.title}}</td>
+                </tr>
+                <tr>
+                    <td><b>지은이</b></td>
+                    <td style="color:magenta">{{search_keyword.author}}</td>
+                </tr>
+                <tr>
+                    <td><b>출판사</b></td>
+                    <td style="color:magenta">{{search_keyword.publisher}}</td>
+                </tr>
+            </table>
+        </div>
 
+            {% if result == 0 %}
+                <h3 style="color:red">해당하는 검색 결과가 없습니다.</h3>
+            {% endif %}
     </div>
 
-    <div class="content">
+    {% for search_list in search_list %}
+    <div class="result_box">
 
-<div class="section-container border-section-container">
-    <div class="container">
-            <div class="row">
-                <div class="col-md-12 section-container-spacer">
-                    <div class="text-center">
-                        <h2>검색 결과</h2>
-                        <p> 검색어<br>
-                        제목 : {{search_keyword.title}} | 지은이 : {{search_keyword.author}} | 출판사 : {{search_keyword.publisher}}
-                        </p>
-                        {% if result == 0 %}
-                        <h3>해당하는 검색 결과가 없습니다.</h3>
-                        {% endif %}
-                    </div>
-                </div>
-                {% for search_list in search_list %}
-                <div class="col-md-4">
-                    <div class="fa-container">
-                        <i aria-hidden="true"> {{ search_list.book_name }} </i>
-                    </div>
-                    <div class="text-center">
-                        <h3><img src="{{ search_list.book_img }}"></h3>
-                    </div>
-                    <div align="center">
-                        <p>지은이 : {{ search_list.author }}<br>
-                           출판사 : {{ search_list.publisher }}<br>
-                           가격 : {{ search_list.price }}<br>
-                        </p>
-                    </div>
-                </div>
-                {% endfor %}
-
-
-
-            </div>
+    <div class="book_img" style="float:left">
+        <h3><img  src="{{ search_list.book_img }}" height="200"></h3>
     </div>
+
+        <div class="book_content">
+            <p class="book_title"> {{ search_list.book_name }} </p>
+
+                <p>지은이 : {{ search_list.author }}<br>
+                    출판사 : {{ search_list.publisher }}<br>
+                    가격 : {{ search_list.price }} 원<br>
+                    평점 : <b style="color:gold">★★★</b> (리뷰 수)
+                </p>
+        </div>
+    </div>
+    {% endfor %}
+
 </div>
 
-    </div>
-</div>
 
 {% block footer %}
 {% include 'footer.html' %}

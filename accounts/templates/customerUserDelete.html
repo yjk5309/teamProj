@@ -19,9 +19,20 @@
             <div class="form-group">
               <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
             </div>
-            <button type="submit" class="btn btn-primary" onclick="alert('회원탈퇴를 진행하시겠습니까?')">회원탈퇴</button>
+            <button type="submit" class="btn btn-primary" onclick="user_delete()">회원탈퇴</button>
         </form>
         </div>
         </div>
         </div>
     </div>
+
+
+<script type="text/javascript">
+function user_delete(){
+    if (confirm("정말로 탈퇴하시겠습니까?") == true){
+        document.form.submit();
+    }else{
+        event.preventDefault();
+    }
+}
+</script>
