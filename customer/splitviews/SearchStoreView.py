@@ -23,7 +23,7 @@ def SearchStoreView (request):
         bookstores = json.dumps(bookstores)
 
 
-        strSql = "SELECT region1 FROM region1"
+        strSql = "SELECT province FROM province"
 
         try:
             cursor = connection.cursor()
@@ -34,13 +34,13 @@ def SearchStoreView (request):
         except:
             connection.rollback()
 
-        region1s = []
+        provinces = []
         for data in datas:
             row = {'name': data[0],}
-            region1s.append(row)
+            provinces.append(row)
 
         return render(request, 'search_store.html', {'bookstores': bookstores,
-                                                     'region1s': region1s})
+                                                     'provinces': provinces})
 
     elif request.method == "POST":
         keyword = request.POST.get("search_store")
@@ -68,7 +68,7 @@ def SearchStoreView (request):
         bookstores = json.dumps(bookstores)
 
 
-        strSql = "SELECT region1 FROM region1"
+        strSql = "SELECT province FROM province"
 
         try:
             cursor = connection.cursor()
@@ -79,10 +79,10 @@ def SearchStoreView (request):
         except:
             connection.rollback()
 
-        region1s = []
+        provinces = []
         for data in datas:
             row = {'name': data[0],}
-            region1s.append(row)
+            provinces.append(row)
 
         return render(request, 'search_store.html', {'bookstores': bookstores,
-                                                     'region1s': region1s})
+                                                     'provinces': provinces})
