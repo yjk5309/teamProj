@@ -18,7 +18,7 @@
 <script type="text/javascript">
     $(function(){
         $('#province').change(function() {
-            var province_name = this.value //사용자가 선택한 요소..?
+            var province_name = this.value
 
             $.ajax({
                 type: "POST",
@@ -28,12 +28,12 @@
                 success: function(response){
                     var items = "<option>---------- 시 ----------</option>";
                     for(var i=0; i<response.cities.length; i++){
-                        items += ("<option>" + response.cities[i].name  + "</option>")  //해당하는 도의 도시 개수만큼 추가
+                        items += ("<option>" + response.cities[i].name  + "</option>")
                     }
 
-                    $("#city").html(items);   //해당 div에 데이터값을 넣어준다.
+                    $("#city").html(items);
                 },
-                error: function(request, status, error){  //각 인자들에 따라서 어떤 에러 형태를 보여줄 것인가?
+                error: function(request, status, error){
                     alert(error);
                 },
             });
