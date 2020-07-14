@@ -1,5 +1,5 @@
 from .common import *
 
-def customerLogout(request):
+def CustomerLogoutView(request):
     logout(request)
     return redirect('customer:main')

@@ -1,8 +1,8 @@
 from .common import *
 
-def customerLoginView(request):
+def CustomerLoginView(request):
     if request.method == "GET":
-        return render(request, 'customerLogin.html')
+        return render(request, 'customer_login.html')
 
     elif request.method == "POST":
         user_id = request.POST.get("user_id")
@@ -16,4 +16,4 @@ def customerLoginView(request):
 
         else:
             messages.error(request,'ID 또는 비밀번호 오류입니다.')
-            return redirect('accounts:customerLogin')
+            return redirect('accounts:CustomerLogin')

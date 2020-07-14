@@ -1,13 +1,10 @@
 from .common import *
 
 @login_required
-def customerInfoModify(request):
+def CustomerInfoModifyView(request):
     user = request.user
 
-    if request.method == "GET":
-        return render(request, 'customer_info_modify.html')
-
-    elif request.method == "POST":
+    if request.method == "POST":
         name = request.POST.get('name')
         user_id = request.POST.get('user_id')
         e_mail = request.POST.get('e_mail')
