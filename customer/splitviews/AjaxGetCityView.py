@@ -1,7 +1,7 @@
 from .common import *
 
 @require_POST
-def AjaxGetRegion2View(request):
+def AjaxGetCityView(request):
 
     province_name = request.POST.get('province_name')
 

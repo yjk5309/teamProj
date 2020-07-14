@@ -5,6 +5,8 @@
             <option>{{ province.name }}</option>
         {% endfor %}
     </select>
+    </form>
+<form class="mt-3" method="post" enctype="multipart/form-data">{% csrf_token %}
     <select name="city" id="city">
         <option>---------- 시 ----------</option>
     </select>
@@ -16,11 +18,11 @@
 <script type="text/javascript">
     $(function(){
         $('#province').change(function() {
-            var province_name = this.value //사용자가 선택한 요소..?
+            var province_name = this.value
 
             $.ajax({
                 type: "POST",
-                url: "{% url 'customer:ajax_get_region2' %}",
+                url: "{% url 'customer:ajax_get_city' %}",
                 data: {'province_name': province_name, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
                 dataType: "json",
                 success: function(response){
@@ -31,7 +33,7 @@
 
                     $("#city").html(items);   //해당 div에 데이터값을 넣어준다.
                 },
-                error: function(request, status, error){  //각 인자들에 따라서 어떤 에러 형태를 보여줄 것인가?
+                error: function(request, status, error){
                     alert(error);
                 },
             });
