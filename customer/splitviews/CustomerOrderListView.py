@@ -1,5 +1,5 @@
 from .common import *
 
 @login_required
-def customerOrderListView(request):
+def CustomerOrderListView(request):
     return render(request, 'customer_order_list.html')

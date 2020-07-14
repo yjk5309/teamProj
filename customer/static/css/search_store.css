@@ -17,3 +17,7 @@
     float: left;
     width: 200px;
 }
+
+.error {
+    float: right;
+}

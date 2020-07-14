@@ -1,5 +1,5 @@
 from .common import *
 
 @login_required
-def customerBasketView(request):
+def CustomerBasketView(request):
     return render(request, 'customer_basket.html')

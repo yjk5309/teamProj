@@ -1,5 +1,5 @@
 from .common import *
 
 @login_required
-def mypageView(request):
+def MypageView(request):
     return render(request,'mypage.html')
