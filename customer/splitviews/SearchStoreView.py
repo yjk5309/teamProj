@@ -45,6 +45,7 @@ def SearchStoreView (request):
     elif request.method == "POST":
         keyword = request.POST.get("search_store")
         city = request.POST.get("city")
+        province = request.POST.get('province')
 
         if keyword is None:
 
@@ -63,7 +64,7 @@ def SearchStoreView (request):
 
             if len(citydata)== 0:
                 messages.error(request, '해당지역에 등록된 서점이 없습니다.')
-                return redirect('customer:SearchStore')
+                return redirect('customer:searchStore')
 
             else:
 
@@ -112,7 +113,7 @@ def SearchStoreView (request):
 
             if len(namedata)==0 :
                 messages.error(request, '아직 등록되지 않은 서점입니다.')
-                return redirect('customer:SearchStore')
+                return redirect('customer:searchStore')
 
             else:
 

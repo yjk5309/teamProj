@@ -22,7 +22,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "{% url 'customer:AjaxGetCity' %}",
+                url: "{% url 'customer:ajaxGetCity' %}",
                 data: {'province_name': province_name, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
                 dataType: "json",
                 success: function(response){
