@@ -19,21 +19,21 @@
 
       <div class="collapse navbar-collapse" id="navbar-collapse-uarr">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="{% url 'customer:main' %}" title="" class="active">Home</a></li>
-          <li><a href="{% url 'customer:searchBook' %}" title="">책 검색</a></li>
-          <li><a href="{% url 'customer:search_store' %}" title="">서점 검색</a></li>
+          <li><a href="{% url 'customer:Main' %}" title="" class="active">Home</a></li>
+          <li><a href="{% url 'customer:SearchBook' %}" title="">책 검색</a></li>
+          <li><a href="{% url 'customer:SearchStore' %}" title="">서점 검색</a></li>
           {% if user.is_authenticated %}
-            <li><a href="{% url 'customer:mypage' %}" title="">마이페이지</a></li>
+            <li><a href="{% url 'customer:MyPage' %}" title="">마이페이지</a></li>
             <li><a href="#" title="">장바구니</a></li>
             <li>
               <p>
-                <a href="{% url 'accounts:customerLogout' %}" class="btn btn-primary navbar-btn" title="">로그아웃</a>
+                <a href="{% url 'accounts:CustomerLogout' %}" class="btn btn-primary navbar-btn" title="">로그아웃</a>
               </p>
             </li>
           {% else %}
             <li>
               <p>
-                <a href="{% url 'accounts:customerLogin' %}" class="btn btn-primary navbar-btn" title="">로그인</a>
+                <a href="{% url 'accounts:CustomerLogin' %}" class="btn btn-primary navbar-btn" title="">로그인</a>
               </p>
             </li>
           {% endif %}

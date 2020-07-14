@@ -63,7 +63,7 @@ def SearchStoreView (request):
 
             if len(citydata)== 0:
                 messages.error(request, '해당지역에 등록된 서점이 없습니다.')
-                return redirect('customer:search_store')
+                return redirect('customer:SearchStore')
 
             else:
 
@@ -112,7 +112,7 @@ def SearchStoreView (request):
 
             if len(namedata)==0 :
                 messages.error(request, '아직 등록되지 않은 서점입니다.')
-                return redirect('customer:search_store')
+                return redirect('customer:SearchStore')
 
             else:
 
