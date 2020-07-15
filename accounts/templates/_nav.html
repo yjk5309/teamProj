@@ -17,14 +17,14 @@
         </a>
       </div>
 
-      <div class="collapse navbar-collapse" id="navbar-collapse-uarr">
+      <div class="collapse navbar-collapse" id="navbar-collapse-uarr" >
         <ul class="nav navbar-nav navbar-right">
           <li><a href="{% url 'customer:main' %}" title="" class="active">Home</a></li>
           <li><a href="{% url 'customer:search_book' %}" title="">책 검색</a></li>
           <li><a href="{% url 'customer:search_store' %}" title="">서점 검색</a></li>
           {% if user.is_authenticated %}
             <li><a href="{% url 'customer:mypage' %}" title="">마이페이지</a></li>
-            <li><a href="#" title="">장바구니</a></li>
+            <li><a href="" title="">장바구니</a></li>
             <li>
               <p>
                 <a href="{% url 'accounts:customer_logout' %}" class="btn btn-primary navbar-btn" title="">로그아웃</a>
