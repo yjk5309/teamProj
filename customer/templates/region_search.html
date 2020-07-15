@@ -5,8 +5,7 @@
             <option>{{ province.name }}</option>
         {% endfor %}
     </select>
-    </form>
-<form class="mt-3" method="post" enctype="multipart/form-data">{% csrf_token %}
+
     <select name="city" id="city">
         <option>---------- 시 ----------</option>
     </select>
@@ -22,7 +21,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "{% url 'customer:ajaxGetCity' %}",
+                url: "{% url 'customer:ajax_get_city' %}",
                 data: {'province_name': province_name, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
                 dataType: "json",
                 success: function(response){

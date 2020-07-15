@@ -51,7 +51,7 @@ def SearchStoreView (request):
 
             strSql = "SELECT store_name, address"
             strSql += " FROM bookstore"
-            strSql += " WHERE address LIKE '%" + city + "%'"
+            strSql += " WHERE address LIKE '" + province + "%" + city + "%'"
 
             try:
                 cursor = connection.cursor()
@@ -64,7 +64,7 @@ def SearchStoreView (request):
 
             if len(citydata)== 0:
                 messages.error(request, '해당지역에 등록된 서점이 없습니다.')
-                return redirect('customer:searchStore')
+                return redirect('customer:search_store')
 
             else:
 
@@ -113,7 +113,7 @@ def SearchStoreView (request):
 
             if len(namedata)==0 :
                 messages.error(request, '아직 등록되지 않은 서점입니다.')
-                return redirect('customer:searchStore')
+                return redirect('customer:search_store')
 
             else:
 
