@@ -11,7 +11,7 @@ def CustomerPasswordCheckView(request):
         password = request.POST.get('password')
 
         if user.check_password(password):
-            return redirect('accounts:customerMyPage')
+            return redirect('accounts:customer_my_page')
         else:
             messages.error(request, '비밀번호가 일치하지 않습니다.')
-            return redirect('accounts:customerPasswordCheck',)
+            return redirect('accounts:customer_password_check',)
