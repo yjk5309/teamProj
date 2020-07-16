@@ -60,8 +60,8 @@
     // 지도를 표시할 div
     var mapContainer = document.getElementById('map'),
         mapOption = {
-            center: new kakao.maps.LatLng(37.3004892, 127.0336443),
-            level: 13
+            center: new kakao.maps.LatLng(35.9284073, 127.5782672),
+            level: 14
         };
 
     // 지도를 생성합니다
@@ -97,6 +97,8 @@
         // 마커 이미지의 이미지 주소입니다
         var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
+        var i;
+
         for (var i = 0; i < positions.length; i ++) {
 
             // 마커 이미지의 이미지 크기 입니다
@@ -105,6 +107,8 @@
             // 마커 이미지를 생성합니다
             var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
+            var bounds = new kakao.maps.LatLngBounds();
+
             // 마커를 생성합니다
             var marker = new kakao.maps.Marker({
                 map: map, // 마커를 표시할 지도
@@ -112,8 +116,17 @@
                 title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
                 image : markerImage // 마커 이미지
             });
+
+            marker.setMap(map);
+            bounds.extend(positions[i].latlng);
         }
     }, 2000);
+
+    function setBounds() {
+        // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+        // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
+        map.setBounds(bounds);
+    }
 
 
 </script>
