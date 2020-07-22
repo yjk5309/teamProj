@@ -4,15 +4,21 @@
         <div class="card">
           <h4 class="card-header">회원탈퇴</h4>
         <div class="card-body">
+
+        <div class="text-center mt-3">
+           <b>본인확인을 위해 ID와 비밀번호를 입력해주세요</b><br><br>
+        </div>
+
         <div class="text-center">
+            {% if messages %}
+                {% for message in messages %}
+                  <p style="color:red"> {{message.message}} </p>
+                {% endfor %}
+            {% endif %}
           <img class="" src="">
         </div>
 
-            <div class="text-center mt-3">
-                <a>본인확인을 위해 ID와 비밀번호를 입력해주세요</a><br><br>
-            </div>
-
-        <form class="mt-3" method="post" action='{% url "accounts:customer_user_delete" %}'>{% csrf_token %}
+        <form class="mt-3" method="post" action='{% url "customer_accounts:user_delete" %}'>{% csrf_token %}
             <div class="form-group">
               <input type="text" class="form-control" id="id" name="id" placeholder="ID">
             </div>

@@ -27,13 +27,13 @@
             <li><a href="#" title="">장바구니</a></li>
             <li>
               <p>
-                <a href="{% url 'accounts:customer_logout' %}" class="btn btn-primary navbar-btn" title="">로그아웃</a>
+                <a href="{% url 'customer_accounts:logout' %}" class="btn btn-primary navbar-btn" title="">로그아웃</a>
               </p>
             </li>
           {% else %}
             <li>
               <p>
-                <a href="{% url 'accounts:customer_login' %}" class="btn btn-primary navbar-btn" title="">로그인</a>
+                <a href="{% url 'customer_accounts:login' %}" class="btn btn-primary navbar-btn" title="">로그인</a>
               </p>
             </li>
           {% endif %}

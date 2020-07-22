@@ -1,7 +1,7 @@
 from .common import *
 
 @login_required
-def CustomerInfoModifyView(request):
+def InfoModifyView(request, user_id):
     user = request.user
 
     if request.method == "POST":
