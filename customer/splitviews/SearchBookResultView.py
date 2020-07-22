@@ -3,9 +3,9 @@ from .common import *
 def SearchBookResultView(request):
     cursor = connection.cursor()
 
-    title = request.POST.get('title')
-    author = request.POST.get('author')
-    publisher = request.POST.get('publisher')
+    title = request.GET.get('title')
+    author = request.GET.get('author')
+    publisher = request.GET.get('publisher')
 
     search_keyword = {'title': title,
                       'author': author,
@@ -38,7 +38,7 @@ def SearchBookResultView(request):
     # 검색키워드가 아무것도 입력되지 않았을 때
     if title == "" and author == "" and publisher == "":
         messages.error(request, '검색 키워드를 하나 이상 입력해주세요.')
-        return redirect('customer:searchBook')
+        return redirect('customer:search_book')
 
     return render(request, 'search_book_result.html', {'search_list': search_list, 'search_keyword': search_keyword,
                                                        'result': result})
