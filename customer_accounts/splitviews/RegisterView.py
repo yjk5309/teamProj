@@ -1,8 +1,8 @@
 from .common import *
 
-def CustomerRegisterView(request):
+def RegisterView(request):
     if request.method == "GET":
-        return render(request, 'customer_register.html')
+        return render(request, 'register.html')
 
     elif request.method == "POST":
         name = request.POST.get("name")
@@ -16,7 +16,7 @@ def CustomerRegisterView(request):
         try:
             user = User.objects.get(username=user_id)
             messages.error(request, "이미 존재하는 계정입니다.")
-            return redirect('accounts:customer_register')
+            return redirect('customer_accounts:register')
 
         except ObjectDoesNotExist:
             if user_pw == user_2nd_pw:
@@ -24,8 +24,8 @@ def CustomerRegisterView(request):
                                                     email=e_mail, phone_number=phone_number, address=address)
 
                 messages.success(request, "회원가입에 성공하였습니다.")
-                return redirect('accounts:customer_login')
+                return redirect('customer_accounts:login')
 
             else:
                 messages.error(request, "비밀번호가 일치하지 않습니다.")
-                return redirect('accounts:customer_register')
+                return redirect('customer_accounts:register')
