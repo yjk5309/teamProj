@@ -6,18 +6,9 @@ def MainView (request):
 
     storeSql = "SELECT store_name, store_msg FROM bookstore limit 3"
 
-    try:
-        cursor = connection.cursor()
-        result = cursor.execute(bookSql,)
-        datas = cursor.fetchall()
+    datas = excute_and_get(bookSql)
 
-        result2 = cursor.execute(storeSql, )
-        datas2 = cursor.fetchall()
-
-        connection.commit()
-
-    except:
-        connection.rollback()
+    datas2 = excute_and_get(storeSql)
 
     books = []
     for data in datas:
@@ -34,4 +25,4 @@ def MainView (request):
                }
         stores.append(row)
 
-    return render(request, 'main.html',{'books':books, 'stores':stores })
+    return render(request, 'main.html',{'books':books, 'stores':stores})
