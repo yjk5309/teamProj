@@ -17,3 +17,42 @@ from django.contrib.auth.hashers import pbkdf2
 import os
 import uuid
 import json
+
+def excute_and_get(sql, data = None) -> tuple :
+    try:
+        cursor = connection.cursor()
+        if data is None:
+            result = cursor.execute(sql,)
+
+        else:
+            result = cursor.execute(sql, data)
+
+        datas = cursor.fetchall()
+        connection.commit()
+
+    except:
+        connection.rollback()
+
+    finally:
+        connection.close()
+
+    return datas
+
+
+def execute(sql, data = None) -> tuple :
+    try:
+        cursor = connection.cursor()
+        if data is None:
+            result = cursor.execute(sql,)
+
+        else:
+            result = cursor.execute(sql, data)
+
+        return result
+        connection.commit()
+
+    except:
+        connection.rollback()
+
+    finally:
+        connection.close()

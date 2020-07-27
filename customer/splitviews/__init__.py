@@ -4,5 +4,7 @@ from .SearchBookView import *
 from .SearchBookResultView import *
 from .CustomerBasketView import *
 from .CustomerOrderListView import *
-from .MypageView import *
+from .MyPageView import *
 from .AjaxGetCityView import *
+from .RegionSearchView import *
+from .KeywordSearchView import *

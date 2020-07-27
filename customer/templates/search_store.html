@@ -60,8 +60,8 @@
     // 지도를 표시할 div
     var mapContainer = document.getElementById('map'),
         mapOption = {
-            center: new kakao.maps.LatLng(37.3004892, 127.0336443),
-            level: 13
+            center: new kakao.maps.LatLng(35.9284073, 127.5782672),
+            level: 14
         };
 
     // 지도를 생성합니다
@@ -97,6 +97,8 @@
         // 마커 이미지의 이미지 주소입니다
         var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
+        var i;
+
         for (var i = 0; i < positions.length; i ++) {
 
             // 마커 이미지의 이미지 크기 입니다
@@ -114,7 +116,6 @@
             });
         }
     }, 2000);
-
 
 </script>
 
