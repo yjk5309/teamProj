@@ -1,4 +1,5 @@
 .container {
+  float: left;
   overflow: hidden;
 }
 
@@ -16,8 +17,4 @@
 .tab_box_container {
     float: left;
     width: 200px;
-}
-
-.error {
-    float: right;
 }

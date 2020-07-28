@@ -3,3 +3,11 @@
     <input type="text" class="form-control" id="search_store" name="search_store" placeholder="찾고싶은 서점을 검색하세요.">
     <button type="submit" class="btn btn-primary" onclick="setBounds()">검색</button>
 </form>
+<br>
+<div class="text-center">
+    {% if messages %}
+    {% for message in messages %}
+        <p style="color:red"> {{message.message}} </p>
+    {% endfor %}
+    {% endif %}
+</div>

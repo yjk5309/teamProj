@@ -68,7 +68,9 @@
                         <i class="fa fa-heart-o fa-3x" aria-hidden="true"></i>
                     </div>
                     <div class="text-center">
-                        <h3>{{store.store_name}}</h3>
+                        <a href="{% url 'customer:bookstore_detail' store.store_id %}" >
+                            <h3>{{store.store_name}}</h3>
+                        </a>
                     </div>
                     <div align="center">
                         <p>{{store.store_msg}}</p>

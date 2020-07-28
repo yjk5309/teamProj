@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+{% endblock head %}
+
+{% block title %}
+서점 상세 페이지 | alleybookstore
+{% endblock title %}
+
+{% block _nav %}
+  {% include '_nav.html' %}
+{% endblock _nav %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+        <h2> {{ store.store_name }} </h2>
+        {% if store.bookstore_img == None %}
+            <img src="{% static 'images/bookstore_icon.png' %}" height="200">
+        {% else %}
+            <img src="{{ store.bookstore_img }}" height="350">
+        {% endif %}
+            <p>주소 : {{ store.address }}<br>
+                번호 : {{ store.phone_num }}<br>
+                소개 : {{ store.store_msg }}<br>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer  %}
+
+{% endblock body %}

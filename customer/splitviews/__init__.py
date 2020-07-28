@@ -8,3 +8,4 @@ from .MyPageView import *
 from .AjaxGetCityView import *
 from .RegionSearchView import *
 from .KeywordSearchView import *
+from .BookStoreDetailView import *

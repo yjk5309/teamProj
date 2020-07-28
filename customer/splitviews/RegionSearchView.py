@@ -10,10 +10,18 @@ def RegionSearchView (request):
         strSql += " FROM bookstore"
         strSql += " WHERE address LIKE '" + province + "%" + city + "%'"
 
+        idSql = "SELECT id, store_name, address"
+        idSql += " FROM bookstore"
+        idSql += " WHERE address LIKE '" + province + "%" + city + "%'"
+
         try:
             cursor = connection.cursor()
             result = cursor.execute(strSql)
             citydata = cursor.fetchall()
+
+            result2 = cursor.execute(idSql)
+            listdata = cursor.fetchall()
+
             connection.commit()
 
         except:
@@ -34,6 +42,14 @@ def RegionSearchView (request):
                 bookstores.append(json_row)
             bookstores = json.dumps(bookstores)
 
+            liststores = []
+            for data in listdata:
+                row = {'store_id': data[0],
+                       'store_name': data[1],
+                       'address': data[2],
+                       }
+                liststores.append(row)
+
             strSql = "SELECT province FROM province"
 
             try:
@@ -51,4 +67,5 @@ def RegionSearchView (request):
                 provinces.append(row)
 
             return render(request, 'search_store.html', {'bookstores': bookstores,
+                                                         'liststores':liststores,
                                                          'provinces': provinces})

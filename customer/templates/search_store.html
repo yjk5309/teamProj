@@ -26,13 +26,7 @@
                     <div class="tab_box on">{% include 'region_search.html' %}</div>
                     <div class="tab_box">{% include 'name_search.html' %}</div>
                 </div>
-                <div class="error">
-                    {% if messages %}
-                        {% for message in messages %}
-                          <p style="color:red"> {{message.message}} </p>
-                        {% endfor %}
-                    {% endif %}
-                </div>
+
                 <div class="content">
                     <div id="map" style="width:600px;height:500px;"></div>
                 </div>

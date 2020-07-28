@@ -12,6 +12,27 @@
     <br>
     <button type="submit" class="btn btn-primary" onclick="setBounds()">검색</button>
 </form>
+<br>
+<div class="text-center">
+    {% if messages %}
+    {% for message in messages %}
+        <p style="color:red"> {{message.message}} </p>
+    {% endfor %}
+    {% endif %}
+</div>
+
+<div class="col-md-5">
+    <ul class="features">
+        {% for store in liststores %}
+        <li>
+            <a href="{% url 'customer:bookstore_detail' store.store_id %}" >
+                <h3>{{store.store_name}}</h3>
+            </a>
+            <p>{{store.address}}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
