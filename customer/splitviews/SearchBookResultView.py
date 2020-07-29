@@ -11,7 +11,7 @@ def SearchBookResultView(request):
                       'author': author,
                       'publisher': publisher,}
 
-    search = "SELECT book_name, author, publisher, book_img, price"
+    search = "SELECT book_name, author, publisher, book_img, price, book_id"
     search += " FROM book"
     search += " WHERE book_name LIKE '%" + title + "%' AND author LIKE '%" + author + "%' AND publisher LIKE '%" + publisher + "%'"
 
@@ -25,6 +25,7 @@ def SearchBookResultView(request):
                'publisher': search_data[2],
                'book_img': search_data[3],
                'price': search_data[4],
+               'book_id': search_data[5],
             }
         search_list.append(row)
 

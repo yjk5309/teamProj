@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/book_detail.css' %}">
+{% endblock head %}
+
+{% block title %}
+책 상세페이지 | alleybookstore
+{% endblock title %}
+
+{% block _nav %}
+  {% include '_nav.html' %}
+{% endblock _nav %}
+
+{% block body %}
+<div class="container">
+    <div class="text-center mt-3">
+        <h3>AlleyBookStore</h3>
+    </div>
+
+    <div class="result_box">
+
+    <div class="book_img" style="float:left">
+        <h3><img  src="{{ book.book_img }}" height="400" width="300"></h3>
+    </div>
+
+        <div class="book_content">
+            <p class="book_title"> {{ book.book_name }} </p>
+
+                <table width="900">
+                    <tr>
+                        <td>지은이</td>
+                        <td>{{ book.author }}</td>
+                    </tr>
+                    <tr>
+                        <td>출판사</td>
+                        <td>{{ book.publisher }}</td>
+                    </tr>
+                    <tr>
+                        <td>가격</td>
+                        <td>{{ book.price }} 원</td>
+                    </tr>
+                    <tr>
+                        <td>재고</td>
+                        <td>{{ book.inven }} 개</td>
+                    </tr>
+                    <tr>
+                        <td>판매상태</td>
+                        <td>{{ book.sales_status }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>판매서점</td>
+                        <td><a>{{book.store_name}}</a></td>
+                    </tr>
+                    <tr>
+                        <td>ISBN</td>
+                        <td>{{ book.isbn }}</td>
+                    </tr>
+                    <tr>
+                        <td>평점</td>
+                        <td><b style="color:gold">★★★</b> <a href="#review_list"> 리뷰(31) </a> </td>
+                        <td>
+                            <button class="button">구매하기</button>&nbsp;
+                            <button class="button">장바구니</button>&nbsp;
+                            <button class="like_button" onclick="like(this, '{{ book.isbn }}')">찜 하기</button>
+                        </td>
+                    </tr>
+                </table>
+
+        </div>
+    </div>
+    <div class="text-center mt-3">
+        <h3 align="left">책소개</h3>
+
+        <div class="book_msg">
+            <p> {{ book.book_msg }}  </p>
+        </div>
+
+        <h3 align="left" id="review_list">리뷰</h3>
+        <div class="review">
+            <p> ??? <br>
+                이 책 겁나 재밌습니다. 꼭 보세요.  </p>
+        </div>
+    </div>
+
+</div>
+
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer  %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function like(elm, n) {
+        $.ajax({
+            url: "{% url 'customer:book_like' 1  %}". replace('1',n),
+            data: {'csrfmiddlewaretoken': '{{csrf_token}}'},
+            dataType: "json",
+            type: "POST",
+            success: function(response) {
+                if (response.like == 1) {
+                    $(elm).attr("onclick", "like(this, '" + n + "')");
+                    alert("찜 목록에 추가되었습니다.");
+                }
+                else if (response.like == 0){
+                    $(elm).attr("onclick", "like(this, '" + n + "')");
+                    alert("찜 목록에서 삭제되었습니다.");
+                    console.log(response.like);
+                }
+            },
+            error: function(error) {
+                alert("찜 하기를 하는 과정에서 에러가 발생하였습니다.");
+            },
+        });
+    }
+
+</script>
+
+{% endblock body %}
