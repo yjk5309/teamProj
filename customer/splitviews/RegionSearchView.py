@@ -14,18 +14,9 @@ def RegionSearchView (request):
         idSql += " FROM bookstore"
         idSql += " WHERE address LIKE '" + province + "%" + city + "%'"
 
-        try:
-            cursor = connection.cursor()
-            result = cursor.execute(strSql)
-            citydata = cursor.fetchall()
+        citydata = execute_and_get(strSql)
 
-            result2 = cursor.execute(idSql)
-            listdata = cursor.fetchall()
-
-            connection.commit()
-
-        except:
-            connection.rollback()
+        listdata = execute_and_get(idSql)
 
         if len(citydata) == 0:
             messages.error(request, '해당지역에 등록된 서점이 없습니다.')
@@ -52,14 +43,7 @@ def RegionSearchView (request):
 
             strSql = "SELECT province FROM province"
 
-            try:
-                cursor = connection.cursor()
-                result = cursor.execute(strSql)
-                datas = cursor.fetchall()
-                connection.commit()
-
-            except:
-                connection.rollback()
+            datas = execute_and_get(strSql)
 
             provinces = []
             for data in datas:

@@ -8,14 +8,7 @@ def KeywordSearchView (request):
         nameSql += " FROM bookstore"
         nameSql += " WHERE store_name LIKE '%" + keyword + "%'"
 
-        try:
-            cursor = connection.cursor()
-            result = cursor.execute(nameSql)
-            namedata = cursor.fetchall()
-            connection.commit()
-
-        except:
-            connection.rollback()
+        namedata = execute_and_get(nameSql)
 
         if len(namedata) == 0:
             messages.error(request, '아직 등록되지 않은 서점입니다.')
@@ -34,14 +27,7 @@ def KeywordSearchView (request):
 
             strSql = "SELECT province FROM province"
 
-            try:
-                cursor = connection.cursor()
-                result = cursor.execute(strSql)
-                datas = cursor.fetchall()
-                connection.commit()
-
-            except:
-                connection.rollback()
+            datas = execute_and_get(strSql)
 
             provinces = []
             for data in datas:

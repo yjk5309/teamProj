@@ -18,7 +18,7 @@ import os
 import uuid
 import json
 
-def excute_and_get(sql, data = None) -> tuple :
+def execute_and_get(sql, data = None) -> tuple :
     try:
         cursor = connection.cursor()
         if data is None:

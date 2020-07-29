@@ -6,9 +6,9 @@ def MainView (request):
 
     storeSql = "SELECT store_name, store_msg, id FROM bookstore limit 3"
 
-    datas = excute_and_get(bookSql)
+    datas = execute_and_get(bookSql)
 
-    datas2 = excute_and_get(storeSql)
+    datas2 = execute_and_get(storeSql)
 
     books = []
     for data in datas:

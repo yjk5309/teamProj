@@ -5,7 +5,7 @@ def BookStoreDetailView (request, store_id):
 
     storeSql = "SELECT store_name, address, phone_num, bookstore_img, store_msg, id FROM bookstore where id =(%s)"
 
-    data = excute_and_get(storeSql,(store_id,))
+    data = execute_and_get(storeSql,(store_id,))
 
     store = {'store_name': data[0][0],
              'address': data[0][1],
@@ -17,7 +17,7 @@ def BookStoreDetailView (request, store_id):
 
     favoriteSql = "SELECT count(*) FROM favorite_bookstore WHERE bookstore_id=(%s) AND user_id=(%s)"
 
-    favorite_data = excute_and_get(favoriteSql, (store_id,user.username,))
+    favorite_data = execute_and_get(favoriteSql, (store_id,user.username,))
 
     favorite = favorite_data[0][0]
 
