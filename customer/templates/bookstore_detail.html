@@ -16,11 +16,18 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
+            {% if user.is_authenticated %}
+              {% if favorite == 0 %}
+              <i class="far fa-heart" style="font-size:36px;" onclick="favorite(this, '{{store.store_id}}')"></i>
+              {% elif favorite == 1 %}
+              <i class="fas fa-heart" style="font-size:36px;" onclick="unfavorite(this, '{{store.store_id}}')"></i>
+              {% endif %}
+            {% endif %}
         <h2> {{ store.store_name }} </h2>
-        {% if store.bookstore_img == None %}
+        {% if store.store_img == None %}
             <img src="{% static 'images/bookstore_icon.png' %}" height="200">
         {% else %}
-            <img src="{{ store.bookstore_img }}" height="350">
+            <img src="{{ store.store_img }}" height="350">
         {% endif %}
             <p>주소 : {{ store.address }}<br>
                 번호 : {{ store.phone_num }}<br>
@@ -35,5 +42,42 @@
 {% block footer %}
 {% include 'footer.html' %}
 {% endblock footer  %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function favorite(elm, n){
+        $.ajax({
+            url: "{% url 'customer:favorite' 1 %}".replace('1', n),
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            dataType: "json",
+            type: "POST",
+            success: function(response){
+               $(elm).attr("class", "fas fa-heart");
+               $(elm).attr("onclick", "unfavorite(this, '" + n + "')");
+               alert("즐겨찾기에 추가됩니다");
+            },
+            error: function(xhr) {
+                    alert("즐겨찾기를 하는 과정에서 에러가 발생했습니다.");
+            }
+        });
+    }
+    function unfavorite(elm, n){
+        $.ajax({
+            url: "{% url 'customer:unfavorite' 1 %}".replace('1', n),
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}',},
+            dataType: "json",
+            type: "POST",
+            success: function(response){
+               $(elm).attr("class", "far fa-heart");
+               $(elm).attr("onclick", "favorite(this, '" + n + "')");
+               alert("즐겨찾기가 취소됩니다");
+            },
+            error: function(xhr) {
+                    alert("즐겨찾기를 취소하는 과정에서 에러가 발생했습니다.");
+            }
+        });
+    }
+
+</script>
 
 {% endblock body %}
