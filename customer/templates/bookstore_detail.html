@@ -54,7 +54,6 @@
             success: function(response){
                $(elm).attr("class", "fas fa-heart");
                $(elm).attr("onclick", "unfavorite(this, '" + n + "')");
-               alert("즐겨찾기에 추가됩니다");
             },
             error: function(xhr) {
                     alert("즐겨찾기를 하는 과정에서 에러가 발생했습니다.");
@@ -70,7 +69,6 @@
             success: function(response){
                $(elm).attr("class", "far fa-heart");
                $(elm).attr("onclick", "favorite(this, '" + n + "')");
-               alert("즐겨찾기가 취소됩니다");
             },
             error: function(xhr) {
                     alert("즐겨찾기를 취소하는 과정에서 에러가 발생했습니다.");

@@ -28,6 +28,12 @@
                 </div>
 
                 <div class="content">
+                    {% for store in liststores %}
+                        <a href="{% url 'customer:bookstore_detail' store.store_id %}" >
+                            <h3>{{store.store_name}}</h3>
+                        </a>
+                        <p>{{store.address}}</p>
+                    {% endfor %}
                     <div id="map" style="width:600px;height:500px;"></div>
                 </div>
             </div>
