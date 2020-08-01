@@ -8,14 +8,7 @@ def KeywordSearchView (request):
         nameSql += " FROM bookstore"
         nameSql += " WHERE store_name LIKE '%" + keyword + "%'"
 
-        try:
-            cursor = connection.cursor()
-            result = cursor.execute(nameSql)
-            namedata = cursor.fetchall()
-            connection.commit()
-
-        except:
-            connection.rollback()
+        namedata = execute_and_get(nameSql)
 
         if len(namedata) == 0:
             messages.error(request, '아직 등록되지 않은 서점입니다.')
@@ -32,16 +25,23 @@ def KeywordSearchView (request):
                 bookstores.append(json_row)
             bookstores = json.dumps(bookstores)
 
+            idSql = "SELECT id, store_name, address"
+            idSql += " FROM bookstore"
+            idSql += " WHERE store_name LIKE '%" + keyword + "%'"
+
+            listdata = execute_and_get(idSql)
+
+            liststores = []
+            for data in listdata:
+                row = {'store_id': data[0],
+                       'store_name': data[1],
+                       'address': data[2],
+                       }
+                liststores.append(row)
+
             strSql = "SELECT province FROM province"
 
-            try:
-                cursor = connection.cursor()
-                result = cursor.execute(strSql)
-                datas = cursor.fetchall()
-                connection.commit()
-
-            except:
-                connection.rollback()
+            datas = execute_and_get(strSql)
 
             provinces = []
             for data in datas:
@@ -49,4 +49,5 @@ def KeywordSearchView (request):
                 provinces.append(row)
 
             return render(request, 'search_store.html', {'bookstores': bookstores,
+                                                         'liststores': liststores,
                                                          'provinces': provinces})

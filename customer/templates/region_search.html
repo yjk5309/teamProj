@@ -12,6 +12,14 @@
     <br>
     <button type="submit" class="btn btn-primary" onclick="setBounds()">검색</button>
 </form>
+<br>
+<div class="text-center">
+    {% if messages %}
+    {% for message in messages %}
+        <p style="color:red"> {{message.message}} </p>
+    {% endfor %}
+    {% endif %}
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
