@@ -48,7 +48,6 @@ def execute(sql, data = None) -> tuple :
         else:
             result = cursor.execute(sql, data)
 
-        # return result
         connection.commit()
 
     except:

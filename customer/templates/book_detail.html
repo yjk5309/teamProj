@@ -42,11 +42,17 @@
                     </tr>
                     <tr>
                         <td>재고</td>
-                        <td>{{ book.inven }} 개</td>
+                        <td>{{ book.book_inven }} 권</td>
                     </tr>
                     <tr>
                         <td>판매상태</td>
-                        <td>{{ book.sales_status }}</td>
+                        <td>
+                            {% if book.book_inven != 0 %}
+                            구매가능
+                            {% else %}
+                            재고소진
+                            {% endif %}
+                        </td>
                     </tr>
 
                     <tr>
@@ -63,7 +69,12 @@
                         <td>
                             <button class="button">구매하기</button>&nbsp;
                             <button class="button">장바구니</button>&nbsp;
-                            <button class="like_button" onclick="like(this, '{{ book.isbn }}')">찜 하기</button>
+                            {% if like == 1 %}
+                            <button class="like_button" onclick="like(this, '{{ book.isbn }}')">찜</button>
+                            {% endif %}
+                            {% if like == 0 %}
+                            <button class="button" onclick="like(this, '{{ book.isbn }}')">찜</button>
+                            {% endif %}
                         </td>
                     </tr>
                 </table>
@@ -102,10 +113,12 @@
             success: function(response) {
                 if (response.like == 1) {
                     $(elm).attr("onclick", "like(this, '" + n + "')");
+                    $(elm).attr("class", "button");
                     alert("찜 목록에 추가되었습니다.");
                 }
                 else if (response.like == 0){
                     $(elm).attr("onclick", "like(this, '" + n + "')");
+                    $(elm).attr("class", "like_button");
                     alert("찜 목록에서 삭제되었습니다.");
                     console.log(response.like);
                 }
