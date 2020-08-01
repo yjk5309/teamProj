@@ -22,24 +22,30 @@
 
         <div class="tab_box_container">
             <div class="container">
-                <div class="aside">
-                    <div class="tab_box on">{% include 'region_search.html' %}</div>
-                    <div class="tab_box">{% include 'name_search.html' %}</div>
-                </div>
-
-                <div class="content">
+                <div class="flex">
+                    <div class="flex-2">
+                    <div class="aside">
+                        <div class="tab_box on">{% include 'region_search.html' %}</div>
+                        <div class="tab_box">{% include 'name_search.html' %}</div>
+                    </div>
                     {% for store in liststores %}
-                        <a href="{% url 'customer:bookstore_detail' store.store_id %}" >
-                            <h3>{{store.store_name}}</h3>
-                        </a>
-                        <p>{{store.address}}</p>
+                        <div class="list">
+                            <a href="{% url 'customer:bookstore_detail' store.store_id %}" >
+                                <h4>{{store.store_name}}</h4>
+                            <p>{{store.address}}</p>
+                            </a>
+                        </div>
                     {% endfor %}
-                    <div id="map" style="width:600px;height:500px;"></div>
+                    </div>
+                    <div class="content">
+                        <div id="map" style="width:600px;height:500px;"></div>
+                    </div>
                 </div>
             </div>
-        </div> <!-- tab_box_container e -->
+        </div><!-- tab_box_container e -->
     </div> <!-- tab_wrap e -->
 </div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">

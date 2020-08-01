@@ -8,6 +8,6 @@ def UnfavoriteView(request, store_id):
     strSql = "DELETE FROM favorite_bookstore "
     strSql += "WHERE user_id=(%s) and bookstore_id = (%s)"
 
-    unfavorite = execute(strSql, (user.username, store_id,))
+    execute(strSql, (user.username, store_id,))
 
     return HttpResponse(json.dumps({'result':'200'}), content_type="application/json")

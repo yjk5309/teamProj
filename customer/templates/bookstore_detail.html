@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/store_detail.css' %}">
 {% endblock head %}
 
 {% block title %}
@@ -14,30 +14,48 @@
 
 {% block body %}
 <div class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            {% if user.is_authenticated %}
-              {% if favorite == 0 %}
-              <i class="far fa-heart" style="font-size:36px;" onclick="favorite(this, '{{store.store_id}}')"></i>
-              {% elif favorite == 1 %}
-              <i class="fas fa-heart" style="font-size:36px;" onclick="unfavorite(this, '{{store.store_id}}')"></i>
-              {% endif %}
-            {% endif %}
-        <h2> {{ store.store_name }} </h2>
-        {% if store.store_img == None %}
-            <img src="{% static 'images/bookstore_icon.png' %}" height="200">
-        {% else %}
-            <img src="{{ store.store_img }}" height="350">
-        {% endif %}
-            <p>주소 : {{ store.address }}<br>
-                번호 : {{ store.phone_num }}<br>
-                소개 : {{ store.store_msg }}<br>
-            </p>
+<div class="background-image-container">
+    <div class="flex">
+        <div class="col col1">
+            <div class="image round fit">
+                {% if store.store_img == None %}
+                <img src="{% static 'images/bookstore_icon.png' %}">
+                {% else %}
+                <img src="{{ store.store_img }}">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col col2">
+            <div class="flex">
+                <h3>{{ store.store_name }}</h3>
+                {% if user.is_authenticated %}
+                {% if favorite == 0 %}
+                <i class="far fa-star fa-2x" title="즐겨찾기" onclick="favorite(this, '{{store.store_id}}')"></i>
+                {% elif favorite == 1 %}
+                <i class="fas fa-star fa-2x" title="즐겨찾기" onclick="unfavorite(this, '{{store.store_id}}')"></i>
+                {% endif %}
+                {% endif %}
+            </div>
+            <p>주소 | {{ store.address }}<br>
+                번호 | {{ store.phone_num }}<br>
+                소개 | {{ store.store_msg }}<br></p>
         </div>
     </div>
 </div>
-
-
+    <div class="content">
+        {% for book in books %}
+                <div class="col">
+                    <a href="" >
+                    <div class="image book">
+                        <img align="center" src="{{ book.book_img }}" alt="" />
+                    </div>
+                    <p>{{ book.book_name }}</p>
+                    <p>{{ book.price }}원</p>
+                    </a>
+                </div>
+        {% endfor %}
+    </div>
+</div>
 
 {% block footer %}
 {% include 'footer.html' %}
@@ -52,7 +70,7 @@
             dataType: "json",
             type: "POST",
             success: function(response){
-               $(elm).attr("class", "fas fa-heart");
+               $(elm).attr("class", "fas fa-star fa-2x");
                $(elm).attr("onclick", "unfavorite(this, '" + n + "')");
             },
             error: function(xhr) {
@@ -67,7 +85,7 @@
             dataType: "json",
             type: "POST",
             success: function(response){
-               $(elm).attr("class", "far fa-heart");
+               $(elm).attr("class", "far fa-star fa-2x");
                $(elm).attr("onclick", "favorite(this, '" + n + "')");
             },
             error: function(xhr) {

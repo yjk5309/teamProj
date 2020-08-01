@@ -10,10 +10,23 @@
 
 .content {
   float: right;
-  margin-right: 150px;
 }
 
 .tab_box_container {
     float: left;
-    width: 200px;
+    width: 1000px;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-2 {
+    display: flex;
+    flex-direction: column;
+}
+
+.list {
+    width:300px;
+    margin-left:20px;
 }
