@@ -2,7 +2,7 @@ from .common import *
 
 def MainView (request):
 
-    bookSql = "SELECT book_name, book_img, book_id FROM book order by inven limit 3"
+    bookSql = "SELECT book_name, book_img, isbn FROM book order by inven limit 3"
 
     storeSql = "SELECT store_name, store_msg, id FROM bookstore limit 3"
 
