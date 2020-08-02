@@ -10,14 +10,13 @@ def RegionSearchView (request):
         strSql += " FROM bookstore"
         strSql += " WHERE address LIKE '" + province + "%" + city + "%'"
 
-        try:
-            cursor = connection.cursor()
-            result = cursor.execute(strSql)
-            citydata = cursor.fetchall()
-            connection.commit()
+        idSql = "SELECT id, store_name, address"
+        idSql += " FROM bookstore"
+        idSql += " WHERE address LIKE '" + province + "%" + city + "%'"
 
-        except:
-            connection.rollback()
+        citydata = execute_and_get(strSql)
+
+        listdata = execute_and_get(idSql)
 
         if len(citydata) == 0:
             messages.error(request, '해당지역에 등록된 서점이 없습니다.')
@@ -34,16 +33,17 @@ def RegionSearchView (request):
                 bookstores.append(json_row)
             bookstores = json.dumps(bookstores)
 
+            liststores = []
+            for data in listdata:
+                row = {'store_id': data[0],
+                       'store_name': data[1],
+                       'address': data[2],
+                       }
+                liststores.append(row)
+
             strSql = "SELECT province FROM province"
 
-            try:
-                cursor = connection.cursor()
-                result = cursor.execute(strSql)
-                datas = cursor.fetchall()
-                connection.commit()
-
-            except:
-                connection.rollback()
+            datas = execute_and_get(strSql)
 
             provinces = []
             for data in datas:
@@ -51,4 +51,5 @@ def RegionSearchView (request):
                 provinces.append(row)
 
             return render(request, 'search_store.html', {'bookstores': bookstores,
+                                                         'liststores':liststores,
                                                          'provinces': provinces})

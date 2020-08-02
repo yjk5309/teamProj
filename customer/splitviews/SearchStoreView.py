@@ -4,14 +4,7 @@ def SearchStoreView (request):
     if request.method == "GET":
         strSql = "SELECT store_name, address FROM bookstore"
 
-        try:
-            cursor = connection.cursor()
-            result = cursor.execute(strSql)
-            storedata = cursor.fetchall()
-            connection.commit()
-
-        except:
-            connection.rollback()
+        storedata = execute_and_get(strSql)
 
         bookstores = []
         for data in storedata:
@@ -25,14 +18,7 @@ def SearchStoreView (request):
 
         strSql = "SELECT province FROM province"
 
-        try:
-            cursor = connection.cursor()
-            result = cursor.execute(strSql)
-            datas = cursor.fetchall()
-            connection.commit()
-
-        except:
-            connection.rollback()
+        datas = execute_and_get(strSql)
 
         provinces = []
         for data in datas:

@@ -4,7 +4,7 @@ def MainView (request):
 
     bookSql = "SELECT book_name, book_img, isbn FROM book order by inven limit 3"
 
-    storeSql = "SELECT store_name, store_msg FROM bookstore limit 3"
+    storeSql = "SELECT store_name, store_msg, id FROM bookstore limit 3"
 
     datas = execute_and_get(bookSql)
 
@@ -21,7 +21,8 @@ def MainView (request):
     stores = []
     for data in datas2:
         row = {'store_name': data[0],
-               'store_msg': data[1]
+               'store_msg': data[1],
+               'store_id':data[2],
                }
         stores.append(row)
 
