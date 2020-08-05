@@ -12,7 +12,6 @@ def LoginView(request):
 
         if login_user is not None:
             login(request, login_user)
-            request.session['user'] = user_id
             return redirect('customer:main')
 
         else:
