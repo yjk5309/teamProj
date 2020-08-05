@@ -21,7 +21,8 @@ def BookStoreDetailView (request, store_id):
 
     favorite = favorite_data[0][0]
 
-    bookSql =  "SELECT isbn, book_name, format(price, N'#,0'), book_img FROM book where store_id =(%s)"
+    bookSql =  "SELECT isbn, book_name, price, book_img FROM book " \
+               "where isbn = any(SELECT book_isbn FROM omp3.book_inven where store_id = (%s))"
 
     datas = execute_and_get(bookSql,(store_id,))
 
