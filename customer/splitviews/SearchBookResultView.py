@@ -12,7 +12,7 @@ def SearchBookResultView(request):
                       'publisher': publisher,}
 
     search_datas = execute_and_get("SELECT book_name, author, publisher, book_img, price, isbn FROM book" +
-                             " WHERE book_name LIKE '%" + title + "%' AND author LIKE '%" + author + "%' AND publisher LIKE '%" + publisher + "%'")
+                             " WHERE book_name LIKE '%" + title + "%' AND author LIKE '%" + author + "%' AND publisher LIKE '%" + publisher + "%' GROUP BY book_name")
 
     search_list = []
     for search_data in search_datas:

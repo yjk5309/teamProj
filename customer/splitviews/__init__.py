@@ -13,3 +13,4 @@ from .BookLikeView import *
 from .BookStoreDetailView import *
 from .FavoriteView import *
 from .UnfavoriteView import *
+from .BookReviewView import *
