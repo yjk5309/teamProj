@@ -65,7 +65,14 @@
                     </tr>
                     <tr>
                         <td>평점</td>
-                        <td><b style="color:gold">{{ book.review_score }}</b> <a href="#review_list"> ({{book.review_count}}) </a> </td>
+
+                        <td>
+                            {% if book.review_score != None %}
+                            <b style="color:gold">{{ book.review_score }}</b> <a href="#review_list"> ({{book.review_count}}) </a>
+                            {% else %}
+                            <b style="color:gold">0</b> <a href="#review_list"> ({{book.review_count}}) </a>
+                            {% endif %}
+                        </td>
                         <td>
                             <button class="button">구매하기</button>&nbsp;
                             <button class="button">장바구니</button>&nbsp;
@@ -127,7 +134,10 @@
 
             {% for review in review %}
             <div class="book_msg">
-                <p> {{ review.title }} <b style="color:gold">{{ review.evaluate_score }}</b> | {{ review.user_id }}  </p>
+                <p> {{ review.title }} <b style="color:gold">{{ review.evaluate_score }}</b> | {{ review.user_id }} &nbsp;&nbsp;
+                    <button>수정</button>
+                    <button type="button" onclick="location.href='{% url 'customer:book_review_delete' review.id %}'">삭제</button>
+                </p>
                 <p> {{ review.content }} </p>
             </div>
             {% endfor %}

@@ -13,11 +13,11 @@ def BookDetailView(request, book_isbn):
 
     book_inven = execute_and_get("SELECT COUNT(*) FROM book_inven  WHERE book_name = (%s)", (book_datas[0][0],))
 
-    book_review_datas = execute_and_get("SELECT AVG(evaluate_score), COUNT(book_name), user_id, title, content, evaluate_score" +
+    book_review_datas = execute_and_get("SELECT ROUND(AVG(evaluate_score),1), COUNT(book_name), user_id, title, content, evaluate_score" +
                                    " FROM review WHERE book_name= (%s)",
                                    (book_datas[0][0],))
 
-    review_list = execute_and_get("SELECT user_id, title, content, evaluate_score FROM review WHERE book_name= (%s)",
+    review_list = execute_and_get("SELECT user_id, title, content, evaluate_score, id FROM review WHERE book_name= (%s)",
                         (book_datas[0][0],))
 
     if is_like[0][0] == 0:
@@ -45,6 +45,7 @@ def BookDetailView(request, book_isbn):
             'title': review_data[1],
             'content': review_data[2],
             'evaluate_score': review_data[3],
+            'id': review_data[4],
         }
         review.append(review_row)
 
