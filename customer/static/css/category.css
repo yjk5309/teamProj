@@ -1,0 +1,57 @@
+.container {
+  overflow: hidden;
+}
+
+.aside {
+  float: left;
+  width:250px;
+  padding:10px;
+}
+
+.content {
+  float: right;
+  width:600px;
+  height:1500px;
+  padding-top:50px;
+  overflow:auto;
+}
+
+.content-2 {
+  width:1000px;
+  padding-top:35px;
+}
+
+.flex {
+    display: flex;
+    flex-wrap:wrap;
+}
+
+.flex-book {
+    display: flex;
+    flex-wrap:wrap;
+    justify-content:space-around;
+}
+    .flex-book.result {
+        padding-left:150px;
+    }
+
+.col {
+    flex-basis:100px;
+}
+
+.image {
+		border: 0;
+		display: inline-block;
+		position: relative;
+		box-shadow: 0px 0px 0px 7px #fff, 0px 0px 0px 8px rgba(0, 0, 0, 0.1);
+}
+       .image.book {
+            display: block;
+            margin: 2em 0 2em 0;
+            width: 168px;
+       }
+            .image.book img {
+                align:center;
+                height:240px;
+                width: 168px;
+                }

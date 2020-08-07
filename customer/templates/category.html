@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/category.css' %}">
+{% endblock head %}
+
+{% block title %}
+서점 검색 페이지 | alleybookstore
+{% endblock title %}
+
+{% block _nav %}
+  {% include '_nav.html' %}
+{% endblock _nav %}
+
+{% block body %}
+
+<div class="container">
+  <div class="flex">
+    <div class="aside">
+        <h3>국내도서</h3>
+        {% for main in domestic %}
+        <a href="{% url 'customer:category_book' main.main_category_id %}" >
+            <div>{{main.main_category}}</div>
+        </a>
+        {% endfor %}
+    </div>
+      <div class="aside">
+          <h3>외국도서</h3>
+        {% for main in foreign %}
+        <a href="{% url 'customer:category_book' main.main_category_id %}" >
+            <div>{{main.main_category}}</div>
+        </a>
+        {% endfor %}
+    </div>
+
+    <div class="content">
+        <div class="flex-book">
+      {% for book in books %}
+                <div class="col">
+                    <a href="{% url 'customer:book_detail' book.isbn %}" >
+                    <div class="image book">
+                        <img align="center" src="{{ book.book_img }}" alt="" />
+                    </div>
+                    <p>{{ book.book_name }}</p>
+                    <p>{{ book.price }}원</p>
+                    </a>
+                </div>
+        {% endfor %}
+            </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+</script>
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer  %}
+
+{% endblock body %}

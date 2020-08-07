@@ -17,4 +17,6 @@ urlpatterns = [
     re_path(r'^book/(?P<book_isbn>\d+)/customer/$', BookLikeView, name='book_like'),
     re_path(r'^favorite/(?P<store_id>\d+)/$', FavoriteView, name='favorite'),
     re_path(r'^unfavorite/(?P<store_id>\d+)/$', UnfavoriteView, name='unfavorite'),
+    re_path(r'^book/category/$', CategoryView, name='category'),
+    re_path(r'^book/category/(?P<main_category_id>\d+)/$', CategoryResultView, name='category_book'),
 ]
