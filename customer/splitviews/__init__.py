@@ -13,5 +13,5 @@ from .BookLikeView import *
 from .BookStoreDetailView import *
 from .FavoriteView import *
 from .UnfavoriteView import *
-from .BookCategoryView import *
-from .AjaxGetSubCategoryView import *
+from .CategoryView import *
+from .CategoryResultView import *
