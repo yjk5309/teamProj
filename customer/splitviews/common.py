@@ -18,6 +18,8 @@ import os
 import uuid
 import json
 
+book_basket = []
+
 def execute_and_get(sql, data = None) -> tuple :
     try:
         cursor = connection.cursor()

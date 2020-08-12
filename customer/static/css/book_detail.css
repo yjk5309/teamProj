@@ -131,14 +131,17 @@ text-indent:0;
     font-weight: bolder;
 }
 
-.star_rating {font-size:0; letter-spacing:-4px;}
-.star_rating a {
-    font-size:22px;
-    letter-spacing:0;
-    display:inline-block;
-    margin-left:5px;
-    color:#ccc;
-    text-decoration:none;
+.star {
+    font-family: inherit;
+    border: 1px solid #999;
+    border-radius: 0px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    color: gold;
 }
-.star_rating a:first-child {margin-left:0;}
-.star_rating a.on {color:#f8585b;;}
+
+.review_list {
+    display: flex;
+    margin-top: 50px;
+}

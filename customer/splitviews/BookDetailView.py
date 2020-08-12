@@ -11,19 +11,14 @@ def BookDetailView(request, book_isbn):
     is_like = execute_and_get("SELECT EXISTS(SELECT * FROM like_list WHERE user_id = (%s) AND book_isbn = (%s))",
                               (user.username, book_isbn,))
 
-    book_inven = execute_and_get("SELECT COUNT(*) FROM book_inven  WHERE book_name = (%s)", (book_datas[0][0],))
+    book_inven = execute_and_get("SELECT CONVERT(SUM(inven), signed integer) FROM book_inven  WHERE book_name = (%s)", (book_datas[0][0],))
 
     book_review_datas = execute_and_get("SELECT ROUND(AVG(evaluate_score),1), COUNT(book_name), user_id, title, content, evaluate_score" +
                                    " FROM review WHERE book_name= (%s)",
                                    (book_datas[0][0],))
 
-    review_list = execute_and_get("SELECT user_id, title, content, evaluate_score, id FROM review WHERE book_name= (%s)",
+    review_list = execute_and_get("SELECT user_id, title, content, evaluate_score, id FROM review WHERE book_name= (%s) ORDER BY CAST(evaluate_score AS signed integer) DESC",
                         (book_datas[0][0],))
-
-    if is_like[0][0] == 0:
-        like = 'like'
-    else:
-        like = 'unlike'
 
     book = {'book_name': book_datas[0][0],
             'author': book_datas[0][1],
@@ -49,7 +44,7 @@ def BookDetailView(request, book_isbn):
         }
         review.append(review_row)
 
-    sale_stores = execute_and_get("SELECT store_name, book_isbn, count(*) FROM bookstore" +
+    sale_stores = execute_and_get("SELECT store_name, book_isbn, CONVERT(SUM(inven), signed integer) FROM bookstore" +
                                   " LEFT OUTER JOIN book_inven on book_inven.store_id = bookstore.id WHERE book_inven.book_name = (%s)  GROUP BY store_name"
                                   , (book_datas[0][0],))
 
@@ -66,5 +61,5 @@ def BookDetailView(request, book_isbn):
 
         sale_stores_list.append(row)
 
-    return render(request, "book_detail.html", {'book': book, 'like': like, 'review': review,
+    return render(request, "book_detail.html", {'book': book, 'is_like': is_like[0][0], 'review': review,
                                                 'sale_stores_list': sale_stores_list})

@@ -6,7 +6,6 @@ def BookReviewDeleteView(request, review_id):
 
     book_isbn = execute_and_get("SELECT book_isbn FROM review WHERE id = (%s)", (review_id,))
 
-    review_delete = execute("DELETE FROM review WHERE user_id = (%s) AND id = (%s)",
-                            (user.username, review_id,))
+    execute("DELETE FROM review WHERE user_id = (%s) AND id = (%s)", (user.username, review_id,))
 
     return redirect('customer:book_detail', book_isbn[0][0])

@@ -16,3 +16,5 @@ from .UnfavoriteView import *
 from .BookReviewView import *
 from .BookReviewDeleteView import *
 from .BookBasketInsertView import *
+from .BookReviewModifyView import *
+from .AjaxReviewRecentView import *
