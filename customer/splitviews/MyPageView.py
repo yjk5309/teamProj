@@ -4,4 +4,4 @@ from .common import *
 def MyPageView(request):
     basket = book_basket
 
-    return render(request,'mypage.html', {'basket':basket})
+    return render(request,'mypage.html', {'basket': basket})

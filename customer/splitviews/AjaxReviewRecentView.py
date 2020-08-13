@@ -1,6 +1,6 @@
 from .common import *
 
-def AjaxRviewRecentView(request, book_isbn):
+def AjaxReviewRecentView(request, book_isbn):
     review_data = execute_and_get('SELECT user_id, title, content, evaluate_score, id FROM review WHERE book_isbn= (%s) ORDER BY date DESC',
                                   (book_isbn,))
 

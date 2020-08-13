@@ -135,7 +135,7 @@
                 <button style="font-size: 15px;" >평점순</button>
             </div>
             {% for review in review %}
-            <div class="review_list">
+            <div class="review_list" id="review_basic_list">
                 <p id="review_title" name="review_title"> {{ review.title }} &nbsp;&nbsp</p>
                         <b style="color:gold; align:right" id="review_score" name="review_score" >
                             {% if review.evaluate_score == '2' %}★☆☆☆☆
@@ -152,6 +152,7 @@
             </div>
             <p id="review_content" name="review_content"> {{ review.content }} </p>
             {% endfor %}
+
 
         </div>
     </div>
@@ -199,8 +200,14 @@
             dataType: "json",
             type: "GET",
             success: function(response) {
-                $("{% for review in review %}").html("{% for review in "+response.review+" %}");
-                $("{% endfor %}").html("{% endfor %}");
+                for(var i=0; i<response.review.length; i++){
+                    $("#review_user").html(response.review[i].user_id);
+                    $("#review_title").html(response.review[i].title);
+                    $("#review_content").html(response.review[i].content);
+                    $("#review_score").html(response.review[i].evaluate_score);
+                    console.log(response.review[i]);
+                }
+
             },
             error: function(error) {
                 alert(error);

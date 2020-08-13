@@ -16,7 +16,7 @@
                         <td><p class="content">{{ baskets.price }}원</p></td>
                         <td><p class="content">{{ baskets.publisher }}원</p></td>
                         <td><button class="button">구매하기</button></td>
-                        <td><button class="button">삭제</button></td>
+                        <td><button class="button" onclick="location.href = '{% url 'customer:book_basket_delete' baskets.isbn %}'">삭제</button></td>
 
                     </tr>
                 </table>
