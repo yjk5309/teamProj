@@ -25,18 +25,41 @@ def CategoryView (request):
         }
         foreign.append(row)
 
-    bookSql =  "SELECT isbn, book_name, price, book_img FROM book "
+    domestic_bookSql = "SELECT distinct a.isbn, a.book_name, a.book_img, a.price "\
+                       "FROM book AS a "\
+                       "JOIN main_category AS b "\
+                       "ON a.category_id = b.id "\
+                       "WHERE b.origin = '국내도서'"
 
-    datas = execute_and_get(bookSql)
+    datas = execute_and_get(domestic_bookSql)
 
-    books = []
+    domestic_books = []
     for data in datas:
         row = {
             'isbn':data[0],
             'book_name':data[1],
-            'price':data[2],
-            'book_img':data[3],
+            'book_img':data[2],
+            'price':data[3],
             }
-        books.append(row)
+        domestic_books.append(row)
 
-    return render(request, 'category.html', {'domestic':domestic,'foreign': foreign,'books':books})
+    foreign_bookSql = "SELECT distinct a.isbn, a.book_name, a.book_img, a.price "\
+                      "FROM book AS a "\
+                      "JOIN main_category AS b " \
+                      "ON a.category_id = b.id "\
+                      "WHERE b.origin = '외국도서'"
+
+    datas = execute_and_get(foreign_bookSql)
+
+    foreign_books = []
+    for data in datas:
+        row = {
+            'isbn':data[0],
+            'book_name':data[1],
+            'book_img':data[2],
+            'price':data[3],
+            }
+        foreign_books.append(row)
+
+    return render(request, 'category.html', {'domestic':domestic,'foreign': foreign,
+                                             'domestic_books':domestic_books, 'foreign_books':foreign_books})

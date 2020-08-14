@@ -15,11 +15,7 @@ def BookStoreDetailView (request, store_id):
              'store_id':data[0][5],
             }
 
-    favoriteSql = "SELECT CASE WHEN " \
-                    "EXISTS (SELECT id FROM favorite_bookstore WHERE bookstore_id=(%s) AND user_id=(%s)) " \
-                    "THEN 'true' " \
-                    "ELSE 'false' " \
-                    "END"
+    favoriteSql = "SELECT EXISTS (SELECT id FROM favorite_bookstore WHERE bookstore_id=(%s) AND user_id=(%s))"
 
     favorite_data = execute_and_get(favoriteSql, (store_id,user.username,))
 

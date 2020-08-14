@@ -1,11 +1,16 @@
 .container {
-  overflow: hidden;
+  overflow: auto;
 }
 
 .aside {
   float: left;
-  width:250px;
-  padding:10px;
+  width:350px;
+  padding:20px;
+}
+.aside-result {
+  float: left;
+  width:200px;
+  padding:20px;
 }
 
 .content {
@@ -23,7 +28,6 @@
 
 .flex {
     display: flex;
-    flex-wrap:wrap;
 }
 
 .flex-book {
@@ -32,7 +36,7 @@
     justify-content:space-around;
 }
     .flex-book.result {
-        padding-left:150px;
+        padding-left:130px;
     }
 
 .col {
@@ -55,3 +59,45 @@
                 height:240px;
                 width: 168px;
                 }
+
+/* tab */
+
+ul{list-style:none;}
+
+.tabmenu{
+  max-width:1000px;
+  height:1000px;
+  margin-bottom:300px;
+  position:relative;
+}
+.tabmenu ul li{
+  display:  inline-block;
+  width:33.33%;
+  float:left;
+  text-align:center;
+}
+.tabmenu label{
+  display:block;
+  width:100%;
+  height:40px;
+  line-height:40px;
+}
+.tabmenu input{display:none;}
+.tabCon{
+  display:none;
+  text-align:left;
+  padding: 20px;
+  position:absolute;
+  left:0; top:40px;
+  width:1000px;
+}
+.tabmenu input:checked ~ label{
+  background:#ccc;
+}
+.tabmenu input:checked ~ .tabCon{
+  display:block;
+}
+
+footer {
+    margin-top : 0px;
+}

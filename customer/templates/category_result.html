@@ -5,7 +5,7 @@
 {% endblock head %}
 
 {% block title %}
-서점 검색 페이지 | alleybookstore
+책 카테고리 페이지 | alleybookstore
 {% endblock title %}
 
 {% block _nav %}
@@ -15,8 +15,7 @@
 {% block body %}
 
 <div class="container">
-  <div class="flex">
-    <div class="aside">
+    <div class="aside-result">
         <a href="{% url 'customer:category' %}" >
             <p>전체 리스트</p>
         </a>
@@ -38,7 +37,6 @@
             {% endfor %}
         </div>
     </div>
-  </div>
 </div>
 
 
