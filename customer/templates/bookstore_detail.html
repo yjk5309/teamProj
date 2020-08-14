@@ -29,9 +29,9 @@
             <div class="flex-2">
                 <h3>{{ store.store_name }}</h3>
                 {% if user.is_authenticated %}
-                {% if is_favorite == 'false' %}
+                {% if is_favorite == False %}
                 <i class="far fa-star fa-2x" title="즐겨찾기" onclick="favorite(this, '{{store.store_id}}')"></i>
-                {% elif is_favorite == 'true' %}
+                {% elif is_favorite == True %}
                 <i class="fas fa-star fa-2x" title="즐겨찾기" onclick="unfavorite(this, '{{store.store_id}}')"></i>
                 {% endif %}
                 {% endif %}

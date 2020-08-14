@@ -13,45 +13,62 @@
 {% endblock _nav %}
 
 {% block body %}
-
 <div class="container">
-  <div class="flex">
-    <div class="aside">
-        <h3>국내도서</h3>
-        {% for main in domestic %}
-        <a href="{% url 'customer:category_book' main.main_category_id %}" >
-            <div>{{main.main_category}}</div>
-        </a>
-        {% endfor %}
-    </div>
-      <div class="aside">
-          <h3>외국도서</h3>
-        {% for main in foreign %}
-        <a href="{% url 'customer:category_book' main.main_category_id %}" >
-            <div>{{main.main_category}}</div>
-        </a>
-        {% endfor %}
-    </div>
-
-    <div class="content">
-        <div class="flex-book">
-      {% for book in books %}
-                <div class="col">
-                    <a href="{% url 'customer:book_detail' book.isbn %}" >
-                    <div class="image book">
-                        <img align="center" src="{{ book.book_img }}" alt="" />
-                    </div>
-                    <p>{{ book.book_name }}</p>
-                    <p>{{ book.price }}원</p>
-                    </a>
-                </div>
-        {% endfor %}
-            </div>
-    </div>
-  </div>
+<div class="tabmenu">
+    <ul>
+        <li id="tab1" class="btnCon"> <input type="radio" checked name="tabmenu" id="tabmenu1">
+          <label for="tabmenu1">국내도서</label>
+          <div class="tabCon" >
+                  <div class="aside">
+              {% for main in domestic %}
+                <a href="{% url 'customer:category_book' main.main_category_id %}" >
+                    <div>{{main.main_category}}</div>
+                </a>
+              {% endfor %}
+                  </div>
+              <div class="flex-book">
+                {% for book in domestic_books %}
+                  <div class="col">
+                      <a href="{% url 'customer:book_detail' book.isbn %}" >
+                          <div class="image book">
+                              <img align="center" src="{{ book.book_img }}" alt="" />
+                          </div>
+                            <p>{{ book.book_name }}</p>
+                            <p>{{ book.price }}원</p>
+                      </a>
+                  </div>
+                {% endfor %}
+              </div>
+          </div>
+        </li>
+        <li id="tab2" class="btnCon"><input type="radio" name="tabmenu" id="tabmenu2">
+          <label for="tabmenu2">외국도서</label>
+          <div class="tabCon" >
+                  <div class="aside">
+              {% for main in foreign %}
+                <a href="{% url 'customer:category_book' main.main_category_id %}" >
+                    <div>{{main.main_category}}</div>
+                </a>
+              {% endfor %}
+                  </div>
+              <div class="flex-book">
+                {% for book in foreign_books %}
+                  <div class="col">
+                      <a href="{% url 'customer:book_detail' book.isbn %}" >
+                          <div class="image book">
+                              <img align="center" src="{{ book.book_img }}" alt="" />
+                          </div>
+                            <p>{{ book.book_name }}</p>
+                            <p>{{ book.price }}원</p>
+                      </a>
+                  </div>
+                {% endfor %}
+              </div>
+          </div>
+        </li>
+    </ul>
 </div>
-
-
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
 
