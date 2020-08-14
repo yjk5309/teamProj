@@ -102,13 +102,18 @@
                     <td><b>판매서점</b></td>
                     <td><b>재고</b></td>
                     <td><b>가격</b></td>
+                    <td><b></b></td>
+                    <td><b></b></td>
+
                 </tr>
                 {% for sale_stores_list in sale_stores_list %}
                 <tr>
-                    <td><a onclick="location.href= '{% url 'customer:book_detail' sale_stores_list.isbn %}'">&nbsp;&nbsp;{{ sale_stores_list.store_name }}&nbsp;&nbsp;
+                    <td><a onclick="location.href= '{% url 'customer:book_detail' sale_stores_list.isbn sale_stores_list.store_id %}'">&nbsp;&nbsp;{{ sale_stores_list.store_name }}&nbsp;&nbsp;
                     </a></td>
                     <td> &nbsp;{{ sale_stores_list.inven }}권&nbsp; </td>
                     <td> &nbsp;{{ sale_stores_list.price }}원&nbsp; </td>
+                    <td><button>구매하기</button></td>
+                    <td></td>
                 </tr>
                 {% endfor %}
             </table>

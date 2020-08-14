@@ -1,12 +1,12 @@
 from .common import *
 
-def BookDetailView(request, book_isbn):
+def BookDetailView(request, book_isbn, store_id):
     user = request.user
     book_datas = execute_and_get("SELECT book_name, author,  publisher, price, book_msg, book_img, isbn" +
                                 " FROM book WHERE isbn = (%s)", (book_isbn,))
 
     current_book_store_name = execute_and_get("SELECT store_name FROM bookstore" +
-                                      " LEFT OUTER JOIN book_inven on book_inven.store_id = bookstore.id WHERE book_inven.book_isbn = (%s)", (book_isbn,))
+                                      " LEFT OUTER JOIN book_inven on book_inven.store_id = bookstore.id WHERE book_inven.book_isbn = (%s) AND store_id = (%s)", (book_isbn, store_id,))
 
     is_like = execute_and_get("SELECT EXISTS(SELECT * FROM like_list WHERE user_id = (%s) AND book_isbn = (%s))",
                               (user.username, book_isbn,))
@@ -44,7 +44,7 @@ def BookDetailView(request, book_isbn):
         }
         review.append(review_row)
 
-    sale_stores = execute_and_get("SELECT store_name, book_isbn, CONVERT(SUM(inven), signed integer) FROM bookstore" +
+    sale_stores = execute_and_get("SELECT store_id, store_name, book_isbn, CONVERT(SUM(inven), signed integer) FROM bookstore" +
                                   " LEFT OUTER JOIN book_inven on book_inven.store_id = bookstore.id WHERE book_inven.book_name = (%s)  GROUP BY store_name"
                                   , (book_datas[0][0],))
 
@@ -52,10 +52,11 @@ def BookDetailView(request, book_isbn):
     for sale_store in sale_stores:
         each_book_price = execute_and_get("SELECT price FROM book " +
                                           "LEFT OUTER JOIN book_inven on book_inven.book_isbn = book.isbn WHERE book.isbn = (%s)"
-                                          , (sale_store[1],))
-        row = {'store_name': sale_store[0],
-               'isbn': sale_store[1],
-               'inven': sale_store[2],
+                                          , (sale_store[2],))
+        row = {'store_id': sale_store[0],
+               'store_name': sale_store[1],
+               'isbn': sale_store[2],
+               'inven': sale_store[3],
                'price': each_book_price[0][0],
             }
 
