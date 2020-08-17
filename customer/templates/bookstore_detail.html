@@ -45,7 +45,7 @@
     <div class="content">
         {% for book in books %}
                 <div class="col">
-                    <a href="{% url 'customer:book_detail' book.isbn %}" >
+                    <a href="{% url 'customer:book_detail' book.isbn book.store_id %}" >
                     <div class="image book">
                         <img align="center" src="{{ book.book_img }}" alt="" />
                     </div>

@@ -29,7 +29,7 @@
               <div class="flex-book">
                 {% for book in domestic_books %}
                   <div class="col">
-                      <a href="{% url 'customer:book_detail' book.isbn %}" >
+                      <a href="{% url 'customer:book_detail' book.isbn book.store_id %}" >
                           <div class="image book">
                               <img align="center" src="{{ book.book_img }}" alt="" />
                           </div>
@@ -54,7 +54,7 @@
               <div class="flex-book">
                 {% for book in foreign_books %}
                   <div class="col">
-                      <a href="{% url 'customer:book_detail' book.isbn %}" >
+                      <a href="{% url 'customer:book_detail' book.isbn book.store_id %}" >
                           <div class="image book">
                               <img align="center" src="{{ book.book_img }}" alt="" />
                           </div>

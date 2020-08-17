@@ -1,0 +1,10 @@
+tr{
+    align:center;
+}
+td{
+    padding:15px;
+}
+.flex-order{
+    display:flex;
+    flex-direction:column;
+}

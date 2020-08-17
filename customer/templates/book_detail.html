@@ -67,8 +67,12 @@
                         <td>평점</td>
                         <td><b style="color:gold">★★★</b> <a href="#review_list"> 리뷰(31) </a> </td>
                         <td>
-                            <button class="button">구매하기</button>&nbsp;
-                            <button class="button">장바구니</button>&nbsp;
+                            <form action="{% url 'customer:order_create' %}">
+                                <input type="hidden" name="isbn" value="{{ book.isbn }}">
+                                <input type="hidden" name="store_name" value="{{book.store_name}}">
+                                <input type="submit" class="button" value="구매하기">
+                            </form>
+                            <button class="button">장바구니</button>
                             {% if like == 1 %}
                             <button class="like_button" onclick="like(this, '{{ book.isbn }}')">찜</button>
                             {% endif %}
@@ -101,10 +105,10 @@
                 </tr>
                 {% for sale_stores_list in sale_stores_list %}
                 <tr>
-                    <td><a onclick="location.href= '{% url 'customer:book_detail' sale_stores_list.isbn sale_stores_list.store_id %}'">&nbsp;&nbsp;{{ sale_stores_list.store_name }}&nbsp;&nbsp;
+                    <td><a onclick="location.href= '{% url 'customer:book_detail' sale_stores_list.isbn sale_stores_list.store_id %}'">{{ sale_stores_list.store_name }}
                     </a></td>
-                    <td> &nbsp;{{ sale_stores_list.inven }}권&nbsp; </td>
-                    <td> &nbsp;{{ sale_stores_list.price }}원&nbsp; </td>
+                    <td> {{ sale_stores_list.inven }}권 </td>
+                    <td> {{ sale_stores_list.price }}원 </td>
                     <td><button>구매하기</button></td>
                     <td></td>
                 </tr>
@@ -121,6 +125,7 @@
     </div>
 
 </div>
+
 
 
 {% block footer %}

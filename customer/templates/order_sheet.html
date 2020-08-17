@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/order_sheet.css' %}">
+{% endblock head %}
+
+{% block title %}
+주문 페이지 | alleybookstore
+{% endblock title %}
+
+{% block _nav %}
+  {% include '_nav.html' %}
+{% endblock _nav %}
+
+{% block body %}
+<div class="container"><br>
+    <div class="card">
+        <h4>주문 상품 정보</h4>
+        <table width="450px;">
+            <tr>
+                <td rowspan="3"><img src="{{ goods.book_img }}" width="75px" height="100px"></td>
+                <td>상품명</td>
+                <td>가격</td>
+                <td>서점</td>
+            </tr>
+            <tr>
+                <td>{{goods.book_name}}</td>
+                <td>{{goods.price}}원</td>
+                <td>{{goods.store_name}}</td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <div class="card">
+        <h4>주문자 정보</h4>
+        <form class="mt-3" method="post" action=''>{% csrf_token %}
+            주문자<input type="text" class="form-control" id="name" name="name" value="{{ user.first_name }}">
+            이메일
+              <input type="email" class="form-control" id="e_mail" name="e_mail" value="{{ user.email }}">
+            연락처
+              <input type="tel" class="form-control" id="phone_number" name="p_number"
+                     pattern="(010)-\d{3,4}-\d{4}" value="{{ user.phone_number }}">
+            주소
+              <input type="text" class="form-control" id="address" name="address" value="{{ user.address }}">
+            <button type="submit" class="btn btn-primary">배송 정보 수정</button>
+        </form>
+    </div>
+    <br>
+    <div class="card">
+        <div class="flex-order">
+            <p><input type="radio" name="chk_info" value="card" checked="checked">카드결제</p>
+            <p><input type="radio" name="chk_info" value="bank">무통장입금</p>
+        <button class="btn btn-primary">결제하기</button>
+        </div>
+    </div>
+</div>
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer  %}
+
+{% endblock body %}

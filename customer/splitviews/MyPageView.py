@@ -4,10 +4,12 @@ from .common import *
 def MyPageView(request):
     user = request.user
 
-    like_bookSql = "SELECT a.book_isbn, b.book_name, b.book_img " \
+    like_bookSql = "SELECT a.book_isbn, b.book_name, b.book_img, c.store_id " \
                    "FROM like_list as a " \
                    "JOIN book as b " \
                    "ON a.book_isbn = b.isbn " \
+                   "JOIN book_inven as c " \
+                   "ON b.isbn = c.book_isbn " \
                    "where a.user_id=(%s) ORDER BY date desc"
 
     datas = execute_and_get(like_bookSql,(user,))
@@ -17,6 +19,7 @@ def MyPageView(request):
         row = {'isbn': data[0],
                'book_name': data[1],
                'book_img': data[2],
+               'store_id': data[3],
                }
         like_books.append(row)
 

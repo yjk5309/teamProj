@@ -7,8 +7,11 @@ def CategoryResultView (request,main_category_id):
     data = execute_and_get(mainSql, (main_category_id,))
     main = data[0][0]
 
-    bookSql = "SELECT isbn, book_name, price, book_img FROM book " \
-               "where category_id = (%s)"
+    bookSql = "SELECT a.isbn, a.book_name, a.price, a.book_img, b.store_id " \
+              "FROM book AS a " \
+              "JOIN book_inven AS b " \
+              "ON a.isbn = b.book_isbn " \
+              "where category_id = (%s)"
 
     datas = execute_and_get(bookSql,(main_category_id,))
 
@@ -19,6 +22,7 @@ def CategoryResultView (request,main_category_id):
             'book_name':data[1],
             'price':data[2],
             'book_img':data[3],
+            'store_id':data[4],
             }
         books.append(row)
 
