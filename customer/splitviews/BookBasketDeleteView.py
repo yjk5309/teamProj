@@ -1,14 +1,16 @@
 from .common import *
 
 def BookBasketDeleteView(request, book_isbn):
-    basket = book_basket
     tab = 'basket'
 
-    if len(basket) == 1:
-        del basket[0]
+    book_info = execute_and_get("SELECT book_name, book_img, price, publisher, isbn FROM book WHERE isbn = (%s)",
+                                (book_isbn,))
 
-    for i in range(len(basket)-1):
-        if basket[i]['isbn'] == book_isbn:
-            del basket[i]
+    for i in range(len(request.session['test'])):
+        if request.session['test'][i]['isbn'] == book_isbn:
+            del request.session['test'][i]
+            break
 
-    return render(request, 'mypage.html', {'tab': tab, 'basket': basket})
+    request.session.modified = True
+
+    return render(request, 'mypage.html', {'tab': tab})

@@ -1,8 +1,8 @@
 from .common import *
 
-def AjaxReviewRecentView(request, book_isbn):
-    review_data = execute_and_get('SELECT user_id, title, content, evaluate_score, id FROM review WHERE book_isbn= (%s) ORDER BY date',
-                                  (book_isbn,))
+def AjaxReviewHighScoreView(request, book_isbn):
+    review_data = execute_and_get('SELECT user_id, title, content, evaluate_score, id FROM review WHERE book_isbn= (%s) ORDER BY convert(evaluate_score, signed integer) DESC',
+                                    (book_isbn,))
 
     review = []
     for review_datas in review_data:

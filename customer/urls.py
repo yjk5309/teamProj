@@ -19,8 +19,9 @@ urlpatterns = [
     re_path(r'^unfavorite/(?P<store_id>\d+)/$', UnfavoriteView, name='unfavorite'),
     re_path(r'^review/(?P<book_isbn>\d+)/$', BookReviewView, name='book_review'),
     re_path(r'^review/(?P<review_id>\d+)/user/$', BookReviewDeleteView, name='book_review_delete'),
-    re_path(r'^review/(?P<review_id>\d+)/$', BookReviewModifyView, name='book_review_modify'),
+    re_path(r'^review/(?P<review_id>\d+)/modify/$', BookReviewModifyView, name='book_review_modify'),
     re_path(r'^review-ajax-recent/(?P<book_isbn>\d+)/$', AjaxReviewRecentView, name='ajax_review_recent'),
+    re_path(r'^review-ajax-highScore/(?P<book_isbn>\d+)/$', AjaxReviewHighScoreView, name='ajax_review_high_score'),
     re_path(r'^basket/(?P<book_isbn>\d+)/$', BookBasketInsertView, name='book_basket_insert'),
     re_path(r'^basket/(?P<book_isbn>\d+)/session/$', BookBasketDeleteView, name='book_basket_delete'),
 ]

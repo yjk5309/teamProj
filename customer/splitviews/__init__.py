@@ -19,3 +19,4 @@ from .BookBasketInsertView import *
 from .BookReviewModifyView import *
 from .AjaxReviewRecentView import *
 from .BookBasketDeleteView import *
+from .AjaxReviewHighScoreView import *

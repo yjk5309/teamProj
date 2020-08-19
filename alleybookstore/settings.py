@@ -118,6 +118,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+TEMPLATE_CONTEXT_PROCESSORS = ( 'django.core.context_processors.request', )
+SESSION_EXPIRE_AT_BROWSER_CLOSER = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/

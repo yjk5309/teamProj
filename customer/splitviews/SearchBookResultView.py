@@ -16,12 +16,14 @@ def SearchBookResultView(request):
 
     search_list = []
     for search_data in search_datas:
+        store_id = execute_and_get("SELECT max(store_id) FROM book_inven WHERE book_isbn = (%s)", (search_data[5],))
         row = {'book_name': search_data[0],
                'author': search_data[1],
                'publisher': search_data[2],
                'book_img': search_data[3],
                'price': search_data[4],
                'book_isbn': search_data[5],
+               'store_id': store_id[0][0],
             }
         search_list.append(row)
 
