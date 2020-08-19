@@ -15,13 +15,14 @@ def BookStoreDetailView (request, store_id):
              'store_id':data[0][5],
             }
 
-    favoriteSql = "SELECT EXISTS (SELECT * FROM favorite_bookstore WHERE bookstore_id=(%s) AND user_id=(%s))"
+    favoriteSql = "SELECT EXISTS (SELECT id FROM favorite_bookstore WHERE bookstore_id=(%s) AND user_id=(%s))"
 
     favorite_data = execute_and_get(favoriteSql, (store_id,user.username,))
 
-    favorite = favorite_data[0][0]
+    is_favorite = favorite_data[0][0]
 
-    bookSql =  "SELECT isbn, book_name, format(price, N'#,0'), book_img FROM book where store_id =(%s)"
+    bookSql =  "SELECT isbn, book_name, price, book_img FROM book " \
+               "where isbn = any(SELECT book_isbn FROM omp3.book_inven where store_id = (%s))"
 
     datas = execute_and_get(bookSql,(store_id,))
 
@@ -35,4 +36,4 @@ def BookStoreDetailView (request, store_id):
             }
         books.append(row)
 
-    return render(request, 'bookstore_detail.html',{'store':store, 'favorite':favorite, 'books':books})
+    return render(request, 'bookstore_detail.html',{'store':store, 'is_favorite':is_favorite, 'books':books})

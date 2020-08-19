@@ -2,9 +2,17 @@ from .common import *
 
 def MainView (request):
 
-    bookSql = "SELECT book_name, book_img, isbn FROM book order by inven limit 3"
+    bookSql = "SELECT book_name, book_img, isbn FROM book as a " \
+                "JOIN like_list as b " \
+                "on a.isbn = b.book_isbn " \
+                "WHERE date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND NOW() " \
+                "group by book_isbn ORDER BY count(book_isbn) desc limit 3"
 
-    storeSql = "SELECT store_name, store_msg, id FROM bookstore limit 3"
+    storeSql = "SELECT store_name, store_msg, a.id FROM bookstore as a " \
+                "JOIN favorite_bookstore as b " \
+                "on a.id = b.bookstore_id " \
+                "WHERE date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND NOW() " \
+                "group by bookstore_id ORDER BY count(bookstore_id) desc"
 
     datas = execute_and_get(bookSql)
 
@@ -14,7 +22,7 @@ def MainView (request):
     for data in datas:
         row = {'book_name':data[0],
                'book_img':data[1],
-               'book_id':data[2],
+               'isbn':data[2],
                }
         books.append(row)
 

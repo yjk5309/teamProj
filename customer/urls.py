@@ -24,4 +24,6 @@ urlpatterns = [
     re_path(r'^review-ajax-highScore/(?P<book_isbn>\d+)/$', AjaxReviewHighScoreView, name='ajax_review_high_score'),
     re_path(r'^basket/(?P<book_isbn>\d+)/$', BookBasketInsertView, name='book_basket_insert'),
     re_path(r'^basket/(?P<book_isbn>\d+)/session/$', BookBasketDeleteView, name='book_basket_delete'),
+    re_path(r'^book/category/$', CategoryView, name='category'),
+    re_path(r'^book/category/(?P<main_category_id>\d+)/$', CategoryResultView, name='category_book'),
 ]

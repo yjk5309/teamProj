@@ -98,7 +98,10 @@
 				width: 66%;
 			}
 
-
+.flex-2 {
+    display: flex;
+    justify-content:flex-start;
+}
 .container {
   overflow: hidden;
 }
