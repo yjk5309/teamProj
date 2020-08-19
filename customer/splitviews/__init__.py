@@ -13,5 +13,12 @@ from .BookLikeView import *
 from .BookStoreDetailView import *
 from .FavoriteView import *
 from .UnfavoriteView import *
+from .BookReviewView import *
+from .BookReviewDeleteView import *
+from .BookBasketInsertView import *
+from .BookReviewModifyView import *
+from .AjaxReviewRecentView import *
+from .BookBasketDeleteView import *
+from .AjaxReviewHighScoreView import *
 from .CategoryView import *
 from .CategoryResultView import *

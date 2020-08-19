@@ -1,0 +1,19 @@
+from .common import *
+
+@login_required
+def BookReviewView(request, book_isbn):
+    user = request.user
+
+    title = request.POST.get('title')
+    evaluate_score = request.POST.get('evaluate_score')
+    content = request.POST.get('content')
+
+    book_name = execute_and_get('SELECT book_name FROM book WHERE isbn = (%s)',
+                                (book_isbn,))
+
+    store_id = execute_and_get("SELECT max(store_id) FROM book_inven WHERE book_isbn = (%s)", (book_isbn,))
+
+    review = execute("INSERT INTO review(user_id, book_isbn, book_name, title, content, evaluate_score) VALUES ((%s), (%s), (%s), (%s), (%s), (%s))",
+                             (user.username, book_isbn, book_name[0][0], title, content, evaluate_score,))
+
+    return redirect('customer:book_detail', book_isbn, store_id[0][0])

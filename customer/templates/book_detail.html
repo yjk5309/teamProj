@@ -42,7 +42,7 @@
                     </tr>
                     <tr>
                         <td>재고</td>
-                        <td>{{ book.book_inven }} 권</td>
+                        <td>총 {{ book.book_inven }}권</td>
                     </tr>
                     <tr>
                         <td>판매상태</td>
@@ -65,14 +65,21 @@
                     </tr>
                     <tr>
                         <td>평점</td>
-                        <td><b style="color:gold">★★★</b> <a href="#review_list"> 리뷰(31) </a> </td>
+
+                        <td>
+                            {% if book.review_score != None %}
+                            <b style="color:gold">{{ book.review_score }}</b> <a href="#review_list"> ({{book.review_count}}) </a>
+                            {% else %}
+                            <b style="color:gold">0</b> <a href="#review_list"> ({{book.review_count}}) </a>
+                            {% endif %}
+                        </td>
                         <td>
                             <button class="button">구매하기</button>&nbsp;
-                            <button class="button">장바구니</button>&nbsp;
-                            {% if like == 1 %}
+                            <button class="button" onclick="location.href ='{% url 'customer:book_basket_insert' book.isbn %}'">장바구니</button>&nbsp;
+                            {% if is_like == True %}
                             <button class="like_button" onclick="like(this, '{{ book.isbn }}')">찜</button>
                             {% endif %}
-                            {% if like == 0 %}
+                            {% if is_like == False %}
                             <button class="button" onclick="like(this, '{{ book.isbn }}')">찜</button>
                             {% endif %}
                         </td>
@@ -86,7 +93,31 @@
 
         <div class="book_msg">
             <p> {{ book.book_msg }}  </p>
-        </div>
+        </div><hr><br>
+
+    <div class="store_list">
+            <h3 align="left">가격 비교</h3><br>
+            <table height="100">
+                <tr>
+                    <td><b>판매서점</b></td>
+                    <td><b>재고</b></td>
+                    <td><b>가격</b></td>
+                    <td><b></b></td>
+                    <td><b></b></td>
+
+                </tr>
+                {% for sale_stores_list in sale_stores_list %}
+                <tr>
+                    <td><a onclick="location.href= '{% url 'customer:book_detail' sale_stores_list.isbn sale_stores_list.store_id %}'">&nbsp;&nbsp;{{ sale_stores_list.store_name }}&nbsp;&nbsp;
+                    </a></td>
+                    <td> &nbsp;{{ sale_stores_list.inven }}권&nbsp; </td>
+                    <td> &nbsp;{{ sale_stores_list.price }}원&nbsp; </td>
+                    <td><button>구매하기</button></td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div><br><hr><br>
 
         <div class="store_list">
             <h3 align="left">가격 비교</h3><br>
@@ -115,10 +146,52 @@
 
         <h3 align="left" id="review_list">리뷰</h3>
         <div class="review">
-            <p> ??? <br>
-                이 책 겁나 재밌습니다. 꼭 보세요.  </p>
+            <h3 align="left" id="review_list">리뷰</h3><br>
+            <form class="mt-3" method="POST" enctype="multipart/form-data" action='{% url "customer:book_review" book.isbn %}'>
+                {% csrf_token %}
+                <div><input type="text" id="title" name="title" placeholder="제목" required></div>
+                <select class="star" name="evaluate_score" id="evaluate_score">
+                    <option value=2>★</option>
+                    <option value=4>★★</option>
+                    <option value=6>★★★</option>
+                    <option value=8>★★★★</option>
+                    <option value=10>★★★★★</option>
+                </select>
+                <div><input id="content" name="content" placeholder="리뷰 내용" style="width:500px; height:100px; letter-spacing: -5px" required>
+                    <button type="submit" class="review_button" onclick="">리뷰 쓰기</button></div>
+            </form><br><hr>
+
+            <div align="right">
+                <button style="font-size: 15px;" onclick="review_recent(this, '{{ book.isbn }}')">최신순</button>
+                <button style="font-size: 15px;" onclick="review_highScore(this, '{{ book.isbn }}')">평점순</button>
+            </div>
+            <div id="review_order" name="review_order">
+            {% for review in review %}
+            <div class="review_list">
+                <p id="review_title" name="review_title"> {{ review.title }} &nbsp;&nbsp</p>
+                        <b style="color:gold; align:right" id="review_score" name="review_score" >
+                            {% if review.evaluate_score == '2' %}★☆☆☆☆
+                            {% elif review.evaluate_score == '4' %}★★☆☆☆
+                            {% elif review.evaluate_score == '6' %}★★★☆☆
+                            {% elif review.evaluate_score == '8' %}★★★★☆
+                            {% elif review.evaluate_score == '10' %}★★★★★
+                            {% endif %} &nbsp;&nbsp;
+                        </b><br>
+                        <p id="review_user" name="review_user">{{ review.user_id }} &nbsp;&nbsp;</p>
+                    <button style="font-size: 15px;" id="review_modify" name="review_modify" onclick="location.href='{% url 'customer:book_review_modify' review.id %}'">수정</button>
+                    <button style="font-size: 15px;" id="review_delete" name="review_delete" onclick="location.href='{% url 'customer:book_review_delete' review.id %}'">삭제</button><br>
+
+            </div>
+            <p id="review_content" name="review_content"> {{ review.content }} </p>
+            {% endfor %}
+            </div>
+
+
+
         </div>
     </div>
+
+
 
 </div>
 
@@ -136,12 +209,12 @@
             dataType: "json",
             type: "POST",
             success: function(response) {
-                if (response.like == 1) {
+                if (response.is_like == true) {
                     $(elm).attr("onclick", "like(this, '" + n + "')");
                     $(elm).attr("class", "button");
                     alert("찜 목록에 추가되었습니다.");
                 }
-                else if (response.like == 0){
+                else if (response.is_like == false){
                     $(elm).attr("onclick", "like(this, '" + n + "')");
                     $(elm).attr("class", "like_button");
                     alert("찜 목록에서 삭제되었습니다.");
@@ -154,6 +227,93 @@
         });
     }
 
+    function review_recent(elm, n) {
+        $.ajax({
+            url: "{% url 'customer:ajax_review_recent' 1  %}". replace('1',n),
+            data: {'csrfmiddlewaretoken': '{{csrf_token}}'},
+            dataType: "json",
+            type: "GET",
+            success: function(response) {
+                for(var i=0; i<response.review.length; i++){
+
+                    var div_start = "<div class='review_list'>";
+
+                    var title = "<p id='review_title' name='review_title'>" + response.review[i].title + "&nbsp;&nbsp</p>";
+                    var review_score = "<b style='color:gold; align:right' id='review_score' name='review_score' > " + response.review[i].evaluate_score + " &nbsp;&nbsp; </b><br>";
+                    var user_name = "<p id='review_user' name='review_user'>"+ response.review[i].user_id +"&nbsp;&nbsp;</p>";
+
+                    var modify_button1 = "<button style='font-size: 15px;' id='review_modify' name='review_modify' onclick=\"location.href='{% url 'customer:book_review_modify' ";
+                    var modify_button2 =  response.review[i].id;
+                    var modify_button3 = " %}'\">수정</button>";
+                    var modify_button = modify_button1 + modify_button2 + modify_button3;
+
+                    var delete_button1 = "<button style='font-size: 15px;' id='review_delete' name='review_delete' onclick=\"location.href='{% url 'customer:book_review_delete' ";
+                    var delete_button2 =  response.review[i].id;
+                    var delete_button3 = " %}'\">삭제</button>";
+                    var delete_button = delete_button1 + delete_button2 + delete_button3;
+
+                    var div_end = "</div>"
+
+                    var content = "<p id='review_content' name='review_content'>"+ response.review[i].content +"</p>";
+
+                    var review = div_start + title + review_score + user_name + modify_button + delete_button + div_end + content;
+                    var review_list = review_list + review;
+
+                }
+                console.log(review_list);
+                $("#review_order").html(review_list);
+
+
+            },
+            error: function(error) {
+                alert(error);
+            },
+        });
+    }
+
+    function review_highScore(elm, n) {
+        $.ajax({
+            url: "{% url 'customer:ajax_review_high_score' 1  %}". replace('1',n),
+            data: {'csrfmiddlewaretoken': '{{csrf_token}}'},
+            dataType: "json",
+            type: "GET",
+            success: function(response) {
+                for(var i=0; i<response.review.length; i++){
+
+                    var div_start = "<div class='review_list'>";
+
+                    var title = "<p id='review_title' name='review_title'>" + response.review[i].title + "&nbsp;&nbsp</p>";
+                    var review_score = "<b style='color:gold; align:right' id='review_score' name='review_score' > " + response.review[i].evaluate_score + " &nbsp;&nbsp; </b><br>";
+                    var user_name = "<p id='review_user' name='review_user'>"+ response.review[i].user_id +"&nbsp;&nbsp;</p>";
+
+                    var modify_button1 = "<button style='font-size: 15px;' id='review_modify' name='review_modify' onclick=\"location.href='{% url 'customer:book_review_modify' ";
+                    var modify_button2 =  response.review[i].id;
+                    var modify_button3 = " %}'\">수정</button>";
+                    var modify_button = modify_button1 + modify_button2 + modify_button3;
+
+                    var delete_button1 = "<button style='font-size: 15px;' id='review_delete' name='review_delete' onclick=\"location.href='{% url 'customer:book_review_delete' ";
+                    var delete_button2 =  response.review[i].id;
+                    var delete_button3 = " %}'\">삭제</button>";
+                    var delete_button = delete_button1 + delete_button2 + delete_button3;
+
+                    var div_end = "</div>"
+
+                    var content = "<p id='review_content' name='review_content'>"+ response.review[i].content +"</p>";
+
+                    var review = div_start + title + review_score + user_name + modify_button + delete_button + div_end + content;
+                    var review_list = review_list + review;
+
+                }
+                console.log(review_list);
+                $("#review_order").html(review_list);
+
+
+            },
+            error: function(error) {
+                alert(error);
+            },
+        });
+    }
 </script>
 
 {% endblock body %}

@@ -1,0 +1,25 @@
+
+    <div class="row justify-content-center align-items-center">
+        {% for data in request.session.test %}
+        <div style="margin-top:100px;" class="basket">
+                <img width="130" height="160" src="{{ data.book_img }}">
+                <table style="text-align:center;">
+                    <tr>
+                        <td><p class="content_title">상품명</p></td>
+                        <td><p class="content_title">가격</p></td>
+                        <td><p class="content_title">출판사</p></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><p class="content">{{ data.book_name }}</p></td>
+                        <td><p class="content">{{ data.price }}원</p></td>
+                        <td><p class="content">{{ data.publisher }}</p></td>
+                        <td><button class="button">구매하기</button></td>
+                        <td><button class="button" onclick="location.href = '{% url 'customer:book_basket_delete' data.isbn %}'">삭제</button></td>
+
+                    </tr>
+                </table>
+        </div><hr>
+        {% endfor %}
+    </div>

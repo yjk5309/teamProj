@@ -65,3 +65,4 @@ def BookDetailView(request, book_isbn, store_id):
     return render(request, "book_detail.html", {'book': book, 'is_like': is_like[0][0], 'review': review,
                                                 'sale_stores_list': sale_stores_list})
 
+
