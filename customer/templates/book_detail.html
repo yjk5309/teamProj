@@ -75,7 +75,7 @@
                         </td>
                         <td>
                             <button class="button" onclick="payment()">구매하기</button>&nbsp;
-                            <button class="button" onclick="location.href ='{% url 'customer:book_basket_insert' book.isbn %}'">장바구니</button>&nbsp;
+                            <button class="button" onclick="location.href ='{% url 'customer:book_basket_insert' book.isbn book.store_id %}'">장바구니</button>&nbsp;
                             {% if is_like == True %}
                             <button class="like_button" onclick="like(this, '{{ book.isbn }}')">찜</button>
                             {% endif %}
@@ -95,34 +95,10 @@
             <p> {{ book.book_msg }}  </p>
         </div><hr><br>
 
-    <div class="store_list">
-            <h3 align="left">가격 비교</h3><br>
-            <table height="100">
-                <tr>
-                    <td><b>판매서점</b></td>
-                    <td><b>재고</b></td>
-                    <td><b>가격</b></td>
-                    <td><b></b></td>
-                    <td><b></b></td>
-
-                </tr>
-                {% for sale_stores_list in sale_stores_list %}
-                <tr>
-                    <td><a onclick="location.href= '{% url 'customer:book_detail' sale_stores_list.isbn sale_stores_list.store_id %}'">&nbsp;&nbsp;{{ sale_stores_list.store_name }}&nbsp;&nbsp;
-                    </a></td>
-                    <td> &nbsp;{{ sale_stores_list.inven }}권&nbsp; </td>
-                    <td> &nbsp;{{ sale_stores_list.price }}원&nbsp; </td>
-                    <td><button>구매하기</button></td>
-                    <td></td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div><br><hr><br>
-
 
         <div class="review">
             <h3 align="left" id="review_list">리뷰</h3><br>
-            <form class="mt-3" method="POST" enctype="multipart/form-data" action='{% url "customer:book_review" book.isbn %}'>
+            <form class="mt-3" method="POST" enctype="multipart/form-data" action='{% url "customer:book_review" book.isbn book.store_id %}'>
                 {% csrf_token %}
                 <div><input type="text" id="title" name="title" placeholder="제목" required></div>
                 <select class="star" name="evaluate_score" id="evaluate_score">
@@ -145,17 +121,18 @@
             <div class="review_list">
                 <p id="review_title" name="review_title"> {{ review.title }} &nbsp;&nbsp</p>
                         <b style="color:gold; align:right" id="review_score" name="review_score" >
-                            {% if review.evaluate_score == '2' %}★☆☆☆☆
-                            {% elif review.evaluate_score == '4' %}★★☆☆☆
-                            {% elif review.evaluate_score == '6' %}★★★☆☆
-                            {% elif review.evaluate_score == '8' %}★★★★☆
-                            {% elif review.evaluate_score == '10' %}★★★★★
+                            {% if review.evaluate_score == 2 %}★☆☆☆☆
+                            {% elif review.evaluate_score == 4 %}★★☆☆☆
+                            {% elif review.evaluate_score == 6 %}★★★☆☆
+                            {% elif review.evaluate_score == 8 %}★★★★☆
+                            {% elif review.evaluate_score == 10 %}★★★★★
                             {% endif %} &nbsp;&nbsp;
                         </b><br>
                         <p id="review_user" name="review_user">{{ review.user_id }} &nbsp;&nbsp;</p>
+                {% if review.user_id == user.username %}
                     <button style="font-size: 15px;" id="review_modify" name="review_modify" onclick="location.href='{% url 'customer:book_review_modify' review.id %}'">수정</button>
                     <button style="font-size: 15px;" id="review_delete" name="review_delete" onclick="location.href='{% url 'customer:book_review_delete' review.id %}'">삭제</button><br>
-
+                {% endif %}
             </div>
             <p id="review_content" name="review_content"> {{ review.content }} </p>
             {% endfor %}
