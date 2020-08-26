@@ -67,11 +67,7 @@
                         <td>평점</td>
                         <td><b style="color:gold">★★★</b> <a href="#review_list"> 리뷰(31) </a> </td>
                         <td>
-                            <form action="{% url 'customer:order_create' %}">
-                                <input type="hidden" name="isbn" value="{{ book.isbn }}">
-                                <input type="hidden" name="store_name" value="{{book.store_name}}">
-                                <input type="submit" class="button" value="구매하기">
-                            </form>
+                            <button class="button" onclick="location.href='{% url 'customer:order_create' book_isbn store_id %}'">구매하기</button>
                             <button class="button">장바구니</button>
                             {% if like == 1 %}
                             <button class="like_button" onclick="like(this, '{{ book.isbn }}')">찜</button>

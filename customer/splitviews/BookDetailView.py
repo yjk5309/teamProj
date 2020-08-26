@@ -63,5 +63,5 @@ def BookDetailView(request, book_isbn, store_id):
         sale_stores_list.append(row)
 
     return render(request, "book_detail.html", {'book': book, 'is_like': is_like[0][0], 'review': review,
-                                                'sale_stores_list': sale_stores_list})
+                                                'sale_stores_list': sale_stores_list, 'book_isbn':book_isbn, 'store_id':store_id,})
 

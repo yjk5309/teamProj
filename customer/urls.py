@@ -19,5 +19,7 @@ urlpatterns = [
     re_path(r'^unfavorite/(?P<store_id>\d+)/$', UnfavoriteView, name='unfavorite'),
     re_path(r'^book/category/$', CategoryView, name='category'),
     re_path(r'^book/category/(?P<main_category_id>\d+)/$', CategoryResultView, name='category_book'),
-    re_path(r'^order-sheet/$', OrderCreateView, name='order_create'),
+    re_path(r'^order-sheet/(?P<book_isbn>\d+)/(?P<store_id>\d+)/$', OrderCreateView, name='order_create'),
+    re_path(r'^order-sheet/default/$', OrderDefaultView, name='order_default'),
+    re_path(r'^order-sheet/new/$', OrderNewView, name='order_new'),
 ]
