@@ -15,6 +15,5 @@ from .FavoriteView import *
 from .UnfavoriteView import *
 from .CategoryView import *
 from .CategoryResultView import *
+from .OrderSheetView import *
 from .OrderCreateView import *
-from .OrderDefaultView import *
-from .OrderNewView import *

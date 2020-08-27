@@ -1,23 +1,33 @@
 from .common import *
 
-def OrderCreateView (request, book_isbn, store_id):
+@login_required
 
-    if request.method == 'GET':
+def OrderCreateView (request):
 
-        bookSql = "SELECT a.book_name, a.price, a.book_img, c.store_name " \
-                  "FROM book AS a " \
-                  "JOIN book_inven AS b " \
-                  "ON a.isbn = b.book_isbn " \
-                  "JOIN bookstore AS c " \
-                  "ON b.store_id = c.id " \
-                  "where a.isbn = (%s) and b.store_id = (%s)"
+    if request.method == 'POST':
+        store = request.POST.get("store")
+        book = request.POST.get("book")
 
-        data = execute_and_get(bookSql, (book_isbn, store_id,))
+        storeIdSql = "SELECT id FROM bookstore where store_name=(%s)"
+        store_id = execute_and_get(storeIdSql, (store,))
 
-        goods = {'book_name': data[0][0],
-                 'price': data[0][1],
-                 'book_img': data[0][2],
-                 'store_name':data[0][3],
-                 }
+        isbnSql = "SELECT book_isbn FROM book_inven " \
+                  "where book_name = (%s) and store_id = (%s)"
+        isbn = execute_and_get(isbnSql, (book, store_id,))
 
-        return render(request, 'order_sheet.html',{'goods':goods})
+        price = request.POST.get("price")
+        name = request.POST.get("name")
+        address = request.POST.get("address")
+        p_num = request.POST.get("p_number")
+        e_mail = request.POST.get("e_mail")
+        memo = request.POST.get("memo")
+
+        user_id = request.user
+
+        orderSql = "INSERT INTO order_info(user_id, store_id, isbn, " \
+                   "order_name, order_address, order_p_num, order_email, order_memo, total_price) " \
+                   "VALUES ((%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s))"
+
+        execute(orderSql, (user_id, store_id, isbn, name, address, p_num, e_mail, memo, price))
+
+        return redirect('customer:main')
