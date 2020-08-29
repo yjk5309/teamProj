@@ -12,8 +12,9 @@ def BookBasketInsertView(request, book_isbn, store_id):
     store_name = execute_and_get("SELECT store_name FROM bookstore WHERE id = (%s)", (store_id,))
 
     for i in range(len(request.session['user_basket'])):
-        if request.session['user_basket'][i]['isbn'] == book_isbn and request.session['user_basket'][i]['store_name'] == store_id:
-            del request.session['user_basket'][i]
+        if request.session['user_basket'][i]['isbn'] == book_isbn and request.session['user_basket'][i]['store_id'] == store_id:
+            messages.error(request ,'이미 해당 서점의 도서가 장바구니에 존재합니다.')
+            return redirect('customer:book_detail', book_isbn, store_id)
 
     book = {'book_name': book_info[0][0],
           'book_img': book_info[0][1],
