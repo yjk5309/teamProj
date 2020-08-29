@@ -74,8 +74,8 @@
                             {% endif %}
                         </td>
                         <td>
-                            <button class="button">구매하기</button>&nbsp;
-                            <button class="button" onclick="location.href ='{% url 'customer:book_basket_insert' book.isbn %}'">장바구니</button>&nbsp;
+                            <button class="button" onclick="payment()">구매하기</button>&nbsp;
+                            <button class="button" onclick="location.href ='{% url 'customer:book_basket_insert' book.isbn book.store_id %}'">장바구니</button>&nbsp;
                             {% if is_like == True %}
                             <button class="like_button" onclick="like(this, '{{ book.isbn }}')">찜</button>
                             {% endif %}
@@ -85,6 +85,11 @@
                         </td>
                     </tr>
                 </table>
+            {% if messages %}
+                {% for message in messages %}
+                <p style="color:red">{{ message.message }}</p>
+                {% endfor %}
+            {% endif %}
 
         </div>
     </div>
@@ -95,59 +100,10 @@
             <p> {{ book.book_msg }}  </p>
         </div><hr><br>
 
-    <div class="store_list">
-            <h3 align="left">가격 비교</h3><br>
-            <table height="100">
-                <tr>
-                    <td><b>판매서점</b></td>
-                    <td><b>재고</b></td>
-                    <td><b>가격</b></td>
-                    <td><b></b></td>
-                    <td><b></b></td>
 
-                </tr>
-                {% for sale_stores_list in sale_stores_list %}
-                <tr>
-                    <td><a onclick="location.href= '{% url 'customer:book_detail' sale_stores_list.isbn sale_stores_list.store_id %}'">&nbsp;&nbsp;{{ sale_stores_list.store_name }}&nbsp;&nbsp;
-                    </a></td>
-                    <td> &nbsp;{{ sale_stores_list.inven }}권&nbsp; </td>
-                    <td> &nbsp;{{ sale_stores_list.price }}원&nbsp; </td>
-                    <td><button>구매하기</button></td>
-                    <td></td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div><br><hr><br>
-
-        <div class="store_list">
-            <h3 align="left">가격 비교</h3><br>
-            <table height="100">
-                <tr>
-                    <td><b>판매서점</b></td>
-                    <td><b>재고</b></td>
-                    <td><b>가격</b></td>
-                    <td><b></b></td>
-                    <td><b></b></td>
-
-                </tr>
-                {% for sale_stores_list in sale_stores_list %}
-                <tr>
-                    <td><a onclick="location.href= '{% url 'customer:book_detail' sale_stores_list.isbn sale_stores_list.store_id %}'">&nbsp;&nbsp;{{ sale_stores_list.store_name }}&nbsp;&nbsp;
-                    </a></td>
-                    <td> &nbsp;{{ sale_stores_list.inven }}권&nbsp; </td>
-                    <td> &nbsp;{{ sale_stores_list.price }}원&nbsp; </td>
-                    <td><button>구매하기</button></td>
-                    <td></td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-
-
-        <h3 align="left" id="review_list">리뷰</h3>
         <div class="review">
             <h3 align="left" id="review_list">리뷰</h3><br>
-            <form class="mt-3" method="POST" enctype="multipart/form-data" action='{% url "customer:book_review" book.isbn %}'>
+            <form class="mt-3" method="POST" enctype="multipart/form-data" action="{% url 'customer:book_review' book.isbn book.store_id %}">
                 {% csrf_token %}
                 <div><input type="text" id="title" name="title" placeholder="제목" required></div>
                 <select class="star" name="evaluate_score" id="evaluate_score">
@@ -170,29 +126,59 @@
             <div class="review_list">
                 <p id="review_title" name="review_title"> {{ review.title }} &nbsp;&nbsp</p>
                         <b style="color:gold; align:right" id="review_score" name="review_score" >
-                            {% if review.evaluate_score == '2' %}★☆☆☆☆
-                            {% elif review.evaluate_score == '4' %}★★☆☆☆
-                            {% elif review.evaluate_score == '6' %}★★★☆☆
-                            {% elif review.evaluate_score == '8' %}★★★★☆
-                            {% elif review.evaluate_score == '10' %}★★★★★
+                            {% if review.evaluate_score == 2 %}★☆☆☆☆
+                            {% elif review.evaluate_score == 4 %}★★☆☆☆
+                            {% elif review.evaluate_score == 6 %}★★★☆☆
+                            {% elif review.evaluate_score == 8 %}★★★★☆
+                            {% elif review.evaluate_score == 10 %}★★★★★
                             {% endif %} &nbsp;&nbsp;
                         </b><br>
                         <p id="review_user" name="review_user">{{ review.user_id }} &nbsp;&nbsp;</p>
-                    <button style="font-size: 15px;" id="review_modify" name="review_modify" onclick="location.href='{% url 'customer:book_review_modify' review.id %}'">수정</button>
+                {% if review.user_id == user.username %}
+                    <button style="font-size: 15px;" id="review_modify" name="review_modify" onclick="review_modify(this, '{{ review.id }}')">수정</button>
                     <button style="font-size: 15px;" id="review_delete" name="review_delete" onclick="location.href='{% url 'customer:book_review_delete' review.id %}'">삭제</button><br>
-
+                {% endif %}
             </div>
             <p id="review_content" name="review_content"> {{ review.content }} </p>
             {% endfor %}
             </div>
 
-
+            <div id="modal" class="searchModal">
+                <div class="search-modal-content">
+                    <div class="page-header">
+                        <h1>리뷰 수정</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form id="review_modal_form" name="review_modal_form" class="mt-3" method="POST" enctype="multipart/form-data" action="">
+                                        {% csrf_token %}
+                                        <div><input type="text" id="modal_review_title" name="modal_review_title" value="#" required></div>
+                                        <select class="star" name="modal_review_evaluate_score" id="modal_review_evaluate_score">
+                                            <option value=2>★</option>
+                                            <option value=4>★★</option>
+                                            <option value=6>★★★</option>
+                                            <option value=8>★★★★</option>
+                                            <option value=10>★★★★★</option>
+                                        </select>
+                                        <div><input id="modal_review_content" name="modal_review_content" value="#" style="width:500px; height:100px; letter-spacing: -5px" required>
+                                            <button type="submit" class="review_button" onclick="">리뷰 수정</button></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;" onClick="closeModal();">
+                        <span class="pop_bt modalCloseBtn" style="font-size: 13pt;">닫기
+                        </span>
+                    </div>
+                    </div>
+                </div>
 
         </div>
     </div>
-
-
-
 </div>
 
 
@@ -201,6 +187,8 @@
 {% endblock footer  %}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 <script type="text/javascript">
     function like(elm, n) {
         $.ajax({
@@ -234,7 +222,19 @@
             dataType: "json",
             type: "GET",
             success: function(response) {
+            var review_list = ""
                 for(var i=0; i<response.review.length; i++){
+                    if (response.review[i].evaluate_score === 10){
+                        response.review[i].evaluate_score = "★★★★★";
+                    }else if (response.review[i].evaluate_score == 8 ){
+                        response.review[i].evaluate_score = "★★★★☆";
+                    }else if (response.review[i].evaluate_score == 6 ){
+                        response.review[i].evaluate_score = "★★★☆☆";
+                    }else if (response.review[i].evaluate_score == 4 ){
+                        response.review[i].evaluate_score = "★★☆☆☆";
+                    }else{
+                        response.review[i].evaluate_score = "★☆☆☆☆";
+                    }
 
                     var div_start = "<div class='review_list'>";
 
@@ -260,7 +260,6 @@
                     var review_list = review_list + review;
 
                 }
-                console.log(review_list);
                 $("#review_order").html(review_list);
 
 
@@ -278,7 +277,19 @@
             dataType: "json",
             type: "GET",
             success: function(response) {
+            var review_list = ""
                 for(var i=0; i<response.review.length; i++){
+                    if (response.review[i].evaluate_score === 10){
+                        response.review[i].evaluate_score = "★★★★★";
+                    }else if (response.review[i].evaluate_score == 8 ){
+                        response.review[i].evaluate_score = "★★★★☆";
+                    }else if (response.review[i].evaluate_score == 6 ){
+                        response.review[i].evaluate_score = "★★★☆☆";
+                    }else if (response.review[i].evaluate_score == 4 ){
+                        response.review[i].evaluate_score = "★★☆☆☆";
+                    }else{
+                        response.review[i].evaluate_score = "★☆☆☆☆";
+                    }
 
                     var div_start = "<div class='review_list'>";
 
@@ -304,7 +315,6 @@
                     var review_list = review_list + review;
 
                 }
-                console.log(review_list);
                 $("#review_order").html(review_list);
 
 
@@ -314,6 +324,71 @@
             },
         });
     }
+
+    function payment() {
+        $(function(){
+            var IMP = window.IMP;
+            IMP.init('imp96816484');
+
+           IMP.request_pay({
+               pg : 'kakao',
+               pay_method : 'card',
+               merchant_uid : 'merchant_' + new Date().getTime(),
+               name : '주문명: 결제 테스트',
+               amount : '100,000',
+               buyer_email : '',
+               buyer_name :  '',
+               buyer_tel :  '',
+               buyer_addr :  '',
+               buyer_postcode :  '',
+               m_redirect_url : '/khx/payEnd.action'	// 결제 완료 후 보낼 컨트롤러의 메소드명
+           }, function(rsp) {
+            if ( rsp.success ) { // 성공시
+                var msg = '결제가 완료되었습니다.';
+                msg += '고유ID : ' + rsp.imp_uid;
+                msg += '상점 거래ID : ' + rsp.merchant_uid;
+                msg += '결제 금액 : ' + rsp.paid_amount;
+                msg += '카드 승인번호 : ' + rsp.apply_num;
+            } else { // 실패시
+                var msg = '결제에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+            }
+            });
+
+        });
+    }
+
+    function review_modify(elm, n) {
+        jQuery(document).ready(function () {
+            $.ajax({
+                url: "{% url 'customer:book_review_modify' 1 %}".replace('1',n),
+                data: {'csrfmiddlewaretoken': '{{csrf_token}}'},
+                dataType: "json",
+                type: "GET",
+                success: function(response) {
+                    var action1 = "/review/";
+                    var action2 = response.current_review_data.review_id;
+                    var action3 = "/modify/";
+                    var action = action1 + action2 + action3;
+
+                    $("#review_modal_form").attr("action",action);
+                    $("#modal_review_title").attr("value",response.current_review_data.title);
+                    $("#modal_review_content").attr("value",response.current_review_data.content);
+                },
+                error: function(error) {
+                    alert("데이터 로딩 중 에러가 발생하였습니다.");
+                },
+            });
+
+            $("#modal").show();
+        });
+    }
+
+    function closeModal() {
+        $('.searchModal').hide();
+    };
+
+
 </script>
 
 {% endblock body %}
