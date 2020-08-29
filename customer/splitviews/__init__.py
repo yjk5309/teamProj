@@ -22,3 +22,5 @@ from .BookBasketDeleteView import *
 from .AjaxReviewHighScoreView import *
 from .CategoryView import *
 from .CategoryResultView import *
+from .OrderSheetView import *
+from .OrderCreateView import *

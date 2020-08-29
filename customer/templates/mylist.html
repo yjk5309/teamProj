@@ -26,7 +26,7 @@
           <div class="tabCon" >
               <div class="flex">
               {% for book in like_books %}
-                        <a href="{% url 'customer:book_detail' book.isbn %}" >
+                        <a href="{% url 'customer:book_detail' book.isbn book.store_id %}" >
                         <div class="image book">
                             <img align="center" src="{{ book.book_img }}" alt="" />
                         </div>

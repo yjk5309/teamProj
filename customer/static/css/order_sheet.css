@@ -1,0 +1,21 @@
+tr{
+    align:center;
+}
+td{
+    padding:15px;
+}
+.flex-order{
+    display:flex;
+    flex-direction:column;
+}
+section{
+    display:none;
+}
+
+label{
+    display:inline-block;
+}
+#default:checked ~ #content1,
+#new:checked ~ #content2 {
+    display:block;
+}

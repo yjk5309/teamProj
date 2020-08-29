@@ -21,8 +21,11 @@ def BookStoreDetailView (request, store_id):
 
     is_favorite = favorite_data[0][0]
 
-    bookSql =  "SELECT isbn, book_name, price, book_img FROM book " \
-               "where isbn = any(SELECT book_isbn FROM omp3.book_inven where store_id = (%s))"
+    bookSql =  "SELECT a.isbn, a.book_name, a.price, a.book_img, b.store_id " \
+               "FROM book AS a " \
+               "JOIN book_inven AS b " \
+               "ON a.isbn = b.book_isbn " \
+               "where store_id = (%s)"
 
     datas = execute_and_get(bookSql,(store_id,))
 
@@ -33,6 +36,7 @@ def BookStoreDetailView (request, store_id):
             'book_name':data[1],
             'price':data[2],
             'book_img':data[3],
+            'store_id':data[4],
             }
         books.append(row)
 

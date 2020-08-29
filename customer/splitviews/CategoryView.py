@@ -25,10 +25,12 @@ def CategoryView (request):
         }
         foreign.append(row)
 
-    domestic_bookSql = "SELECT distinct a.isbn, a.book_name, a.book_img, a.price "\
+    domestic_bookSql = "SELECT distinct a.isbn, a.book_name, a.book_img, a.price, c.store_id "\
                        "FROM book AS a "\
                        "JOIN main_category AS b "\
-                       "ON a.category_id = b.id "\
+                       "ON a.category_id = b.id " \
+                       "JOIN book_inven AS c " \
+                       "ON a.isbn = c.book_isbn "\
                        "WHERE b.origin = '국내도서'"
 
     datas = execute_and_get(domestic_bookSql)
@@ -40,13 +42,16 @@ def CategoryView (request):
             'book_name':data[1],
             'book_img':data[2],
             'price':data[3],
+            'store_id':data[4],
             }
         domestic_books.append(row)
 
-    foreign_bookSql = "SELECT distinct a.isbn, a.book_name, a.book_img, a.price "\
+    foreign_bookSql = "SELECT distinct a.isbn, a.book_name, a.book_img, a.price, c.store_id "\
                       "FROM book AS a "\
                       "JOIN main_category AS b " \
-                      "ON a.category_id = b.id "\
+                      "ON a.category_id = b.id " \
+                      "JOIN book_inven AS c " \
+                      "ON a.isbn = c.book_isbn " \
                       "WHERE b.origin = '외국도서'"
 
     datas = execute_and_get(foreign_bookSql)
@@ -58,6 +63,7 @@ def CategoryView (request):
             'book_name':data[1],
             'book_img':data[2],
             'price':data[3],
+            'store_id':data[4],
             }
         foreign_books.append(row)
 
