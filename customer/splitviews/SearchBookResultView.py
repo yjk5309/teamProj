@@ -16,16 +16,25 @@ def SearchBookResultView(request):
 
     search_list = []
     for search_data in search_datas:
-        store_id = execute_and_get("SELECT max(store_id) FROM book_inven WHERE book_isbn = (%s)", (search_data[5],))
-        row = {'book_name': search_data[0],
-               'author': search_data[1],
-               'publisher': search_data[2],
-               'book_img': search_data[3],
-               'price': search_data[4],
-               'book_isbn': search_data[5],
-               'store_id': store_id[0][0],
-            }
-        search_list.append(row)
+        store_data = execute_and_get("SELECT store_id, inven, store_name FROM book_inven "+
+                                     "LEFT OUTER JOIN bookstore on bookstore.id = book_inven.store_id WHERE book_isbn = (%s)", (search_data[5],))
+
+        for i in range(len(store_data)):
+            review_score = execute_and_get("SELECT ROUND(AVG(evaluate_score),1), COUNT(*) FROM review WHERE book_isbn = (%s) AND store_id = (%s)", (search_data[5], store_data[i][0],))
+
+            row = {'book_name': search_data[0],
+                   'author': search_data[1],
+                   'publisher': search_data[2],
+                   'book_img': search_data[3],
+                   'price': search_data[4],
+                   'book_isbn': search_data[5],
+                   'store_id': store_data[i][0],
+                   'inven': store_data[i][1],
+                   'store_name': store_data[i][2],
+                   'review_score': review_score[0][0],
+                   'review_count': review_score[0][1],
+                }
+            search_list.append(row)
 
     connection.commit()
     connection.close()

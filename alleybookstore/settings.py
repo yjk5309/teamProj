@@ -118,6 +118,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+TEMPLATE_CONTEXT_PROCESSORS = ( 'django.core.context_processors.request', )
+SESSION_EXPIRE_AT_BROWSER_CLOSER = True
+
+IAMPORT_KEY = '8851128907681685'
+IAMPORT_SECRET = 'hJb3wljldTvp9lif6W8dzYOvFHGg7uHoeSrKeL6sEBROXa346biGa6cPNS6UnNiBGKlUvsma4eY2o26v'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
