@@ -30,11 +30,4 @@ def OrderCreateView (request):
 
         execute(orderSql, (user_id, store_id, isbn, name, address, p_num, e_mail, memo, price))
 
-        order_data = {'price': price,
-                      'book': book,
-                      'name': name,
-                      'address': address,
-                      'p_num': p_num,
-                      'e_mail': e_mail,}
-
-        return HttpResponse(json.dumps({'order_data': order_data}), content_type='application/json')
+        return redirect('customer:main')
