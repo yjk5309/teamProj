@@ -1,5 +1,4 @@
 from .common import *
-import pyautogui
 
 @login_required
 def BookBasketInsertView(request, book_isbn, store_id):

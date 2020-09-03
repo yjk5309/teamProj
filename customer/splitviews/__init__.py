@@ -24,3 +24,5 @@ from .CategoryView import *
 from .CategoryResultView import *
 from .OrderSheetView import *
 from .OrderCreateView import *
+from .OrderConfirmView import *
+from .OrderSheetCartView import *
