@@ -25,7 +25,7 @@ def CategoryView (request):
         }
         foreign.append(row)
 
-    domestic_bookSql = "SELECT distinct a.isbn, a.book_name, a.book_img, a.price, c.store_id "\
+    domestic_bookSql = "SELECT distinct a.isbn, a.book_name, a.book_img, a.price, c.store_id, a.publisher, a.author "\
                        "FROM book AS a "\
                        "JOIN main_category AS b "\
                        "ON a.category_id = b.id " \
@@ -43,10 +43,12 @@ def CategoryView (request):
             'book_img':data[2],
             'price':data[3],
             'store_id':data[4],
+            'publisher':data[5],
+            'author':data[6],
             }
         domestic_books.append(row)
 
-    foreign_bookSql = "SELECT distinct a.isbn, a.book_name, a.book_img, a.price, c.store_id "\
+    foreign_bookSql = "SELECT distinct a.isbn, a.book_name, a.book_img, a.price, c.store_id, a.publisher, a.author "\
                       "FROM book AS a "\
                       "JOIN main_category AS b " \
                       "ON a.category_id = b.id " \
@@ -64,6 +66,8 @@ def CategoryView (request):
             'book_img':data[2],
             'price':data[3],
             'store_id':data[4],
+            'publisher':data[5],
+            'author':data[6],
             }
         foreign_books.append(row)
 
