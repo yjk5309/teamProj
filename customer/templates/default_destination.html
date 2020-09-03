@@ -15,8 +15,41 @@
                 <p><input type="radio" name="chk_info" value="card" checked>카드결제</p>
                 <p><input type="radio" name="chk_info" value="bank">무통장입금</p>
             </div>
+    {% if tab == 'basket' %}
+        {% for goods in carts %}
+            <input type="hidden" name="price" value="{{goods.price}}">
+            <input type="hidden" name="store" value="{{goods.store_name}}">
+            <input type="hidden" name="book" value="{{goods.book_name}}">
+        {% endfor %}
+    {% else %}
     <input type="hidden" name="price" value="{{goods.price}}">
     <input type="hidden" name="store" value="{{goods.store_name}}">
     <input type="hidden" name="book" value="{{goods.book_name}}">
-            <button type="submit" class="btn btn-primary">결제하기</button>
+    {% endif %}
+    <input type="hidden" name="store[]" id="store_list" value="">
+            <button type="submit" id="BtnFor" onclick="getlist()" class="btn btn-primary">결제하기</button>
 </form>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.js"></script>
+<script type="text/javascript">
+
+    function getlist(){
+       var list = new Array();
+       $("input[name=store]").each(function(index, item){
+           list.push($(item).val());
+       });
+       url = "{% url 'customer:order' %}";
+       alert(list);
+       alert(url);
+       jQuery.ajaxSettings.traditional = true;
+       $.ajax({
+            url: url,
+            method: 'POST',
+            data: {
+                'list[]' : list,
+                'csrfmiddlewaretoken':'{{csrf_token}}',
+                'is_ajax':true,
+            },
+        });
+    }
+</script>
