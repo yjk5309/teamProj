@@ -15,48 +15,16 @@
                 <p><input type="radio" name="chk_info" value="card" checked>카드결제</p>
                 <p><input type="radio" name="chk_info" value="bank">무통장입금</p>
             </div>
+    {% if tab == 'basket' %}
+        {% for goods in carts %}
+            <input type="hidden" name="price" value="{{goods.price}}">
+            <input type="hidden" name="store" value="{{goods.store_name}}">
+            <input type="hidden" name="book" value="{{goods.book_name}}">
+        {% endfor %}
+    {% else %}
     <input type="hidden" name="price" value="{{goods.price}}">
     <input type="hidden" name="store" value="{{goods.store_name}}">
-    <input type="hidden" name="book" id="book" value="{{goods.book_name}}">
-            <button onclick="submit" class="btn btn-primary">결제하기</button>
+    <input type="hidden" name="book" value="{{goods.book_name}}">
+    {% endif %}
+            <button type="submit" class="btn btn-primary">결제하기</button>
 </form>
-<button onclick="payment()" class="btn btn-primary">결제하기</button>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
-<script type="text/javascript">
-    function payment() {
-        $(function(){
-            var IMP = window.IMP;
-            IMP.init('imp96816484');
-
-           IMP.request_pay({
-               pg : 'kakao',
-               pay_method : 'card',
-               merchant_uid : 'merchant_' + new Date().getTime(),
-               name : $("#book").attr("value"),
-               amount : '100,000',
-               buyer_email : '',
-               buyer_name :  '',
-               buyer_tel :  '',
-               buyer_addr :  '',
-               buyer_postcode :  '',
-               m_redirect_url : '/khx/payEnd.action'	// 결제 완료 후 보낼 컨트롤러의 메소드명
-           }, function(rsp) {
-            if ( rsp.success ) { // 성공시
-                var msg = '결제가 완료되었습니다.';
-                msg += '고유ID : ' + rsp.imp_uid;
-                msg += '상점 거래ID : ' + rsp.merchant_uid;
-                msg += '결제 금액 : ' + rsp.paid_amount;
-                msg += '카드 승인번호 : ' + rsp.apply_num;
-            } else { // 실패시
-                var msg = '결제에 실패하였습니다.';
-                msg += '에러내용 : ' + rsp.error_msg;
-            }
-            });
-
-        });
-    }
-
-</script>

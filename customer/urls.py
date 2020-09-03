@@ -27,5 +27,7 @@ urlpatterns = [
     re_path(r'^book/category/$', CategoryView, name='category'),
     re_path(r'^book/category/(?P<main_category_id>\d+)/$', CategoryResultView, name='category_book'),
     re_path(r'^order-sheet/(?P<book_isbn>\d+)/(?P<store_id>\d+)/$', OrderSheetView, name='order_sheet'),
+    re_path(r'^order-sheet/cart/$', OrderSheetCartView, name='order_sheet_cart'),
     re_path(r'^order-sheet/create/$', OrderCreateView, name='order'),
+    re_path(r'^order-sheet/confirm/$', OrderConfirmView, name='order_confirm'),
 ]
