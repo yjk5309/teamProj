@@ -214,6 +214,7 @@
         });
     }
 
+    //리뷰의 수정, 삭제버튼에 대한 경로를 하드코딩으로 지정한 상태.
     function review_recent(elm, n) {
         $.ajax({
             url: "{% url 'customer:ajax_review_recent' 1  %}". replace('1',n),
@@ -241,21 +242,26 @@
                     var review_score = "<b style='color:gold; align:right' id='review_score' name='review_score' > " + response.review[i].evaluate_score + " &nbsp;&nbsp; </b><br>";
                     var user_name = "<p id='review_user' name='review_user'>"+ response.review[i].user_id +"&nbsp;&nbsp;</p>";
 
-                    var modify_button1 = "<button style='font-size: 15px;' id='review_modify' name='review_modify' onclick=\"location.href='{% url 'customer:book_review_modify' ";
+                    var modify_button1 = "<button style='font-size: 15px;' id='review_modify' name='review_modify' onclick=\"review_modify(this,'";
                     var modify_button2 =  response.review[i].id;
-                    var modify_button3 = " %}'\">수정</button>";
+                    var modify_button3 = "')\">수정</button>";
                     var modify_button = modify_button1 + modify_button2 + modify_button3;
 
-                    var delete_button1 = "<button style='font-size: 15px;' id='review_delete' name='review_delete' onclick=\"location.href='{% url 'customer:book_review_delete' ";
+                    var delete_button1 = "<button style='font-size: 15px;' id='review_delete' name='review_delete' onclick=\"location.href='/review/";
                     var delete_button2 =  response.review[i].id;
-                    var delete_button3 = " %}'\">삭제</button>";
+                    var delete_button3 = "/user/'\">삭제</button>";
                     var delete_button = delete_button1 + delete_button2 + delete_button3;
 
                     var div_end = "</div>"
 
                     var content = "<p id='review_content' name='review_content'>"+ response.review[i].content +"</p>";
 
-                    var review = div_start + title + review_score + user_name + modify_button + delete_button + div_end + content;
+                    if (response.review[i].user_id===response.review[i].login_user){
+                        var review = div_start + title + review_score + user_name + modify_button + delete_button + div_end + content;
+                    }else{
+                        var review = div_start + title + review_score + user_name + div_end + content;
+                    }
+
                     var review_list = review_list + review;
 
                 }
@@ -269,6 +275,7 @@
         });
     }
 
+    //리뷰의 수정, 삭제버튼에 대한 경로를 하드코딩으로 지정한 상태.
     function review_highScore(elm, n) {
         $.ajax({
             url: "{% url 'customer:ajax_review_high_score' 1  %}". replace('1',n),
@@ -296,14 +303,14 @@
                     var review_score = "<b style='color:gold; align:right' id='review_score' name='review_score' > " + response.review[i].evaluate_score + " &nbsp;&nbsp; </b><br>";
                     var user_name = "<p id='review_user' name='review_user'>"+ response.review[i].user_id +"&nbsp;&nbsp;</p>";
 
-                    var modify_button1 = "<button style='font-size: 15px;' id='review_modify' name='review_modify' onclick=\"location.href='{% url 'customer:book_review_modify' ";
+                    var modify_button1 = "<button style='font-size: 15px;' id='review_modify' name='review_modify' onclick=\"review_modify(this, '";
                     var modify_button2 =  response.review[i].id;
-                    var modify_button3 = " %}'\">수정</button>";
+                    var modify_button3 = "')\">수정</button>";
                     var modify_button = modify_button1 + modify_button2 + modify_button3;
 
-                    var delete_button1 = "<button style='font-size: 15px;' id='review_delete' name='review_delete' onclick=\"location.href='{% url 'customer:book_review_delete' ";
+                    var delete_button1 = "<button style='font-size: 15px;' id='review_delete' name='review_delete' onclick=\"location.href='/review/";
                     var delete_button2 =  response.review[i].id;
-                    var delete_button3 = " %}'\">삭제</button>";
+                    var delete_button3 = "/user/'\">삭제</button>";
                     var delete_button = delete_button1 + delete_button2 + delete_button3;
 
                     var div_end = "</div>"
@@ -311,6 +318,13 @@
                     var content = "<p id='review_content' name='review_content'>"+ response.review[i].content +"</p>";
 
                     var review = div_start + title + review_score + user_name + modify_button + delete_button + div_end + content;
+
+                    if (response.review[i].user_id===response.review[i].login_user){
+                        var review = div_start + title + review_score + user_name + modify_button + delete_button + div_end + content;
+                    }else{
+                        var review = div_start + title + review_score + user_name + div_end + content;
+                    }
+
                     var review_list = review_list + review;
 
                 }
