@@ -11,19 +11,20 @@ def OrderCreateView (request):
         p_num = request.POST.get("p_number")
         e_mail = request.POST.get("e_mail")
         memo = request.POST.get("memo")
+        payment = request.POST.get("payment")
 
         user_id = request.user
 
         orderSql = "INSERT INTO order_info(user_id, order_name, " \
-                   "order_address, order_p_num, order_email, order_memo) " \
-                   "VALUES ((%s),(%s),(%s),(%s),(%s),(%s))"
-        execute(orderSql, (user_id, name, address, p_num, e_mail, memo,))
+                   "order_address, order_p_num, order_email, order_memo, payment) " \
+                   "VALUES ((%s),(%s),(%s),(%s),(%s),(%s),(%s))"
+        execute(orderSql, (user_id, name, address, p_num, e_mail, memo, payment,))
 
         idSql = "SELECT id FROM order_info " \
                 "where user_id = (%s) and order_name =(%s) and order_address = (%s) " \
-                "and order_p_num = (%s) and order_email = (%s) and order_memo =(%s) " \
+                "and order_p_num = (%s) and order_email = (%s) and order_memo =(%s) and payment =(%s) " \
                 "order by buy_date desc limit 1"
-        id = execute_and_get(idSql, (user_id, name, address, p_num, e_mail, memo,))
+        id = execute_and_get(idSql, (user_id, name, address, p_num, e_mail, memo, payment,))
 
         if len(id) != 0:
             store = request.POST.getlist("store")
@@ -55,4 +56,4 @@ def OrderCreateView (request):
                           "VALUES ((%s),(%s),(%s),(%s))"
                 execute(listSql, (id, store_id, isbn, price,))
 
-            return redirect('customer:main')
+            return redirect('customer:order_confirm', order_info_id=id[0][0])
