@@ -25,3 +25,4 @@ from .OrderSheetView import *
 from .OrderCreateView import *
 from .OrderConfirmView import *
 from .OrderSheetCartView import *
+from .OrderDetailView import *

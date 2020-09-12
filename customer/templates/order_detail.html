@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/mypage.css' %}">
+{% endblock head %}
+
+{% block title %}
+마이페이지 | alleybookstore
+{% endblock title %}
+
+{% block _nav %}
+  {% include '_nav.html' %}
+{% endblock _nav %}
+
+{% block body %}
+<div class="container">
+<div class="tab_wrap">
+  <div class="tab_menu_container">
+    <button class="tab_menu_btn on" type="button" onclick="location.href='{% url 'customer:mypage' %}'">주문확인/배송조회</button>
+    <button class="tab_menu_btn" type="button">장바구니</button>
+    <button class="tab_menu_btn" type="button">마이리스트</button>
+    <button class="tab_menu_btn" type="button" onclick="location.href='{% url 'customer_accounts:password_check' %}'" >회원정보</button>
+  </div> <!-- tab_menu_container e -->
+
+  <div class="tab_box_container">
+    <div class="tab_box on">
+        <table>
+          <tr>
+            <th>주문번호</th>
+            <td colspan="3">{{order_detail.order_num}}</td>
+          </tr>
+          <tr>
+            <th>주문접수일</th>
+            <td></td>
+            <th>결제일</th>
+            <td></td>
+          </tr>
+        </table>
+<br>
+        <table>
+          <tr>
+            <th>주문하신 분</th>
+            <td>{{order_detail.user_name}}</td>
+            <th>받으시는 분</th>
+            <td>{{order_detail.order_name}}</td>
+          </tr>
+          <tr>
+            <th>배송 주소</th>
+            <td colspan="3">{{order_detail.order_address}}</td>
+          </tr>
+          <tr>
+            <th>휴대번호</th>
+            <td>{{order_detail.order_p_num}}</td>
+            <th>배송메시지</th>
+            <td>{{order_detail.order_memo}}</td>
+          </tr>
+        </table>
+<br>
+
+
+        <table>
+          <tr>
+            <th>총 주문 금액</th>
+            <td>{{order_detail.price}}</td>
+          </tr>
+          <tr>
+            <th>결제 방법</th>
+            <td>{{order_detail.payment}}</td>
+          </tr>
+        </table>
+
+    </div>
+    <div class="tab_box">{% include 'book_basket.html' %}</div>
+    <div class="tab_box">{% include 'mylist.html' %}</div>
+  </div> <!-- tab_box_container e -->
+</div> <!-- tab_wrap e -->
+
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $('.tab_menu_btn').on('click',function(){
+  //버튼 색 제거,추가
+  $('.tab_menu_btn').removeClass('on');
+  $(this).addClass('on')
+
+  //컨텐츠 제거 후 인덱스에 맞는 컨텐츠 노출
+  var idx = $('.tab_menu_btn').index(this);
+
+  $('.tab_box').hide();
+  $('.tab_box').eq(idx).show();
+});
+</script>
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}
+
+{% endblock body %}
