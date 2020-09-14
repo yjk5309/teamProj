@@ -26,6 +26,7 @@ def OrderSheetCartView (request):
             datas.append(execute_and_get(bookSql, (book['isbn'], book['store_id'],)))
 
         carts = []
+        total_price = 0
         for data in datas:
             row = {'book_name': data[0][0],
                     'price': data[0][1],
@@ -33,5 +34,6 @@ def OrderSheetCartView (request):
                     'store_name': data[0][3],
                     }
             carts.append(row)
+            total_price += data[0][1]
 
-    return render(request,'order_sheet.html',{'carts':carts,'tab': tab})
+    return render(request,'order_sheet.html',{'carts':carts,'tab': tab, 'total_price': total_price})

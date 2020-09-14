@@ -32,6 +32,7 @@
             </tr>
         </table>
         {% endfor %}
+        <br><p align="right" style="font-weight:bold">총 금액 &nbsp; : &nbsp; <a>{{total_price}}</a> 원</p>
         {% else %}
         <table>
             <tr>
@@ -53,8 +54,8 @@
         <h4>배송지 정보</h4>
             <div class="tab_wrap">
                 <div class="tab_menu_container">
-                  <button class="tab_menu_btn on" type="button">기본배송지</button>
-                  <button class="tab_menu_btn" type="button">신규배송지</button>
+                  <button id="default_sheet" class="tab_menu_btn on" type="button">기본배송지</button>
+                  <button id="new_sheet" class="tab_menu_btn" type="button">신규배송지</button>
                 </div> <!-- tab_menu_container e -->
 
                 <div class="tab_box_container">
@@ -69,18 +70,87 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 <script type="text/javascript">
     $('.tab_menu_btn').on('click',function(){
-  //버튼 색 제거,추가
-  $('.tab_menu_btn').removeClass('on');
-  $(this).addClass('on')
+      //버튼 색 제거,추가
+      $('.tab_menu_btn').removeClass('on');
+      $(this).addClass('on')
 
-  //컨텐츠 제거 후 인덱스에 맞는 컨텐츠 노출
-  var idx = $('.tab_menu_btn').index(this);
+      //컨텐츠 제거 후 인덱스에 맞는 컨텐츠 노출
+      var idx = $('.tab_menu_btn').index(this);
 
-  $('.tab_box').hide();
-  $('.tab_box').eq(idx).show();
-});
+      $('.tab_box').hide();
+      $('.tab_box').eq(idx).show();
+    });
+
+
+    function payment(){
+        var thisForm = document.order_create;
+
+        if (document.getElementById('default_sheet').className === "tab_menu_btn on") {
+            var thisForm = document.order_create;
+        }else {
+            var thisForm = document.new_order_create;
+        }
+
+        //주문 정보 입력 페이지의 탭이 2개로 분류되면서 동일 책 정보가 중복되어 나누기 2를 함.
+        var count = $("input[name='book']").length/2;
+        var total_price = 0;
+        var order_name = $("input[name='book']").eq(0).attr("value");
+
+        //주문 상품의 총 가격
+        for (i=0 ; i<count; i++){
+            total_price += Number($("input[name='price']").eq(i).attr("value"));
+        }
+
+        if (count>1){
+            order_name += ' 외 ' + (count-1) + '종';
+        }
+
+        console.log(thisForm.elements["name"].value);
+        console.log(thisForm.elements["e_mail"].value);
+        console.log(thisForm.elements["p_number"].value);
+        console.log(thisForm.elements["address"].value);
+        console.log(order_name);
+        console.log($("input[name='store']").eq(0).attr("value"));
+        console.log(total_price);
+
+        $(function(){
+            var IMP = window.IMP;
+            IMP.init('imp96816484');
+
+           IMP.request_pay({
+               pg : 'kakao',
+               pay_method : 'card',
+               merchant_uid : 'merchant_' + new Date().getTime(),
+               name : order_name,
+               amount : total_price,
+               buyer_email : thisForm.elements["e_mail"].value,
+               buyer_name :  thisForm.elements["name"].value,
+               buyer_tel :  thisForm.elements["p_number"].value,
+               buyer_addr :  thisForm.elements["address"].value,
+               buyer_postcode :  '',
+               m_redirect_url : '/khx/payEnd.action'	// 결제 완료 후 보낼 컨트롤러의 메소드명
+           }, function(rsp) {
+            if ( rsp.success ) { // 성공시
+                var msg = '결제가 완료되었습니다.';
+                msg += '고유ID : ' + rsp.imp_uid;
+                msg += '상점 거래ID : ' + rsp.merchant_uid;
+                msg += '결제 금액 : ' + rsp.paid_amount;
+                msg += '카드 승인번호 : ' + rsp.apply_num;
+                thisForm.submit();
+
+            } else { // 실패시
+                var msg = '결제에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+            }
+            });
+
+        });
+
+    }
 </script>
 {% block footer %}
 {% include 'footer.html' %}
