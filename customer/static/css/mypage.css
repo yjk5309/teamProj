@@ -134,3 +134,10 @@ table {
   th {
     background-color: #E6E6FA;
   }
+
+.card{
+    border: 0px solid #c7c7c7;
+    background-color: white;
+    width:600px;
+    height: auto;
+}

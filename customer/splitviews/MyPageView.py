@@ -42,9 +42,9 @@ def MyPageView(request):
                    }
             favorite_stores.append(row)
 
-        orderHistorySql = "SELECT a.buy_date, a.order_num, a.order_name, c.book_name, count(b.isbn), sum(b.price) " \
+        orderHistorySql = "SELECT a.buy_date, a.order_num, a.order_name, c.book_name, count(b.isbn), sum(b.price), b.order_status " \
                           "FROM order_info as a " \
-                          "JOIN order_products as b ON a.id = b.order_info_id " \
+                          "JOIN order_products as b ON a.order_num = b.order_num " \
                           "JOIN book AS c ON b.isbn = c.isbn " \
                           "WHERE a.user_id = (%s) group by a.order_num order by buy_date desc"
 
@@ -58,6 +58,7 @@ def MyPageView(request):
                    'book_name': data[3],
                    'book_count': data[4],
                    'sum_price': data[5],
+                   'order_status': data[6],
                    }
             order_history.append(row)
 
@@ -66,18 +67,19 @@ def MyPageView(request):
 
     else:
         order_num = request.POST.get('order_num')
-        date1 = request.POST.get('date1')
-        date2 = request.POST.get('date2')
+        order_status = request.POST.get('order_status')
+        date = request.POST.get('date')
 
-        orderHistorySql = "SELECT a.buy_date, a.order_num, a.order_name, c.book_name, count(b.isbn), sum(b.price) " \
-                          "FROM order_info as a " \
-                          "JOIN order_products as b ON a.id = b.order_info_id " \
-                          "JOIN book AS c ON b.isbn = c.isbn " \
-                          "WHERE a.user_id = (%s) " \
-                          "and (date(a.buy_date) between (%s) and (%s) " \
-                          "or a.order_num = (%s)) " \
-                          "group by a.order_num order by buy_date desc"
-        datas = execute_and_get(orderHistorySql, (user,date1,date2,order_num,))
+        orderHistorySql ="SELECT a.buy_date, a.order_num, a.order_name, c.book_name, " \
+                         "count(b.isbn), sum(b.price), b.order_status FROM order_info as a " \
+                         "JOIN order_products as b ON a.order_num = b.order_num " \
+                         "JOIN book AS c ON b.isbn = c.isbn WHERE" \
+                         " a.order_num like '%" + order_num + "%' " \
+                         "and b.order_status like '%" + order_status + "%' " \
+                         "and date(a.buy_date) like '%" + date + "%' " \
+                         "group by a.order_num order by buy_date desc"
+
+        datas = execute_and_get(orderHistorySql)
 
         order_history = []
         for data in datas:
@@ -87,6 +89,7 @@ def MyPageView(request):
                    'book_name': data[3],
                    'book_count': data[4],
                    'sum_price': data[5],
+                   'order_status':data[6],
                    }
             order_history.append(row)
 

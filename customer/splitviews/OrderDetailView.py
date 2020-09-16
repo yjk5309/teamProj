@@ -4,9 +4,9 @@ from .common import *
 def OrderDetailView(request,order_num):
 
     orderDetailSql = "SELECT a.order_num, b.first_name, a.order_name, a.order_address, " \
-                     "a.order_p_num, a.order_memo, a.payment, sum(c.price) " \
+                     "a.order_p_num, a.order_memo, a.payment, sum(c.price), a.buy_date, date_add(a.buy_date,INTERVAL 1 DAY) " \
                      "FROM order_info as a JOIN customer_accounts_user as b ON a.user_id = b.username " \
-                     "JOIN order_products as c ON a.id = c.order_info_id where order_num = (%s)"
+                     "JOIN order_products as c ON a.order_num = c.order_num where a.order_num = (%s)"
 
     data = execute_and_get(orderDetailSql,(order_num,))
 
@@ -18,6 +18,47 @@ def OrderDetailView(request,order_num):
                     'order_memo':data[0][5],
                     'payment':data[0][6],
                     'price':data[0][7],
+                    'buy_date':data[0][8],
+                    'due_date':data[0][9],
                     }
 
-    return render(request, 'order_detail.html', {'order_detail':order_detail})
+    productSql = "SELECT a.book_name, c.store_name, a.price, a.book_img, b.order_status " \
+                 "FROM book AS a " \
+                 "JOIN order_products AS b " \
+                 "ON a.isbn = b.isbn " \
+                 "JOIN bookstore AS c " \
+                 "ON b.store_id = c.id " \
+                 "where order_num = (%s)"
+
+    datas = execute_and_get(productSql, (order_num,))
+
+    products = []
+    for data in datas:
+        row = {
+            'book_name': data[0],
+            'store_name': data[1],
+            'price': data[2],
+            'book_img': data[3],
+            'order_status':data[4],
+        }
+        products.append(row)
+
+    accountSql = "SELECT c.store_name, sum(a.price), b.account, b.bank " \
+                 "FROM order_products AS a " \
+                 "JOIN shipping_info AS b ON a.store_id = b.bookstore_id " \
+                 "JOIN bookstore AS c ON a.store_id = c.id " \
+                 "WHERE order_num = (%s) GROUP BY store_id"
+
+    account_datas = execute_and_get(accountSql, (order_num,))
+
+    account_info = []
+    for data in account_datas:
+        row = {
+            'store_name': data[0],
+            'price': data[1],
+            'account': data[2],
+            'bank': data[3],
+        }
+        account_info.append(row)
+
+    return render(request, 'order_detail.html', {'order_detail':order_detail, 'products':products, 'account_info':account_info})
