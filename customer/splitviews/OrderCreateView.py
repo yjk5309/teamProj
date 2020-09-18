@@ -1,4 +1,5 @@
 from .common import *
+from datetime import datetime
 
 @login_required
 
@@ -12,9 +13,13 @@ def OrderCreateView (request):
         e_mail = request.POST.get("e_mail")
         memo = request.POST.get("memo")
         payment = request.POST.get("payment")
-        order_num = request.POST.get("date")
 
         user_id = request.user
+
+        idIntSql = "SELECT id FROM customer_accounts_user WHERE username = (%s)"
+        id_int = execute_and_get(idIntSql,(user_id,))
+
+        order_num = str(id_int[0][0]) +str(int(datetime.today().strftime("%Y%m%d%H%M%S")) + random.randrange(10000,99999))
 
         orderSql = "INSERT INTO order_info(user_id, order_name, " \
                    "order_address, order_p_num, order_email, order_memo, payment, order_num) " \
