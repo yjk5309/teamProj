@@ -87,7 +87,6 @@
     <input type="hidden" name="store" value="{{goods.store_name}}">
     <input type="hidden" name="book" value="{{goods.book_name}}">
     {% endif %}
-            <input type="hidden" name="date" id="date" >
             <button type="submit" class="btn btn-primary">결제하기</button>
 </form></div>
                   <div class="tab_box">
@@ -118,7 +117,6 @@
     <input type="hidden" name="store" value="{{goods.store_name}}">
     <input type="hidden" name="book" value="{{goods.book_name}}">
     {% endif %}
-            <input type="hidden" name="date" id="date_new" >
             <button type="submit" class="btn btn-primary">결제하기</button>
 </form></div>
                 </div> <!-- tab_box_container e -->
@@ -143,24 +141,6 @@
   $('.tab_box').eq(idx).show();
 });
 
-var generateRandom = function (min, max) {
-  var ranNum = Math.floor(Math.random()*(max-min+1)) + min;
-  return ranNum;
-}
-window.onload = function(){
-    var td = new Date();                   //오늘 날짜
-    var yyyy = td.getFullYear();           //년도
-    var mm = "" + (td.getMonth()+1);    //월
-    var dd = "" + td.getDate();           //일
-
-    if(mm.length < 2) mm = "0" + mm;
-    if(dd.length < 2) dd = "0" + dd;
-
-    var Today = yyyy.toString() + mm + dd;
-
-    document.getElementById('date').value = Today + generateRandom(10000, 99999) ;
-    document.getElementById('date_new').value = Today + generateRandom(10000, 99999) ;
-    }
 </script>
 {% block footer %}
 {% include 'footer.html' %}
