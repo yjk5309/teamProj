@@ -4,7 +4,8 @@ from .common import *
 def OrderDetailView(request,order_num):
 
     orderDetailSql = "SELECT a.order_num, b.first_name, a.order_name, a.order_address, " \
-                     "a.order_p_num, a.order_memo, a.payment, sum(c.price), a.buy_date, date_add(a.buy_date,INTERVAL 1 DAY) " \
+                     "a.order_p_num, a.order_memo, a.payment, sum(c.price), a.buy_date, " \
+                     "CASE WHEN a.payment = 'bank' THEN date_add(a.buy_date,INTERVAL 1 DAY) ELSE null END AS due_date " \
                      "FROM order_info as a JOIN customer_accounts_user as b ON a.user_id = b.username " \
                      "JOIN order_products as c ON a.order_num = c.order_num where a.order_num = (%s)"
 
