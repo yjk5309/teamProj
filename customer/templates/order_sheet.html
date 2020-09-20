@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/order_sheet.css' %}">
+{% endblock head %}
+
+{% block title %}
+주문 페이지 | alleybookstore
+{% endblock title %}
+
+{% block _nav %}
+  {% include '_nav.html' %}
+{% endblock _nav %}
+
+{% block body %}
+<div class="container"><br>
+    <div class="card">
+        <h4>주문 상품 정보</h4>
+        {% if tab == 'basket' %}
+        {% for goods in carts %}
+        <table>
+            <tr>
+                <td rowspan="3"><img src="{{ goods.book_img }}" width="75px" height="100px"></td>
+                <td width="190">상품명</td>
+                <td width="100">가격</td>
+                <td width="100">서점</td>
+            </tr>
+            <tr>
+                <td width="190">{{goods.book_name}}</td>
+                <td width="100">{{goods.price}}원</td>
+                <td width="100">{{goods.store_name}}</td>
+            </tr>
+        </table>
+        {% endfor %}
+        {% else %}
+        <table>
+            <tr>
+                <td rowspan="3"><img src="{{ goods.book_img }}" width="75px" height="100px"></td>
+                <td width="190">상품명</td>
+                <td width="100">가격</td>
+                <td width="100">서점</td>
+            </tr>
+            <tr>
+                <td width="190">{{goods.book_name}}</td>
+                <td width="100">{{goods.price}}원</td>
+                <td width="100">{{goods.store_name}}</td>
+            </tr>
+        </table>
+        {% endif %}
+    </div>
+    <br>
+    <div class="card">
+        <h4>배송지 정보</h4>
+            <div class="tab_wrap">
+                <div class="tab_menu_container">
+                  <button class="tab_menu_btn on" type="button">기본배송지</button>
+                  <button class="tab_menu_btn" type="button">신규배송지</button>
+                </div> <!-- tab_menu_container e -->
+
+                <div class="tab_box_container">
+                  <div class="tab_box on">
+                      <form class="mt-3" method="post" enctype="multipart/form-data" action="{% url 'customer:order' %}">{% csrf_token %}
+                주문자<input type="text" class="form-control" id="name" name="name" value="{{ user.first_name }}">
+                이메일
+                  <input type="email" class="form-control" id="e_mail" name="e_mail" value="{{ user.email }}">
+                연락처
+                  <input type="tel" class="form-control" id="phone_number" name="p_number"
+                         pattern="(010)-\d{3,4}-\d{4}" value="{{ user.phone_number }}">
+                주소
+                  <input type="text" class="form-control" id="address" name="address" value="{{ user.address }}">
+                배송메모<input type="text" class="form-control" id="memo" name="memo" placeholder="ex)부재시 문 앞에 배송해주세요">
+
+                <hr>
+            <div class="flex-order">
+                <h4>결제 수단</h4>
+                <p><input type="radio" name="payment" value="card" checked>카드결제</p>
+                <p><input type="radio" name="payment" value="bank">무통장입금</p>
+            </div>
+    {% if tab == 'basket' %}
+        {% for goods in carts %}
+            <input type="hidden" name="price" value="{{goods.price}}">
+            <input type="hidden" name="store" value="{{goods.store_name}}">
+            <input type="hidden" name="book" value="{{goods.book_name}}">
+        {% endfor %}
+    {% else %}
+    <input type="hidden" name="price" value="{{goods.price}}">
+    <input type="hidden" name="store" value="{{goods.store_name}}">
+    <input type="hidden" name="book" value="{{goods.book_name}}">
+    {% endif %}
+            <button type="submit" class="btn btn-primary">결제하기</button>
+</form></div>
+                  <div class="tab_box">
+                      <form class="mt-3" method="post" enctype="multipart/form-data" action="{% url 'customer:order' %}">{% csrf_token %}
+                주문자<input type="text" class="form-control" id="new_name" name="name" required>
+                이메일
+                  <input type="email" class="form-control" id="new_e_mail" name="e_mail">
+                연락처
+                  <input type="tel" class="form-control" id="new_phone_number" name="p_number"
+                         pattern="(010)-\d{3,4}-\d{4}" required>
+                주소
+                  <input type="text" class="form-control" id="new_address" name="address" required>
+                배송메모<input type="text" class="form-control" id="new_memo" name="memo" placeholder="ex)부재시 문 앞에 배송해주세요">
+    <hr>
+            <div class="flex-order">
+                <h4>결제 수단</h4>
+                <p><input type="radio" name="payment" value="card" checked>카드결제</p>
+                <p><input type="radio" name="payment" value="bank">무통장입금</p>
+            </div>
+    {% if tab == 'basket' %}
+        {% for goods in carts %}
+            <input type="hidden" name="price" value="{{goods.price}}">
+            <input type="hidden" name="store" value="{{goods.store_name}}">
+            <input type="hidden" name="book" value="{{goods.book_name}}">
+        {% endfor %}
+    {% else %}
+    <input type="hidden" name="price" value="{{goods.price}}">
+    <input type="hidden" name="store" value="{{goods.store_name}}">
+    <input type="hidden" name="book" value="{{goods.book_name}}">
+    {% endif %}
+            <button type="submit" class="btn btn-primary">결제하기</button>
+</form></div>
+                </div> <!-- tab_box_container e -->
+
+            </div> <!-- tab_wrap e -->
+
+
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $('.tab_menu_btn').on('click',function(){
+  //버튼 색 제거,추가
+  $('.tab_menu_btn').removeClass('on');
+  $(this).addClass('on')
+
+  //컨텐츠 제거 후 인덱스에 맞는 컨텐츠 노출
+  var idx = $('.tab_menu_btn').index(this);
+
+  $('.tab_box').hide();
+  $('.tab_box').eq(idx).show();
+});
+
+</script>
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer  %}
+
+{% endblock body %}

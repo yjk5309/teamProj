@@ -17,7 +17,7 @@
     <div class="text-center mt-3">
         <h3>검색 결과</h3>
         <div align="center">
-            <table width="100">
+            <table width="200">
                 <tr>
                     <td><b>제목</b></td>
                     <td style="color:magenta">{{search_keyword.title}}</td>
@@ -41,17 +41,36 @@
     {% for search_list in search_list %}
     <div class="result_box">
 
+    {% if search_list.inven == 0 %}
     <div class="book_img" style="float:left">
-        <h3><img  src="{{ search_list.book_img }}" height="200"></h3>
+        <h3><img  src="{{ search_list.book_img }}" height="220" onclick="#"></h3>
     </div>
 
         <div class="book_content">
-            <p class="book_title"> {{ search_list.book_name }} </p>
+            <p class="book_title" onclick="#"> {{ search_list.book_name }} <b style="color:red; font-size:15px"> SOLD OUT </b> </p>
+    {% else %}
+    <div class="book_img" style="float:left">
+        <h3><img  src="{{ search_list.book_img }}" height="220" onclick="location.href='{% url 'customer:book_detail' search_list.book_isbn search_list.store_id %}'"></h3>
+    </div>
+
+        <div class="book_content">
+            <p class="book_title" onclick="location.href='{% url 'customer:book_detail' search_list.book_isbn search_list.store_id %}'"> {{ search_list.book_name }} </p>
+    {% endif %}
 
                 <p>지은이 : {{ search_list.author }}<br>
                     출판사 : {{ search_list.publisher }}<br>
+                    판매서점 : <a>{{ search_list.store_name }}</a><br>
+                    남은재고 : {{ search_list.inven }}권 <br>
                     가격 : {{ search_list.price }} 원<br>
-                    평점 : <b style="color:gold">★★★</b> (리뷰 수)
+                    평점 :  <b style="color:gold">
+                                {% if search_list.review_score == NULL %}☆☆☆☆☆
+                                {% elif search_list.review_score < 3 %} ★☆☆☆☆
+                                {% elif search_list.review_score < 5 %} ★★☆☆☆
+                                {% elif search_list.review_score < 7  %} ★★★☆☆
+                                {% elif search_list.review_score < 9  %} ★★★★☆
+                                {% elif search_list.review_score <= 10  %} ★★★★★
+                                {% endif %}
+                            </b> ({{ search_list.review_count }})
                 </p>
         </div>
     </div>

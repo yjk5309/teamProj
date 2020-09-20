@@ -20,6 +20,7 @@
       <div class="collapse navbar-collapse" id="navbar-collapse-uarr">
         <ul class="nav navbar-nav navbar-right">
           <li><a href="{% url 'customer:main' %}" title="" class="active">Home</a></li>
+          <li><a href="{% url 'customer:category' %}" title="">Category</a></li>
           <li><a href="{% url 'customer:search_book' %}" title="">책 검색</a></li>
           <li><a href="{% url 'customer:search_store' %}" title="">서점 검색</a></li>
           {% if user.is_authenticated %}
@@ -27,13 +28,13 @@
             <li><a href="#" title="">장바구니</a></li>
             <li>
               <p>
-                <a href="{% url 'accounts:customer_logout' %}" class="btn btn-primary navbar-btn" title="">로그아웃</a>
+                <a href="{% url 'customer_accounts:logout' %}" class="btn btn-primary navbar-btn" title="">로그아웃</a>
               </p>
             </li>
           {% else %}
             <li>
               <p>
-                <a href="{% url 'accounts:customer_login' %}" class="btn btn-primary navbar-btn" title="">로그인</a>
+                <a href="{% url 'customer_accounts:login' %}" class="btn btn-primary navbar-btn" title="">로그인</a>
               </p>
             </li>
           {% endif %}

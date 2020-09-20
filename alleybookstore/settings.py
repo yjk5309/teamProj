@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
+    'customer_accounts',
     'customer',
     'seller',
 ]
@@ -118,6 +118,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+TEMPLATE_CONTEXT_PROCESSORS = ( 'django.core.context_processors.request', )
+SESSION_EXPIRE_AT_BROWSER_CLOSER = True
+
+IAMPORT_KEY = '8851128907681685'
+IAMPORT_SECRET = 'hJb3wljldTvp9lif6W8dzYOvFHGg7uHoeSrKeL6sEBROXa346biGa6cPNS6UnNiBGKlUvsma4eY2o26v'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -142,4 +147,4 @@ STATICFILES_DIR = [os.path.join(BASE_DIR, 'static')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'customer_accounts.User'

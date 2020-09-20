@@ -10,14 +10,7 @@ def AjaxGetCityView(request):
     strSql += " JOIN province ON province.id = city.province_id"
     strSql += " WHERE province = (%s)"
 
-    try:
-        cursor = connection.cursor()
-        result = cursor.execute(strSql, (province_name,))
-        datas = cursor.fetchall()
-        connection.commit()
-
-    except:
-        connection.rollback()
+    datas = execute_and_get(strSql, (province_name,))
 
     cities = []
     for data in datas:
