@@ -41,12 +41,12 @@ def OrderCreateView (request):
                     isbn = execute_and_get(isbnSql, (book[i], store_id,))
 
                     if payment in "bank":
-                        listSql = "INSERT INTO order_products(order_num, store_id, isbn, price, shipping_status) " \
+                        listSql = "INSERT INTO order_products(order_num, store_id, isbn, price, order_status) " \
                                   "VALUES ((%s),(%s),(%s),(%s),(%s))"
                         execute(listSql, (order_num, store_id, isbn, price[i], '결제 대기중',))
 
                     elif payment in "card":
-                        listSql = "INSERT INTO order_products(order_num, store_id, isbn, price, shipping_status) " \
+                        listSql = "INSERT INTO order_products(order_num, store_id, isbn, price, order_status) " \
                                   "VALUES ((%s),(%s),(%s),(%s),(%s))"
                         execute(listSql, (order_num, store_id, isbn, price[i], '결제 완료',))
 
@@ -60,12 +60,12 @@ def OrderCreateView (request):
 
                 if payment in "bank":
 
-                    listSql = "INSERT INTO order_products(order_num, store_id, isbn, price, shipping_status) " \
+                    listSql = "INSERT INTO order_products(order_num, store_id, isbn, price, order_status) " \
                               "VALUES ((%s),(%s),(%s),(%s),(%s))"
                     execute(listSql, (order_num, store_id, isbn, price, '결제 대기중',))
 
                 elif payment in "card":
-                    listSql = "INSERT INTO order_products(order_num, store_id, isbn, price, shipping_status) " \
+                    listSql = "INSERT INTO order_products(order_num, store_id, isbn, price, order_status) " \
                               "VALUES ((%s),(%s),(%s),(%s),(%s))"
                     execute(listSql, (order_num, store_id, isbn, price, '결제 완료',))
 

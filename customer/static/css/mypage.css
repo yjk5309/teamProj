@@ -121,3 +121,23 @@ ul{list-style:none;}
     flex-wrap:wrap;
     justify-content:space-around;
 }
+
+/* table */
+table {
+    border: 1px solid #c5c5f1;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid #c5c5f1;
+    padding: 8px;
+  }
+  th {
+    background-color: #E6E6FA;
+  }
+
+.card{
+    border: 0px solid #c7c7c7;
+    background-color: white;
+    width:600px;
+    height: auto;
+}

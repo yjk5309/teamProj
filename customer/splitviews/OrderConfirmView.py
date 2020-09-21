@@ -42,7 +42,7 @@ def OrderConfirmView (request, order_num):
                'due_date': data[0][1],
                }
 
-    accountSql = "SELECT c.store_name, sum(a.price), b.account " \
+    accountSql = "SELECT c.store_name, sum(a.price), b.account, b.bank " \
                  "FROM order_products AS a " \
                  "JOIN shipping_info AS b ON a.store_id = b.bookstore_id " \
                  "JOIN bookstore AS c ON a.store_id = c.id " \
@@ -56,6 +56,7 @@ def OrderConfirmView (request, order_num):
             'store_name':data[0],
             'price':data[1],
             'account':data[2],
+            'bank':data[3],
             }
         account_info.append(row)
 

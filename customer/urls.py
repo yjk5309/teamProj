@@ -29,5 +29,8 @@ urlpatterns = [
     re_path(r'^order-sheet/(?P<book_isbn>\d+)/(?P<store_id>\d+)/$', OrderSheetView, name='order_sheet'),
     re_path(r'^order-sheet/cart/$', OrderSheetCartView, name='order_sheet_cart'),
     re_path(r'^order-sheet/create/$', OrderCreateView, name='order'),
-    re_path(r'^order-sheet/confirm/(?P<order_num>\d+)/$', OrderConfirmView, name='order_confirm'),
+    re_path(r'^order-confirm/(?P<order_num>\d+)/$', OrderConfirmView, name='order_confirm'),
+    re_path(r'^order-detail/(?P<order_num>\d+)/$', OrderDetailView, name='order_detail'),
+    re_path(r'^order-history/$', OrderHistoryView, name='order_history'),
 ]
+
