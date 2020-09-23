@@ -7,8 +7,9 @@ def BookBasketInsertView(request, book_isbn, store_id):
 
     tab = 'basket'
 
-    book_info = execute_and_get("SELECT book_name, book_img, price, publisher, isbn FROM book WHERE isbn = (%s)", (book_isbn,))
+    book_info = execute_and_get("SELECT book_name, book_img, publisher, isbn FROM book WHERE isbn = (%s)", (book_isbn,))
     store_name = execute_and_get("SELECT store_name FROM bookstore WHERE id = (%s)", (store_id,))
+    price = execute_and_get("SELECT price FROM book_inven WHERE book_isbn = (%s) AND store_id = (%s)", (book_isbn, store_id,))
 
     for i in range(len(request.session['user_basket'])):
         if request.session['user_basket'][i]['isbn'] == book_isbn and request.session['user_basket'][i]['store_id'] == store_id:
@@ -17,9 +18,9 @@ def BookBasketInsertView(request, book_isbn, store_id):
 
     book = {'book_name': book_info[0][0],
           'book_img': book_info[0][1],
-          'price': book_info[0][2],
-          'publisher': book_info[0][3],
-          'isbn':book_info[0][4],
+          'price': price[0][0],
+          'publisher': book_info[0][2],
+          'isbn':book_info[0][3],
           'store_name': store_name[0][0],
           'store_id': store_id
               }

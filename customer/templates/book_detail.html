@@ -57,7 +57,7 @@
 
                     <tr>
                         <td>판매서점</td>
-                        <td><a>{{book.store_name}}</a></td>
+                        <td><a onclick="location.href='{% url 'customer:bookstore_detail' book.store_id %}'">{{book.store_name}}</a></td>
                     </tr>
                     <tr>
                         <td>ISBN</td>
