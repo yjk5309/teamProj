@@ -18,7 +18,7 @@
                         <td width="160"><a class="content" href="{% url 'customer:bookstore_detail' data.store_id %}">{{ data.store_name }}</a></td>
                     </tr>
                     </table>
-            <button class="button" onclick="location.href = '{% url 'customer:book_basket_delete' data.isbn %}'">삭제</button>
+                    <button type="button" class="button" onclick="location.href = '{% url 'customer:book_basket_delete' data.isbn %}'">삭제</button>
                     <input type="checkbox" name="cart" class="ab" value="{{data.store_id}},{{data.isbn}}">
         </div>
         <hr>

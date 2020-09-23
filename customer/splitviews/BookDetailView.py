@@ -8,8 +8,8 @@ def BookDetailView(request, book_isbn, store_id):
     current_book_store_name = execute_and_get("SELECT store_name, bookstore.id FROM bookstore" +
                                       " LEFT OUTER JOIN book_inven on book_inven.store_id = bookstore.id WHERE book_inven.book_isbn = (%s) AND store_id = (%s)", (book_isbn, store_id,))
 
-    is_like = execute_and_get("SELECT EXISTS(SELECT * FROM like_list WHERE user_id = (%s) AND book_isbn = (%s))",
-                              (user.username, book_isbn,))
+    is_like = execute_and_get("SELECT exists (SELECT * FROM like_list WHERE user_id = (%s) AND book_isbn = (%s) AND store_id = (%s))",
+                              (user.username, book_isbn, store_id,))
 
     book_inven = execute_and_get("SELECT inven, price FROM book_inven  WHERE book_name = (%s) AND store_id= (%s)",
                                  (book_datas[0][0], store_id,))
