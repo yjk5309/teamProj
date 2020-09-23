@@ -17,8 +17,8 @@
 <div class="tab_wrap">
   {% if tab == 'basket' %}
   <div class="tab_menu_container">
-    <button class="tab_menu_btn" type="button">주문확인/배송조회</button>
-    <button class="tab_menu_btn on" type="button">장바구니</button>
+    <button class="tab_menu_btn" type="button" onclick="location.href='{% url 'customer:mypage' %}'">주문확인/배송조회</button>
+    <button class="tab_menu_btn on" onclick="location.href='{% url 'customer:mypage_basket' %}'" type="button">장바구니</button>
     <button class="tab_menu_btn" type="button">마이리스트</button>
     <button class="tab_menu_btn" type="button" onclick="location.href='{% url 'customer_accounts:password_check' %}'" >회원정보</button>
   </div> <!-- tab_menu_container e -->
