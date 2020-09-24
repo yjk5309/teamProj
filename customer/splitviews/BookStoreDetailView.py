@@ -21,7 +21,7 @@ def BookStoreDetailView (request, store_id):
 
     is_favorite = favorite_data[0][0]
 
-    bookSql =  "SELECT a.isbn, a.book_name, b.price, a.book_img, b.store_id " \
+    bookSql =  "SELECT a.isbn, a.book_name, b.price, a.book_img, b.store_id, a.author " \
                "FROM book AS a " \
                "JOIN book_inven AS b " \
                "ON a.isbn = b.book_isbn " \
@@ -37,10 +37,11 @@ def BookStoreDetailView (request, store_id):
             'price':data[2],
             'book_img':data[3],
             'store_id':data[4],
+            'author': data[5],
             }
         books.append(row)
 
-    like_bookSql = "SELECT b.book_isbn, b.book_name, b.price, a.book_img, b.store_id " \
+    like_bookSql = "SELECT b.book_isbn, b.book_name, b.price, a.book_img, b.store_id, a.author " \
                    "FROM book AS a " \
                    "JOIN book_inven AS b " \
                    "ON a.isbn = b.book_isbn " \
@@ -59,10 +60,11 @@ def BookStoreDetailView (request, store_id):
             'price': data[2],
             'book_img': data[3],
             'store_id': data[4],
+            'author': data[5],
         }
         like_books.append(row)
 
-    lately_bookSql =  "SELECT b.book_isbn, b.book_name, b.price, a.book_img, b.store_id " \
+    lately_bookSql =  "SELECT b.book_isbn, b.book_name, b.price, a.book_img, b.store_id, a.author " \
                       "FROM book AS a " \
                       "JOIN book_inven AS b " \
                       "ON a.isbn = b.book_isbn " \
@@ -79,6 +81,7 @@ def BookStoreDetailView (request, store_id):
             'price':data[2],
             'book_img':data[3],
             'store_id':data[4],
+            'author': data[5],
             }
         lately_books.append(row)
 
