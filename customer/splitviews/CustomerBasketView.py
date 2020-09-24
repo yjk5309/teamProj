@@ -2,4 +2,5 @@ from .common import *
 
 @login_required
 def CustomerBasketView(request):
-    return render(request, 'book_basket.html')
+    tab = 'basket'
+    return render(request, 'mypage.html', {'tab': tab})
