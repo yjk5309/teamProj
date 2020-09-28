@@ -16,8 +16,10 @@ def OrderSheetCartView (request):
             cart = cart.split(",")
             store_id = cart[0]
             isbn = cart[1]
+            quantity = cart[2]
             row = {'isbn': isbn,
                    'store_id': store_id,
+                   'quantity': quantity,
                    }
             cart_list.append(row)
 
@@ -32,8 +34,19 @@ def OrderSheetCartView (request):
                     'price': data[0][1],
                     'book_img': data[0][2],
                     'store_name': data[0][3],
-                    }
+                   }
             carts.append(row)
-            total_price += data[0][1]
 
-    return render(request,'order_sheet.html',{'carts':carts,'tab': tab, 'total_price': total_price})
+        quantity_datas = []
+        for book in cart_list:
+            quantity_datas.append(book['quantity'])
+
+        quantity = []
+        for quantity_data in quantity_datas:
+            row = {'quantity': quantity_data[0][0],
+                   }
+            quantity.append(row)
+            total_price += data[0][1]*int(quantity_data[0][0])
+
+    return render(request,'order_sheet.html',{'carts':carts,'quantity':quantity,
+                                              'tab': tab, 'total_price': total_price})

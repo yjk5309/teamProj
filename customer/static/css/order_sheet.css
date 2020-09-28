@@ -7,6 +7,14 @@ td{
 .flex-order{
     display:flex;
     flex-direction:column;
+
+.parent {
+    display: flex;
+}
+.child {
+    flex: 1;
+}
+
 }
 section{
     display:none;
@@ -18,4 +26,11 @@ label{
 #default:checked ~ #content1,
 #new:checked ~ #content2 {
     display:block;
+}
+
+.card{
+    border: 1px solid #c7c7c7;
+    background-color: #fafafa;
+    width:600px;
+    height: auto;
 }

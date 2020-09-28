@@ -8,18 +8,20 @@
                     <tr>
                         <td width="400"><p class="content_title">상품명</p></td>
                         <td width="120"><p class="content_title">가격</p></td>
+                        <td width="120"><p class="content_title">수량</p></td>
                         <td width="120"><p class="content_title">출판사</p></td>
                         <td width="160"><p class="content_title">판매서점</p></td>
                     </tr>
                     <tr>
                         <td width="400"><a class="content" href="{% url 'customer:book_detail' data.isbn data.store_id %}">{{ data.book_name }}</a></td>
                         <td width="120"><p class="content">{{ data.price }}원</p></td>
+                        <td width="120"><p class="content_title">{{ data.quantity }}</p></td>
                         <td width="120"><p class="content">{{ data.publisher }}</p></td>
                         <td width="160"><a class="content" href="{% url 'customer:bookstore_detail' data.store_id %}">{{ data.store_name }}</a></td>
                     </tr>
                     </table>
                     <button type="button" class="button" onclick="location.href = '{% url 'customer:book_basket_delete' data.isbn %}'">삭제</button>
-                    <input type="checkbox" name="cart" class="ab" value="{{data.store_id}},{{data.isbn}}">
+                    <input type="checkbox" name="cart" class="ab" value="{{data.store_id}},{{data.isbn}},{{ data.quantity }}">
         </div>
         <hr>
         {% endfor %}
