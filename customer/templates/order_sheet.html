@@ -164,12 +164,11 @@
             return false;
         }
 
-        //카드결제 & 무통장입금 구분분
+        //카드결제 & 무통장입금 구분
         var payment_check = thisForm.elements["payment"].value;
 
         if (payment_check !== "card"){
-            alert('무통장 결제는 준비중입니다.');
-            return false;
+            thisForm.submit();
         };
 
        //주문 정보 입력 페이지의 탭이 2개로 분류되면서 동일 책 정보가 중복되어 나누기 2를 함.
