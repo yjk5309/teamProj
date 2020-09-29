@@ -82,7 +82,8 @@ ul{list-style:none;}
   height:40px;
   line-height:40px;
 }
-.tabmenu input{display:none;}
+.tabmenu #tabmenu1{display:none;}
+.tabmenu #tabmenu2{display:none;}
 .tabCon{
   display:none;
   text-align:left;
@@ -109,5 +110,7 @@ footer {
     boder-left:0px;
     boder-bottom:0px;
     text-align:center;
+    overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }

@@ -4,22 +4,19 @@ from .common import *
 def MyPageView(request):
     user = request.user
 
-    like_bookSql = "SELECT a.book_isbn, b.book_name, b.book_img, c.store_id " \
-                       "FROM like_list as a " \
-                       "JOIN book as b " \
-                       "ON a.book_isbn = b.isbn " \
-                       "JOIN book_inven as c " \
-                       "ON b.isbn = c.book_isbn " \
-                       "where a.user_id=(%s) ORDER BY date desc"
+    like_bookSql = "SELECT isbn, book_name, book_img, store_id FROM book LEFT OUTER JOIN like_list on book.isbn = like_list.book_isbn " \
+                   "LEFT OUTER JOIN bookstore on bookstore.id = like_list.store_id WHERE like_list.user_id = (%s)"
 
-    datas = execute_and_get(like_bookSql,(user,))
+    book_datas = execute_and_get(like_bookSql,(user,))
 
     like_books = []
-    for data in datas:
+    for data in book_datas:
+        bookstore = execute_and_get("SELECT store_name FROM bookstore WHERE id = (%s)", (data[3],))
         row = {'isbn': data[0],
                    'book_name': data[1],
                    'book_img': data[2],
                    'store_id': data[3],
+                   'store_name': bookstore[0][0],
                    }
         like_books.append(row)
 
@@ -30,10 +27,10 @@ def MyPageView(request):
                             "ON a.bookstore_id = b.id " \
                             "where a.user_id=(%s) ORDER BY date desc"
 
-    datas = execute_and_get(favorite_storeSql,(user,))
+    store_datas = execute_and_get(favorite_storeSql,(user,))
 
     favorite_stores = []
-    for data in datas:
+    for data in store_datas:
         row = {'store_id': data[0],
                    'store_name': data[1],
                    'store_img': data[2],
@@ -46,10 +43,10 @@ def MyPageView(request):
                           "JOIN book AS c ON b.isbn = c.isbn " \
                           "WHERE a.user_id = (%s) group by a.order_num order by buy_date desc"
 
-    datas = execute_and_get(orderHistorySql,(user,))
+    order_datas = execute_and_get(orderHistorySql,(user,))
 
     order_history = []
-    for data in datas:
+    for data in order_datas:
         row = {'buy_date': data[0],
                    'order_num': data[1],
                    'order_name': data[2],

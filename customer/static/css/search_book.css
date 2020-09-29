@@ -31,3 +31,10 @@
     margin-left: 30px;
     margin-top: 20px;
 }
+
+.search_keyword {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 200px;
+    display: block;
+}

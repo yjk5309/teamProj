@@ -4,7 +4,7 @@ def OrderSheetCartView (request):
     if request.method == 'POST':
         tab = 'basket'
         checked_cart = request.POST.getlist('cart')
-        bookSql = "SELECT a.book_name, a.price, a.book_img, c.store_name " \
+        bookSql = "SELECT a.book_name, b.price, a.book_img, c.store_name " \
                   "FROM book AS a " \
                   "JOIN book_inven AS b " \
                   "ON a.isbn = b.book_isbn " \

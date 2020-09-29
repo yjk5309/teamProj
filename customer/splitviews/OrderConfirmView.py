@@ -15,7 +15,7 @@ def OrderConfirmView (request, order_num):
             'order_num':data[0][3],
             }
 
-    productSql = "SELECT a.book_name, c.store_name, a.price, a.book_img " \
+    productSql = "SELECT a.book_name, c.store_name, a.book_img, a.isbn , c.id " \
                  "FROM book AS a " \
                  "JOIN order_products AS b " \
                  "ON a.isbn = b.isbn " \
@@ -27,11 +27,13 @@ def OrderConfirmView (request, order_num):
 
     products = []
     for data in datas:
+        price = execute_and_get("SELECT price FROM book_inven WHERE book_isbn = (%s) AND store_id = (%s)",
+                                (data[3], data[4],))
         row = {
             'book_name':data[0],
             'store_name':data[1],
-            'price':data[2],
-            'book_img':data[3],
+            'price':price[0][0],
+            'book_img':data[2],
             }
         products.append(row)
 

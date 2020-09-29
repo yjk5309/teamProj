@@ -57,7 +57,7 @@
 
                     <tr>
                         <td>판매서점</td>
-                        <td><a>{{book.store_name}}</a></td>
+                        <td><a onclick="location.href='{% url 'customer:bookstore_detail' book.store_id %}'">{{book.store_name}}</a></td>
                     </tr>
                     <tr>
                         <td>ISBN</td>
@@ -77,10 +77,10 @@
                             <button class="button" onclick="location.href='{% url 'customer:order_sheet' book_isbn store_id %}'">구매하기</button>
                             <button class="button" onclick="location.href ='{% url 'customer:book_basket_insert' book.isbn book.store_id %}'">장바구니</button>&nbsp;
                             {% if is_like == False %}
-                            <button class="like_button" onclick="like(this, '{{ book.isbn }}')">찜</button>
+                            <button class="like_button" onclick="like(this, '{{ book_isbn }}', '{{ store_id }}')">찜</button>
                             {% endif %}
                             {% if is_like == True %}
-                            <button class="button" onclick="like(this, '{{ book.isbn }}')">찜</button>
+                            <button class="button" onclick="like(this, '{{ book_isbn }}', '{{ store_id }}')">찜</button>
                             {% endif %}
                         </td>
                     </tr>
@@ -189,9 +189,9 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 <script type="text/javascript">
-    function like(elm, n) {
+    function like(elm, n, m) {
         $.ajax({
-            url: "{% url 'customer:book_like' 1  %}". replace('1',n),
+            url: "{% url 'customer:book_like' 1 2 %}".replace('1',n).replace('/2/', '/'+ m +'/'),
             data: {'csrfmiddlewaretoken': '{{csrf_token}}'},
             dataType: "json",
             type: "POST",
