@@ -29,8 +29,12 @@
             <td width="190">{{goods.buy_date}}</td>
             <td width="190"><a href="{% url 'customer:order_detail' goods.order_num %}" >{{goods.order_num}}</a></td>
             <td width="100">{{goods.order_name}}</td>
+            {% if goods.book_count == 1 %}
+            <td width="250"><p>{{goods.book_name}}</p>
+            {% else %}
             <td width="250"><p>{{goods.book_name}} 외 총 {{goods.book_count}}권</p>
-                <p>총 가격 {{goods.sum_price}}원</p></td>
+            {% endif %}
+                            <p>총 가격 {{goods.sum_price}}원</p></td>
             <td width="100">{{goods.order_status}}</td>
         </tr>
         {% endfor %}

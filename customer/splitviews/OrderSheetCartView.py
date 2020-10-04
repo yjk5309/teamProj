@@ -11,42 +11,23 @@ def OrderSheetCartView (request):
                   "JOIN bookstore AS c " \
                   "ON b.store_id = c.id " \
                   "where a.isbn = (%s) and b.store_id = (%s)"
-        cart_list = []
+
+        carts = []
+        total_price = 0
         for cart in checked_cart:
             cart = cart.split(",")
             store_id = cart[0]
             isbn = cart[1]
             quantity = cart[2]
-            row = {'isbn': isbn,
-                   'store_id': store_id,
-                   'quantity': quantity,
-                   }
-            cart_list.append(row)
-
-        datas = []
-        for book in cart_list:
-            datas.append(execute_and_get(bookSql, (book['isbn'], book['store_id'],)))
-
-        carts = []
-        total_price = 0
-        for data in datas:
-            row = {'book_name': data[0][0],
-                    'price': data[0][1],
-                    'book_img': data[0][2],
-                    'store_name': data[0][3],
-                   }
+            datas = execute_and_get(bookSql, (isbn, store_id,))
+            row = {'book_name': datas[0][0],
+                       'price': datas[0][1],
+                       'book_img': datas[0][2],
+                       'store_name': datas[0][3],
+                       'quantity':quantity,
+                       }
             carts.append(row)
+            total_price += datas[0][1]*int(quantity)
 
-        quantity_datas = []
-        for book in cart_list:
-            quantity_datas.append(book['quantity'])
-
-        quantity = []
-        for quantity_data in quantity_datas:
-            row = {'quantity': quantity_data[0][0],
-                   }
-            quantity.append(row)
-            total_price += data[0][1]*int(quantity_data[0][0])
-
-    return render(request,'order_sheet.html',{'carts':carts,'quantity':quantity,
+    return render(request,'order_sheet.html',{'carts':carts,
                                               'tab': tab, 'total_price': total_price})

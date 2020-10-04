@@ -42,14 +42,14 @@ def OrderCreateView (request):
                     isbn = execute_and_get(isbnSql, (book[i], store_id,))
 
                     if payment in "bank":
-                        listSql = "INSERT INTO order_products(order_num, store_id, isbn, price, order_status, quantity) " \
+                        listSql = "INSERT INTO order_products(order_num, store_id, isbn, purchased_price, order_status, quantity) " \
                                   "VALUES ((%s),(%s),(%s),(%s),(%s),(%s))"
-                        execute(listSql, (order_num, store_id, isbn, price[i], '결제 대기중',quantity[i],))
+                        execute(listSql, (order_num, store_id, isbn, int(price[i])*int(quantity[i]), '결제 대기중',quantity[i],))
 
                     elif payment in "card":
-                        listSql = "INSERT INTO order_products(order_num, store_id, isbn, price, order_status, quantity) " \
+                        listSql = "INSERT INTO order_products(order_num, store_id, isbn, purchased_price, order_status, quantity) " \
                                   "VALUES ((%s),(%s),(%s),(%s),(%s),(%s))"
-                        execute(listSql,(order_num, store_id, isbn, price[i], '결제 완료', quantity[i],))
+                        execute(listSql,(order_num, store_id, isbn, int(price[i])*int(quantity[i]), '결제 완료', quantity[i],))
 
             else:
                 storeIdSql = "SELECT id FROM bookstore where store_name=(%s)"
@@ -60,13 +60,13 @@ def OrderCreateView (request):
                 isbn = execute_and_get(isbnSql, (book, store_id,))
 
                 if payment in "bank":
-                    listSql = "INSERT INTO order_products(order_num, store_id, isbn, price, order_status, quantity) " \
+                    listSql = "INSERT INTO order_products(order_num, store_id, isbn, purchased_price, order_status, quantity) " \
                               "VALUES ((%s),(%s),(%s),(%s),(%s),(%s))"
-                    execute(listSql, (order_num, store_id, isbn, price, '결제 대기중', quantity,))
+                    execute(listSql, (order_num, store_id, isbn, int(price)*int(quantity), '결제 대기중', quantity,))
 
                 elif payment in "card":
-                    listSql = "INSERT INTO order_products(order_num, store_id, isbn, price, order_status, quantity) " \
+                    listSql = "INSERT INTO order_products(order_num, store_id, isbn, purchased_price, order_status, quantity) " \
                               "VALUES ((%s),(%s),(%s),(%s),(%s),(%s))"
-                    execute(listSql, (order_num, store_id, isbn, price, '결제 완료', quantity,))
+                    execute(listSql, (order_num, store_id, isbn, int(price)*int(quantity), '결제 완료', quantity,))
 
             return redirect('customer:order_confirm', order_num = order_num)

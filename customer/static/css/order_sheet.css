@@ -8,13 +8,6 @@ td{
     display:flex;
     flex-direction:column;
 
-.parent {
-    display: flex;
-}
-.child {
-    flex: 1;
-}
-
 }
 section{
     display:none;
