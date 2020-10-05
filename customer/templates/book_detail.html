@@ -65,7 +65,6 @@
                     </tr>
                     <tr>
                         <td>평점</td>
-
                         <td>
                             {% if book.review_score != None %}
                             <b style="color:gold">{{ book.review_score }}</b> <a href="#review_list"> ({{book.review_count}}) </a>
@@ -73,9 +72,15 @@
                             <b style="color:gold">0</b> <a href="#review_list"> ({{book.review_count}}) </a>
                             {% endif %}
                         </td>
+                    </tr>
+                    <tr>
+                        <form class="mt-3" method="post" enctype="multipart/form-data">{% csrf_token %}
+                        <td>수량</td>
+                        <td><input type="number" name="quantity" min="1" max="{{ book.book_inven }}" value="0" required></td>
                         <td>
-                            <button class="button" onclick="location.href='{% url 'customer:order_sheet' book_isbn store_id %}'">구매하기</button>
-                            <button class="button" onclick="location.href ='{% url 'customer:book_basket_insert' book.isbn book.store_id %}'">장바구니</button>&nbsp;
+                            <button class="button" type="submit" formaction="{% url 'customer:order_sheet' book_isbn store_id %}">구매하기</button>
+                            <button class="button" type="submit" formaction="{% url 'customer:book_basket_insert' book.isbn book.store_id %}">장바구니</button>&nbsp;
+                        </form>
                             {% if is_like == False %}
                             <button class="like_button" onclick="like(this, '{{ book_isbn }}', '{{ store_id }}')">찜</button>
                             {% endif %}

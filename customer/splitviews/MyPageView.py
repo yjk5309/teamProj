@@ -37,24 +37,24 @@ def MyPageView(request):
                    }
         favorite_stores.append(row)
 
-    orderHistorySql = "SELECT a.buy_date, a.order_num, a.order_name, c.book_name, count(b.isbn), sum(b.price), b.order_status " \
-                          "FROM order_info as a " \
-                          "JOIN order_products as b ON a.order_num = b.order_num " \
-                          "JOIN book AS c ON b.isbn = c.isbn " \
-                          "WHERE a.user_id = (%s) group by a.order_num order by buy_date desc"
+    orderHistorySql = "SELECT a.buy_date, a.order_num, a.order_name, c.book_name, sum(b.quantity), sum(b.purchased_price), b.order_status " \
+                      "FROM order_info as a " \
+                      "JOIN order_products as b ON a.order_num = b.order_num " \
+                      "JOIN book AS c ON b.isbn = c.isbn " \
+                      "WHERE a.user_id = (%s) group by a.order_num order by buy_date desc"
 
     order_datas = execute_and_get(orderHistorySql,(user,))
 
     order_history = []
     for data in order_datas:
         row = {'buy_date': data[0],
-                   'order_num': data[1],
-                   'order_name': data[2],
-                   'book_name': data[3],
-                   'book_count': data[4],
-                   'sum_price': data[5],
-                   'order_status': data[6],
-                   }
+               'order_num': data[1],
+               'order_name': data[2],
+               'book_name': data[3],
+               'book_count': data[4],
+               'sum_price': data[5],
+               'order_status': data[6],
+               }
         order_history.append(row)
 
     return render(request, 'mypage.html', {'like_books': like_books, 'favorite_stores': favorite_stores,
