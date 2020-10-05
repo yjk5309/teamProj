@@ -35,6 +35,8 @@ def OrderDetailView(request,order_num):
 
     products = []
     for data in datas:
+        price = execute_and_get("SELECT price FROM book_inven WHERE book_isbn = (%s) AND store_id = (%s)",
+                                (data[4], data[5],))
         row = {
             'book_name': data[0],
             'store_name': data[1],
