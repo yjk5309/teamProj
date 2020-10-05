@@ -42,6 +42,69 @@
         </div>
     </div>
 </div>
+    <div class="search" align="center">
+        <form class="mt-3" method="post" enctype="multipart/form-data" action='{% url "customer:search_book_in_store" %}'>{% csrf_token %}
+            <label for="search_book">"{{ store.store_name }}"에서 찾고싶은 책을 검색해보세요</label><br>
+            <input id="search_book" type="text" name="search_book" value="{{search_book}}" size="35" placeholder="책 제목이나 작가이름이면 충분해요">
+            <input type="hidden" name="store_id" value="{{store.store_id}}">
+            <button class="btn btn-primary" type="submit">검색</button>
+            {% if messages %}
+                {% for message in messages %}
+                  <p style="color:red"> {{message.message}} </p>
+                {% endfor %}
+            {% endif %}
+        </form>
+    </div>
+    {% if tab == 'search_book' %}
+    <div class="content">
+        <a href="{% url 'customer:bookstore_detail' store.store_id %}" >전체 책 보기</a>
+        {% for book in books %}
+                <div class="col">
+                    <a href="{% url 'customer:book_detail' book.isbn book.store_id %}" >
+                    <div class="image book">
+                        <img align="center" src="{{ book.book_img }}" alt="" />
+                    </div>
+                    <p>{{ book.book_name }}</p>
+                    <p>{{ book.author }}</p>
+                    <p>{{ book.price }}원</p>
+                    </a>
+                </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <hr width="60%">
+    <h3 align="center">인기가 많아요</h3>
+    <div class="content">
+        {% for book in like_books %}
+                <div class="col">
+                    <a href="{% url 'customer:book_detail' book.isbn book.store_id %}" >
+                    <div class="image book">
+                        <img align="center" src="{{ book.book_img }}" alt="" />
+                    </div>
+                    <p>{{ book.book_name }}</p>
+                    <p>{{ book.author }}</p>
+                    <p>{{ book.price }}원</p>
+                    </a>
+                </div>
+        {% endfor %}
+    </div>
+    <hr>
+    <h3 align="center">새로 들어왔어요</h3>
+    <div class="content">
+        {% for book in lately_books %}
+                <div class="col">
+                    <a href="{% url 'customer:book_detail' book.isbn book.store_id %}" >
+                    <div class="image book">
+                        <img align="center" src="{{ book.book_img }}" alt="" />
+                    </div>
+                    <p>{{ book.book_name }}</p>
+                    <p>{{ book.author }}</p>
+                    <p>{{ book.price }}원</p>
+                    </a>
+                </div>
+        {% endfor %}
+    </div>
+    <hr>
     <div class="content">
         {% for book in books %}
                 <div class="col">
@@ -50,11 +113,13 @@
                         <img align="center" src="{{ book.book_img }}" alt="" />
                     </div>
                     <p>{{ book.book_name }}</p>
+                    <p>{{ book.author }}</p>
                     <p>{{ book.price }}원</p>
                     </a>
                 </div>
         {% endfor %}
     </div>
+    {% endif %}
 </div>
 
 {% block footer %}

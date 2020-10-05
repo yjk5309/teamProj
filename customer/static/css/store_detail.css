@@ -116,6 +116,10 @@
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
   grid-auto-rows: minmax(100px, auto);
-  padding:60px 60px 0 170px;
+  padding:30px 60px 0 170px;
   display: grid;
+}
+
+.search {
+    padding:20px;
 }

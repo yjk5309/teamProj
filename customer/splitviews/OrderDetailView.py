@@ -4,7 +4,7 @@ from .common import *
 def OrderDetailView(request,order_num):
 
     orderDetailSql = "SELECT a.order_num, b.first_name, a.order_name, a.order_address, " \
-                     "a.order_p_num, a.order_memo, a.payment, sum(c.price), a.buy_date, " \
+                     "a.order_p_num, a.order_memo, a.payment, sum(c.purchased_price), a.buy_date, " \
                      "CASE WHEN a.payment = 'bank' THEN date_add(a.buy_date,INTERVAL 1 DAY) ELSE null END AS due_date " \
                      "FROM order_info as a JOIN customer_accounts_user as b ON a.user_id = b.username " \
                      "JOIN order_products as c ON a.order_num = c.order_num where a.order_num = (%s)"
@@ -23,7 +23,7 @@ def OrderDetailView(request,order_num):
                     'due_date':data[0][9],
                     }
 
-    productSql = "SELECT a.book_name, c.store_name, a.book_img, b.order_status, a.isbn, c.id " \
+    productSql = "SELECT a.book_name, c.store_name, b.purchased_price, a.book_img, b.order_status, b.quantity " \
                  "FROM book AS a " \
                  "JOIN order_products AS b " \
                  "ON a.isbn = b.isbn " \
@@ -40,13 +40,14 @@ def OrderDetailView(request,order_num):
         row = {
             'book_name': data[0],
             'store_name': data[1],
-            'price': price[0][0],
-            'book_img': data[2],
-            'order_status':data[3],
+            'price': data[2],
+            'book_img': data[3],
+            'order_status':data[4],
+            'quantity':data[5],
         }
         products.append(row)
 
-    accountSql = "SELECT c.store_name, sum(a.price), b.account, b.bank " \
+    accountSql = "SELECT c.store_name, sum(a.purchased_price), b.account, b.bank " \
                  "FROM order_products AS a " \
                  "JOIN shipping_info AS b ON a.store_id = b.bookstore_id " \
                  "JOIN bookstore AS c ON a.store_id = c.id " \

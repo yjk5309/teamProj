@@ -27,3 +27,4 @@ from .OrderConfirmView import *
 from .OrderSheetCartView import *
 from .OrderDetailView import *
 from .OrderHistoryView import *
+from .SearchBookInStoreView import *

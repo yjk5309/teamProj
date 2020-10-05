@@ -6,6 +6,7 @@ def BookBasketInsertView(request, book_isbn, store_id):
         request.session['user_basket'] = []
 
     tab = 'basket'
+    quantity = request.POST.get('quantity')
 
     book_info = execute_and_get("SELECT book_name, book_img, publisher, isbn FROM book WHERE isbn = (%s)", (book_isbn,))
     store_name = execute_and_get("SELECT store_name FROM bookstore WHERE id = (%s)", (store_id,))
@@ -17,13 +18,13 @@ def BookBasketInsertView(request, book_isbn, store_id):
             return redirect('customer:book_detail', book_isbn, store_id)
 
     book = {'book_name': book_info[0][0],
-          'book_img': book_info[0][1],
-          'price': price[0][0],
-          'publisher': book_info[0][2],
-          'isbn':book_info[0][3],
-          'store_name': store_name[0][0],
-          'store_id': store_id
-              }
+            'book_img': book_info[0][1],
+            'price': price[0][0]*int(quantity),
+            'publisher': book_info[0][2],
+            'isbn':book_info[0][3],
+            'store_name': store_name[0][0],
+            'store_id': store_id,
+            'quantity':quantity,}
 
     request.session['user_basket'].append(book)
     request.session.modified = True
