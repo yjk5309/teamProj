@@ -22,6 +22,8 @@ def RegisterView(request):
             if user_pw == user_2nd_pw:
                 new_user = User.objects.create_user(first_name=name, username=user_id, password=user_pw,
                                                     email=e_mail, phone_number=phone_number, address=address)
+                new_user.is_customer = True
+                new_user.save()
 
                 messages.success(request, "회원가입에 성공하였습니다.")
                 return redirect('customer_accounts:login')

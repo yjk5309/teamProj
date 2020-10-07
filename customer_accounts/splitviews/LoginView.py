@@ -10,9 +10,13 @@ def LoginView(request):
 
         login_user = authenticate(request, username=user_id, password=user_pw)
 
-        if login_user is not None:
+        if login_user is not None and login_user.is_seller == 0:
             login(request, login_user)
             return redirect('customer:main')
+
+        elif login_user is not None and login_user.is_seller == 1:
+            login(request, login_user)
+            return redirect('seller_accounts:bookstore_register')
 
         else:
             messages.error(request,'ID 또는 비밀번호 오류입니다.')
