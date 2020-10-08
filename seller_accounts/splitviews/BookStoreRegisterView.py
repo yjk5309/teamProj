@@ -9,6 +9,7 @@ def BookStoreRegisterView(request):
     elif request.method == "POST":
         user = request.user
 
+        business_num = request.POST.get("business_num")
         store_name = request.POST.get("store_name")
         repre_name = request.POST.get("repre_name")
 
@@ -21,9 +22,19 @@ def BookStoreRegisterView(request):
 
         store_img_url = fileUpload(user, store_img)
 
-        orderSql = "INSERT INTO bookstore(store_name, repre_name, " \
-                   "address, store_num, store_email, store_msg, bookstore_img, seller_id) " \
-                   "VALUES ((%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s))"
-        execute(orderSql, (store_name, repre_name, address, store_number, store_email, store_msg, store_img_url, user))
+        businessNumSql = "SELECT exists (SELECT business_num from bookstore where business_num = (%s))"
+        is_businessNum = execute_and_get(businessNumSql,(business_num,))
 
-        return redirect('customer:main')
+        if is_businessNum[0][0] == False:
+
+            orderSql = "INSERT INTO bookstore(store_name, repre_name, " \
+                       "address, store_num, store_email, store_msg, bookstore_img, seller_id, business_num) " \
+                       "VALUES ((%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s))"
+            execute(orderSql, (store_name, repre_name, address, store_number, store_email, store_msg, store_img_url, user, business_num,))
+
+            messages.success(request, "서점 등록에 성공하였습니다.")
+            return redirect('customer:main')
+
+        else:
+            messages.error(request, "이미 등록된 사업자번호입니다.")
+            return redirect('seller_accounts:bookstore_register')

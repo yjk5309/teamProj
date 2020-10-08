@@ -1,5 +1,4 @@
 from .common import *
-from customer_accounts.models import Seller
 
 def SellerRegisterView(request):
     if request.method == "GET":
@@ -21,11 +20,9 @@ def SellerRegisterView(request):
         except ObjectDoesNotExist:
             if user_pw == user_2nd_pw:
                 new_user = User.objects.create_user(first_name=name, username=user_id, password=user_pw)
-                new_user.is_seller = True
+                # 1은 관리자, 2는 구매자, 3은 판매자
+                new_user.user_type = 3
                 new_user.save()
-                user = User.objects.get(username=user_id)
-                user.seller.business_number = business_number
-                user.save()
 
                 messages.success(request, "회원가입에 성공하였습니다.")
                 return redirect('customer_accounts:login')

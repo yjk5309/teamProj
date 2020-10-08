@@ -10,11 +10,11 @@ def LoginView(request):
 
         login_user = authenticate(request, username=user_id, password=user_pw)
 
-        if login_user is not None and login_user.is_seller == 0:
+        if login_user is not None and login_user.user_type == 2:
             login(request, login_user)
             return redirect('customer:main')
 
-        elif login_user is not None and login_user.is_seller == 1:
+        elif login_user is not None and login_user.user_type == 3:
             login(request, login_user)
             return redirect('seller_accounts:bookstore_register')
 
