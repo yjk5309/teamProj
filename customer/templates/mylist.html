@@ -2,7 +2,7 @@
     <div class="tabmenu">
       <ul>
         <li id="tab1" class="btnCon"> <input type="radio" checked name="tabmenu" id="tabmenu1">
-          <label for="tabmenu1">즐겨찾기한 서점</label>
+          <label for="tabmenu1">즐겨찾기 서점</label>
           <div class="tabCon" >
               <div class="flex">
               {% for store in favorite_stores %}
@@ -14,7 +14,7 @@
                                 <img src="{{ store.store_img }}">
                                 {% endif %}
                             </div>
-                        <p align="center">{{ store.store_name }}</p>
+                        <p style="font-weight:bold" align="center">{{ store.store_name }}</p>
                         </a>
               {% endfor %}
               </div>
@@ -26,13 +26,14 @@
           <div class="tabCon" >
               <div class="flex">
               {% for book in like_books %}
+                  <div class="like_list">
                         <a href="{% url 'customer:book_detail' book.isbn book.store_id %}" >
                         <div class="image book">
                             <img align="center" src="{{ book.book_img }}" alt="" />
                         </div>
-                        <p align="center">{{ book.book_name }}</p>
-                        <p align="center"><{{ book.store_name }}></p>
+                        <p style="font-weight:bold;" align="center">{{ book.book_name }}<br>{{ book.store_name }}</p>
                         </a>
+                  </div>
               {% endfor %}
               </div>
           </div>
