@@ -62,11 +62,11 @@ def OrderCreateView (request):
                 if payment in "bank":
                     listSql = "INSERT INTO order_products(order_num, store_id, isbn, purchased_price, order_status, quantity) " \
                               "VALUES ((%s),(%s),(%s),(%s),(%s),(%s))"
-                    execute(listSql, (order_num, store_id, isbn, int(price)*int(quantity), '결제 대기중', quantity,))
+                    execute(listSql, (order_num, store_id, isbn, int(price[0])*int(quantity[0]), '결제 대기중', quantity,))
 
                 elif payment in "card":
                     listSql = "INSERT INTO order_products(order_num, store_id, isbn, purchased_price, order_status, quantity) " \
                               "VALUES ((%s),(%s),(%s),(%s),(%s),(%s))"
-                    execute(listSql, (order_num, store_id, isbn, int(price)*int(quantity), '결제 완료', quantity,))
+                    execute(listSql, (order_num, store_id, isbn, int(price[0])*int(quantity[0]), '결제 완료', quantity,))
 
             return redirect('customer:order_confirm', order_num = order_num)
