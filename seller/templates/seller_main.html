@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/seller_main.css' %}">
+{% endblock head %}
+
+{% block title %}
+판매자 홈 | alleybookstore
+{% endblock title %}
+
+{% block _nav %}
+  {% include '_seller_nav.html' %}
+{% endblock _nav %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+    <div class="seller_flex">
+        <div class="seller_main">
+            <b style="color:purple; margin-left:10px; font-size:20px">| <b style="color:orange">판매 현황</b>
+            </b>
+            <table class="type04">
+                <tr>
+                    <th scope="row">등록상품</th>
+                    <td>N개</td>
+                </tr>
+                <tr>
+                    <th scope="row">주문 확인 요청</th>
+                    <td>N개</td>
+                </tr>
+                <tr>
+                    <th scope="row">배송 & 구매확정전</th>
+                    <td>N개</td>
+                </tr>
+                <tr>
+                    <th scope="row">구매확정 & 정산대기</th>
+                    <td>N개</td>
+                </tr>
+                <tr>
+                    <th scope="row">정산완료</th>
+                    <td>N개</td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td><button>+더보기</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="seller_main">
+            <b style="color:purple; margin-left:10px; font-size:20px">| <b style="color:orange">게시판</b>
+           </b>
+            <table class="type04">
+                <tr>
+                    <th scope="row">서점 공지사항</th>
+                    <td>N개</td>
+                </tr>
+                <tr>
+                    <th scope="row">판매 평가</th>
+                    <td>N개</td>
+                </tr>
+                <tr>
+                    <th scope="row">Q&A</th>
+                    <td>N개</td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td><button>+더보기</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="seller_main">
+            <b style="color:purple; margin-left:10px; font-size:20px">| <b style="color:orange">반품 접수 내역</b>
+           </b>
+            <table class="type04">
+                <tr>
+                    <th scope="row">신규 접수</th>
+                    <td>N개</td>
+                </tr>
+                <tr>
+                    <th scope="row">반품 완료</th>
+                    <td>N개</td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td><button>+더보기</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="seller_flex" style="margin-bottom:50px">
+        <div class="seller_main">
+            <b style="color:purple; margin-left:10px; font-size:20px">| <b style="color:orange">??????????</b>
+           </b>
+            <table class="type04">
+                <tr>
+                    <th scope="row">???</th>
+                    <td>N개</td>
+                </tr>
+                <tr>
+                    <th scope="row">???</th>
+                    <td>N개</td>
+                </tr>
+                <tr>
+                    <th scope="row">???</th>
+                    <td>N개</td>
+                </tr>
+                <tr>
+                    <th scope="row">???</th>
+                    <td>N개</td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td><button>+더보기</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <div class="not_login_flex" style="margin-bottom:50px">
+        <div class="seller_main" style="margin-left:500px; text-align:center">
+            <br><b style="font-size:30px"># ALLEY BOOKSTORE Shop Manger</b><br>
+            <button class="button">서점등록</button>
+            <div><img class="seller_main_img" width="500px" height="400px" src="{% static 'images/not_login_main.jpg' %}"></div>
+        </div>
+    </div>
+    {% endif %}
+
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer  %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function (event) {
+    navActivePage();
+  });
+</script>
+
+
+<script type="text/javascript" src="./main.41beeca9.js"></script>
+
+{% endblock body %}
