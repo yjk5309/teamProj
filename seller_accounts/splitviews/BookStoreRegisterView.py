@@ -33,7 +33,7 @@ def BookStoreRegisterView(request):
             execute(orderSql, (store_name, repre_name, address, store_number, store_email, store_msg, store_img_url, user, business_num,))
 
             messages.success(request, "서점 등록에 성공하였습니다.")
-            return redirect('customer:main')
+            return redirect('seller:main')
 
         else:
             messages.error(request, "이미 등록된 사업자번호입니다.")

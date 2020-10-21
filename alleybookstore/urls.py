@@ -10,3 +10,4 @@ urlpatterns = [
     re_path(r'^', include('customer.urls')),
     re_path(r'^seller/', include('seller.urls')),
     re_path(r'^seller_accounts/', include('seller_accounts.urls')),
+]
