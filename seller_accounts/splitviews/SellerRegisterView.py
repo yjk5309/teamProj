@@ -9,11 +9,10 @@ def SellerRegisterView(request):
         user_id = request.POST.get("user_id")
         user_pw = request.POST.get("user_pw")
         user_2nd_pw = request.POST.get("user_2nd_pw")
-        business_number = request.POST.get("business_num")
 
         try:
             user = User.objects.get(username=user_id)
-            if user.seller.business_number == business_number or user == User.objects.get(username=user_id):
+            if user == User.objects.get(username=user_id):
                 messages.error(request, "이미 존재하는 계정입니다.")
                 return redirect('seller_accounts:seller_register')
 

@@ -8,7 +8,7 @@
       <div class="collapse navbar-collapse" id="navbar-collapse-uarr" >
         <ul class="nav navbar-nav navbar-right">
           <li><a href="{% url 'seller:main' %}" title="" class="active">판매자 홈</a></li>
-          <li><a href="#" title="">상품등록</a></li>
+          <li><a href="{% url 'seller:product_register' %}" title="">상품등록</a></li>
           <li><a href="#" title="">상품 조회/수정</a></li>
           <li><a href="#" title="">판매관리</a></li>
           <li><a href="#" title="">정산조회</a></li>
@@ -16,13 +16,13 @@
           {% if user.is_authenticated %}
             <li>
               <p>
-                <a href="#" class="btn btn-primary navbar-btn" title="">로그아웃</a>
+                <a href="{% url 'customer_accounts:logout' %}" class="btn btn-primary navbar-btn" title="">로그아웃</a>
               </p>
             </li>
           {% else %}
             <li>
               <p>
-                <a href="#" class="btn btn-primary navbar-btn" title="">매니저 로그인</a>
+                <a href="{% url 'customer_accounts:login' %}" class="btn btn-primary navbar-btn" title="">매니저 로그인</a>
               </p>
             </li>
           {% endif %}

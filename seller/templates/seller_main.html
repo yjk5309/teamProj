@@ -13,7 +13,7 @@
 {% endblock _nav %}
 
 {% block body %}
-    {% if user.is_authenticated %}
+    {% if store_manager == user.username %}
     <div class="seller_flex">
         <div class="seller_main">
             <b style="color:purple; margin-left:10px; font-size:20px">| <b style="color:orange">판매 현황</b>
@@ -21,7 +21,7 @@
             <table class="type04">
                 <tr>
                     <th scope="row">등록상품</th>
-                    <td>N개</td>
+                    <td>{{selling_info.product_count}}개</td>
                 </tr>
                 <tr>
                     <th scope="row">주문 확인 요청</th>
@@ -121,7 +121,13 @@
     <div class="not_login_flex" style="margin-bottom:50px">
         <div class="seller_main" style="margin-left:500px; text-align:center">
             <br><b style="font-size:30px"># ALLEY BOOKSTORE Shop Manger</b><br>
-            <button class="button">서점등록</button>
+            {% if user.user_type == 3 %}
+                <button class="button" onclick="location.href='{% url 'seller_accounts:bookstore_register' %}'">서점등록</button>
+            {% else %}
+                <b><b style="color:red">판매자전용</b> 페이지입니다.</b><br>
+                <b>판매자가입 페이지로 이동하시려면 아래의 버튼을 눌러주세요.</b><br>
+                <button class="button" onclick="location.href='{% url 'seller_accounts:seller_register' %}'">판매자 가입</button>
+            {% endif %}
             <div><img class="seller_main_img" width="500px" height="400px" src="{% static 'images/not_login_main.jpg' %}"></div>
         </div>
     </div>
