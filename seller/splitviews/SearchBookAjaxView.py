@@ -11,6 +11,8 @@ def SearchBookAjaxView(request):
     registered_book = 1
     if len(search_datas) == 0:
         registered_book = 0
+    elif title == "" and author == "" and publisher == "":
+        registered_book = -1
 
     search_result = []
     for search_data in search_datas:
