@@ -15,10 +15,9 @@ def BookstoreModifyView(request, user_id):
         store_img_url = fileUpload(user, store_img)
         store_msg = request.POST.get('store_msg')
 
-        updateSql = "UPDATE omp3.bookstore SET store_name = (%s), repre_name = (%s), address = (%s), store_msg = (%s), " \
+        updateSql = "UPDATE bookstore SET store_name = (%s), repre_name = (%s), address = (%s), store_msg = (%s), " \
                     "store_num = (%s), store_email = (%s), bookstore_img = (%s) " \
                     "WHERE seller_id = (%s)"
         execute(updateSql, (store_name, repre_name, address, store_msg, store_number, e_mail, store_img_url, user,))
 
-        messages.success(request, "서점 정보 수정에 성공하였습니다.")
         return redirect('seller_accounts:seller_info')

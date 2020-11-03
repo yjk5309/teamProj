@@ -14,20 +14,20 @@ def SellerDeleteView(request):
             store_delete_sql = "DELETE FROM bookstore WHERE seller_id =(%s)"
             execute(store_delete_sql, (user_id,))
 
-            inven_delete_sql = "DELETE FROM book_inven " \
-                               "WHERE store_id = (SELECT id FROM bookstore where seller_id = (%s));"
+            inven_delete_sql = "DELETE a FROM book_inven AS a " \
+                               "LEFT JOIN bookstore AS b ON a.store_id = b.id where seller_id = (%s)"
             execute(inven_delete_sql, (user_id,))
 
-            likebook_delete_sql = "DELETE FROM like_list " \
-                                  "WHERE store_id = (SELECT id FROM bookstore where seller_id = (%s));"
+            likebook_delete_sql = "DELETE a FROM like_list AS a " \
+                                  "LEFT JOIN bookstore AS b ON a.store_id = b.id where seller_id = (%s)"
             execute(likebook_delete_sql, (user_id,))
 
-            favoritestore_delete_sql = "DELETE FROM favorite_bookstore " \
-                                       "WHERE bookstore_id = (SELECT id FROM bookstore where seller_id = (%s));"
+            favoritestore_delete_sql = "DELETE a FROM favorite_bookstore AS a " \
+                                       "LEFT JOIN bookstore AS b ON a.store_id = b.id where seller_id = (%s)"
             execute(favoritestore_delete_sql, (user_id,))
 
-            review_delete_sql = "DELETE FROM review " \
-                                "WHERE store_id = (SELECT id FROM bookstore where seller_id = (%s));"
+            review_delete_sql = "DELETE a FROM review AS a " \
+                                "LEFT JOIN bookstore AS b ON a.store_id = b.id where seller_id = (%s)"
             execute(review_delete_sql, (user_id,))
 
             user.delete()
