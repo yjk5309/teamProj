@@ -15,45 +15,6 @@
 {% block body %}
 
 <div class="container">
-    <!-- modal -->
-<div class="modal fade" id="modify_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">상품 정보 및 재고 수정</h4>
-      </div>
-      <div class="modal-body">
-        <form class="mt-3" method="post" action="" enctype="multipart/form-data">{% csrf_token %}
-            <div class="form-group">
-                <input type="text" class="form-control" id="author" name="author" placeholder="작가" required readonly>
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" id="publisher" name="publisher" placeholder="출판사" required readonly>
-            </div>
-            <div class="form-group">
-              <input type="number" class="form-control" id="inven" name="inven" placeholder="등록수량" required>
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" id="price" name="price" placeholder="판매가격" required>
-            </div>
-            <div class="form-group">
-                <textarea class="form-control" id="book_msg" name="book_msg" placeholder="책 소개" rows="5" required></textarea>
-            </div>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="book_img" name="book_img" aria-describedby="inputGroupFileAddon01">
-                <label class="custom-file-label" for="book_img">책 사진을 업로드해주세요.</label>
-              </div><br>
-            <button type="submit" class="btn btn-primary" onclick="register_confirm()">상품 등록</button>
-        </form>
-      </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-      </div>
-    </div>
-  </div></div>
-<!-- modal -->
     <div align="center">
         <div align="right" style="margin:30px 0 30px 0;">
         <form class="mt-3" method="post" enctype="multipart/form-data" action='{% url "seller:search_book_in_manage" %}'>{% csrf_token %}
@@ -89,7 +50,7 @@
                             </tr>
                         </table>
                         <div>
-                            <a href="#modify_modal"><button type="button" class="button" data-toggle="modal" data-target="#modify_modal">수정</button></a>
+                            <button type="button" class="button" onclick="location.href = 'javascript:popup()'">수정</button>
                             <button type="button" class="button" onclick="location.href = '{% url 'seller:book_delete' book.store_id book.isbn %}'">삭제</button>
                         </div>
                 </div>
@@ -116,7 +77,7 @@
                     </tr>
                 </table>
                 <div>
-                    <a href="#modify_modal"><button type="button" class="button" data-toggle="modal" data-target="#modify_modal">수정</button></a>
+                    <button type="button" class="button" onclick="location.href = 'javascript:popup()'">수정</button>
                     <button type="button" class="button" onclick="location.href = '{% url 'seller:book_delete' book.store_id book.isbn %}'">삭제</button>
                 </div>
         </div>
@@ -134,7 +95,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
     navActivePage();
 });
 
-$('#modify_modal').modal('show');
+function popup(){
+            var url = "{% url 'seller:book_modify' %}";
+            var name = "상품 정보 및 재고 수정";
+            var option = "width = 500, height = 500, top = 100, left = 200, location = no";
+            window.open(url, name, option);
+        }
 </script>
 
 <script type="text/javascript" src="./main.41beeca9.js"></script>
