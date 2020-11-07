@@ -4,3 +4,4 @@ from .SearchBookAjaxView import *
 from .BookRegisterView import *
 from .OrderCheckView import *
 from .PayCheckAjaxView import *
+from .OrderDetailView import *

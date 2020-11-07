@@ -27,7 +27,7 @@
                 </tr>
                 {% for data in order_info_list %}
                 <tr class="order_history_tr">
-                    <td class="order_history_td" width="190">{{ data.order_num }}</td>
+                    <td class="order_history_td" width="190"><a onclick="order_detail(this, '{{ data.order_num }}')">{{ data.order_num }}</a></td>
                     <td class="order_history_td" width="100">{{ data.buy_date }}</td>
                     <td class="order_history_td" width="250">{{ data.purchased_price }} 원</td>
                     <td class="order_history_td" width="250">
@@ -48,6 +48,78 @@
                 {% endfor %}
             </table>
         </div>
+
+        <div id="modal" class="orderModal">
+            <div class="order-modal-content">
+                <div class="page-header">
+                    <h1>주문 상세 정보</h1>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="order_detail">
+                                    <caption style="font-weight:bold; font-size:20px;">상품 정보</caption>
+                                    <tr class="order_detail_tr">
+                                        <td class="order_detail_th" width="120">ISBN</td>
+                                        <td class="order_detail_td" id="isbn" name="isbn" width="200"></td>
+                                    </tr>
+                                    <tr class="order_detail_tr">
+                                        <td class="order_detail_th" width="120">책 제목</td>
+                                        <td class="order_detail_td" width="200">
+                                            <p id="book_name" name="book_name"></p>
+                                            <img width="180" height="200" id="book_img" name="book_img" src="">
+                                        </td>
+                                    </tr>
+                                    <tr class="order_detail_tr">
+                                        <td class="order_detail_th" width="120">작가</td>
+                                        <td class="order_detail_td" id="author" name="author" width="200"></td>
+                                    </tr>
+                                    <tr class="order_detail_tr">
+                                        <td class="order_detail_th" width="120">출판사</td>
+                                        <td class="order_detail_td" id="publisher" name="publisher" width="200"></td>
+                                    </tr>
+                                    <tr class="order_detail_tr">
+                                        <td class="order_detail_th" width="120">주문량</td>
+                                        <td class="order_detail_td" id="quantity" name="quantity" width="200"></td>
+                                    </tr>
+                                </table>
+
+                                <table class="order_detail">
+                                    <caption style="font-weight:bold; font-size:20px;">주문자 정보</caption>
+                                    <tr class="order_detail_tr">
+                                        <td class="order_detail_th" width="120">주문자</td>
+                                        <td class="order_detail_td" id="order_name" name="order_name" width="300"></td>
+                                    </tr>
+                                    <tr class="order_detail_tr">
+                                        <td class="order_detail_th" width="120">전화번호</td>
+                                        <td class="order_detail_td" id="order_p_num" name="order_p_num" width="300"></td>
+                                    </tr>
+                                    <tr class="order_detail_tr">
+                                        <td class="order_detail_th" width="120">E-Mail</td>
+                                        <td class="order_detail_td" id="order_email" name="order_email" width="300"></td>
+                                    </tr>
+                                    <tr class="order_detail_tr">
+                                        <td class="order_detail_th" width="120">배송지</td>
+                                        <td class="order_detail_td" id="order_address" name="order_address" width="300"></td>
+                                    </tr>
+                                    <tr class="order_detail_tr">
+                                        <td class="order_detail_th" width="120">요청사항</td>
+                                        <td class="order_detail_td" id="order_memo" name="order_memo" width="300"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;" onClick="closeModal();">
+                    <span class="pop_bt modalCloseBtn" style="font-size: 13pt;">닫기
+                    </span>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -66,12 +138,14 @@
             type: "POST",
             success: function(response){
                 if (response.update_order_status == "결제 완료"){
+                    $(elm).parent().prev().text("결제 완료");
                     $(elm).attr("onclick", "pay_check(this, '" + n + "')");
                     $(elm).attr("class", "after_button");
                     $(elm).text("확인");
                     alert('입금 확인 처리가 되었습니다.');
                 }
                 else if (response.update_order_status == "결제 대기중"){
+                    $(elm).parent().prev().text("결제 대기중");
                     $(elm).attr("onclick", "pay_check(this, '" + n + "')");
                     $(elm).attr("class", "before_button");
                     $(elm).text("미확인");
@@ -83,6 +157,41 @@
             },
         });
     }
+
+    function order_detail(elm, n) {
+        $.ajax({
+            url: "{% url 'seller:order_detail_ajax' 1 %}".replace("1",n),
+            data: {'csrfmiddlewaretoken': '{{csrf_token}}'},
+            dataType: "json",
+            type: "GET",
+            success: function(response){
+                //책정보
+                $("#isbn").text(response.order_detail.isbn);
+                $("#book_img").attr("src", response.order_detail.book_img);
+                $("#book_name").text(response.order_detail.book_name);
+                $("#author").text(response.order_detail.author);
+                $("#publisher").text(response.order_detail.publisher);
+                $("#quantity").text(response.order_detail.quantity+"권");
+
+                //주문자 정보
+                $("#order_name").text(response.order_detail.order_name);
+                $("#order_p_num").text(response.order_detail.order_p_num);
+                $("#order_email").text(response.order_detail.order_email);
+                $("#order_address").text(response.order_detail.order_address);
+                $("#order_memo").text(response.order_detail.order_memo);
+            },
+            error: function(request,status,error){
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            },
+        });
+
+        $("#modal").show();
+    }
+
+    function closeModal() {
+        $('.orderModal').hide();
+    };
+
 </script>
 
 {% endblock body %}
