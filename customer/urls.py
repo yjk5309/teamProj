@@ -34,5 +34,6 @@ urlpatterns = [
     re_path(r'^order-history/$', OrderHistoryView, name='order_history'),
     re_path(r'^bookstore/book-list/$', SearchBookInStoreView, name='search_book_in_store'),
     re_path(r'^mypage_basket/$', CustomerBasketView, name='mypage_basket'),
+    re_path(r'^order-decision/(?P<order_num>\d+)/$', OrderDecisionView, name='order_decision'),
 ]
 
