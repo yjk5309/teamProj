@@ -77,7 +77,15 @@
                     </tr>
                 </table>
                 <div>
-                    <button type="button" class="button" onclick="location.href = 'javascript:popup()'">수정</button>
+                    <form name=form1 method=post>
+
+<input type="text" name="user_id" value="아이디">
+
+                    <button type="button" class="button" onclick="popup()">수정</button>
+                        </form>
+                        <input type="hidden" id="store_id" name="store_id" value="{{book.store_id}}">
+                        <input type="hidden" id="pInput" name="isbn" value="{{book.isbn}}">
+                        <button type="submit" class="button" onclick="openChild();">수정</button>
                     <button type="button" class="button" onclick="location.href = '{% url 'seller:book_delete' book.store_id book.isbn %}'">삭제</button>
                 </div>
         </div>
@@ -85,6 +93,7 @@
         {% endfor %}
         {% endif %}
     </div>
+
 </div>
 {% block footer %}
 {% include 'footer.html' %}
@@ -96,11 +105,48 @@ document.addEventListener("DOMContentLoaded", function (event) {
 });
 
 function popup(){
-            var url = "{% url 'seller:book_modify' %}";
-            var name = "상품 정보 및 재고 수정";
-            var option = "width = 500, height = 500, top = 100, left = 200, location = no";
-            window.open(url, name, option);
+            var check =document.form1;
+
+            window.open('', 'POP');
+
+            check.action="{% url 'seller:book_modify' %}";
+
+            check.target='POP';
+
+            check.submit();
         }
+function open_pop(store_id, isbn){
+    var frmPop= document.frmPopup;
+    var url = "{% url 'seller:book_modify' %}";
+    var name = "상품 정보 및 재고 수정";
+    var option = "width = 600, height = 600, top = 100, left = 200, location = no";
+    window.open(url, name, option);
+
+    frmPop.action = url;
+    frmPop.target = "상품 정보 및 재고 수정";
+    frmPop.store_id.value = document.getElementById("store_id");
+    frmPop.isbn.value = document.getElementById("isbn");
+    frmPop.method="post";
+    frmPop.submit();
+
+}
+var openWin;
+
+function openChild(){
+    // window.name = "부모창 이름";
+    window.name = "parentForm";
+    // window.open("open할 window", "자식창 이름", "팝업창 옵션");
+    var url = "{% url 'seller:book_modify' %}";
+    var option = "width = 600, height = 600, top = 100, left = 200, location = no";
+    openWin = window.open(url, "childForm", option);
+
+    openWin.document.getElementById("cInput").value = document.getElementById("pInput").value;
+    }
+
+function setChildText(){
+    openWin.document.getElementById("cInput").value = document.getElementById("pInput").value;
+}
+
 </script>
 
 <script type="text/javascript" src="./main.41beeca9.js"></script>
