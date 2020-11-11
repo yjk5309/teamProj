@@ -24,7 +24,7 @@ def SellerRegisterView(request):
                 new_user.save()
 
                 messages.success(request, "회원가입에 성공하였습니다.")
-                return redirect('customer_accounts:login')
+                return redirect('seller_accounts:seller_login')
 
             else:
                 messages.error(request, "비밀번호가 일치하지 않습니다.")

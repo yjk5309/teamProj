@@ -6,3 +6,41 @@ from customer_accounts.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+
+def execute_and_get(sql, data = None) -> tuple :
+    try:
+        cursor = connection.cursor()
+        if data is None:
+            result = cursor.execute(sql,)
+
+        else:
+            result = cursor.execute(sql, data)
+
+        datas = cursor.fetchall()
+        connection.commit()
+
+    except:
+        connection.rollback()
+
+    finally:
+        connection.close()
+
+    return datas
+
+
+def execute(sql, data = None) -> tuple :
+    try:
+        cursor = connection.cursor()
+        if data is None:
+            result = cursor.execute(sql,)
+
+        else:
+            result = cursor.execute(sql, data)
+
+        connection.commit()
+
+    except:
+        connection.rollback()
+
+    finally:
+        connection.close()

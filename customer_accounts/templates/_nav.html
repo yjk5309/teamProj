@@ -11,7 +11,7 @@
           <li><a href="{% url 'customer:category' %}" title="">카테고리</a></li>
           <li><a href="{% url 'customer:search_book' %}" title="">책 검색</a></li>
           <li><a href="{% url 'customer:search_store' %}" title="">서점 검색</a></li>
-          {% if user.is_authenticated %}
+          {% if user.is_authenticated and user.user_type == 2 %}
             <li><a href="{% url 'customer:mypage' %}" title="">마이페이지</a></li>
             <li><a href="{% url 'customer:mypage_basket' %}" title="">장바구니</a></li>
             <li>
