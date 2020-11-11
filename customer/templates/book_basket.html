@@ -2,10 +2,10 @@
     <input type="checkbox" name="all" class="check-all"> <label>전체 선택</label>
     <div class="row justify-content-center align-items-center">
         {% for data in request.session.user_basket %}
-        <div style="margin-top:100px;" class="basket">
+        <div style="margin-top:70px;" class="basket">
                 <input type="checkbox" name="cart" class="ab" value="{{data.store_id}},{{data.isbn}},{{ data.quantity }}">&nbsp;&nbsp;
                 <img width="160" height="220" src="{{ data.book_img }}" onclick="location.href='{% url 'customer:book_detail' data.isbn data.store_id %}'">
-                <table class="basket_table" style="text-align:center;">
+                <table class="basket_table" style="text-align:center; height:60px">
                     <tr class="basket_tr">
                         <td class="basket_td1"><p class="content_title">상품명</p></td>
                         <td class="basket_td"><a class="content" href="{% url 'customer:book_detail' data.isbn data.store_id %}">{{ data.book_name }}</a></td>
@@ -24,7 +24,7 @@
                     </tr>
                     <tr class="basket_tr">
                         <td class="basket_td1"><p class="content_title">수량</p></td>
-                        <td class="basket_td"><a class="content">{{ data.quantity }}</a></td>
+                        <td class="basket_td"><p class="content">{{ data.quantity }}</p></td>
                     </tr>
                 </table>
                 <div align="right">
