@@ -3,3 +3,4 @@ from .ProductListView import *
 from .SearchBookInManageView import *
 from .ProductDeleteView import *
 from .ProductModifyView import *
+from .AjaxGetProductInfoView import *

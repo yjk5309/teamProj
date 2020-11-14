@@ -4,9 +4,12 @@ from .common import *
 def ProductModifyView(request):
     store_id = request.POST.get('store_id')
     isbn = request.POST.get('isbn')
-    book_sql = "SELECT book_name, inven, price, book_msg " \
-               "FROM book_inven WHERE store_id=(%s) and book_isbn=(%s) "
-    data = execute_and_get(book_sql, (store_id, isbn,))
+    inven = request.POST.get('inven')
+    price = request.POST.get('price')
+    book_msg = request.POST.get('book_msg')
 
+    update_sql = "UPDATE book_inven SET inven = (%s), price = (%s), book_msg = (%s) " \
+                 "WHERE store_id = (%s) and book_isbn = (%s) "
+    execute(update_sql, (inven, price, book_msg, store_id, isbn,))
 
-    return render(request, 'product_modify.html', {})
+    return redirect('seller:product_list')

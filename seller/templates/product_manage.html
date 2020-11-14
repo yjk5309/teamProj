@@ -50,7 +50,7 @@
                             </tr>
                         </table>
                         <div>
-                            <button type="button" class="button" onclick="location.href = 'javascript:popup()'">수정</button>
+                            <button type="button" class="button" onclick="book_search(this, '{{ book.isbn }}')">수정</button>
                             <button type="button" class="button" onclick="location.href = '{% url 'seller:book_delete' book.store_id book.isbn %}'">삭제</button>
                         </div>
                 </div>
@@ -77,15 +77,7 @@
                     </tr>
                 </table>
                 <div>
-                    <form name=form1 method=post>
-
-<input type="text" name="user_id" value="아이디">
-
-                    <button type="button" class="button" onclick="popup()">수정</button>
-                        </form>
-                        <input type="hidden" id="store_id" name="store_id" value="{{book.store_id}}">
-                        <input type="hidden" id="pInput" name="isbn" value="{{book.isbn}}">
-                        <button type="submit" class="button" onclick="openChild();">수정</button>
+                    <button type="button" class="button" onclick="book_search(this, '{{ book.isbn }}')">수정</button>
                     <button type="button" class="button" onclick="location.href = '{% url 'seller:book_delete' book.store_id book.isbn %}'">삭제</button>
                 </div>
         </div>
@@ -93,7 +85,35 @@
         {% endfor %}
         {% endif %}
     </div>
-
+<div id="modal" class="searchModal">
+    <div class="search-modal-content">
+        <div class="page-header">
+            <h1>책 정보를 수정합니다.</h1>
+        </div>
+    <form class="mt-3" method="post" action='{% url "seller:book_modify" %}' enctype="multipart/form-data">{% csrf_token %}
+    <div class="form-group">
+        <input type="text" class="form-control" id="name" name="name" value="" required readonly>
+    </div>
+    <div class="form-group">수량
+        <input type="number" class="form-control" id="inven" name="inven" value="" placeholder="등록수량" required>
+    </div>
+    <div class="form-group">가격(원)
+        <input type="text" class="form-control" id="price" name="price" value="" placeholder="판매가격" required>
+    </div>
+    <div class="form-group">책 소개
+        <input type="textarea" class="form-control" id="book_msg" name="book_msg" value="" placeholder="책 소개" rows="5" required>
+    </div>
+        <input type="hidden" id="store_id" name="store_id" value="">
+        <input type="hidden" id="isbn" name="isbn" value="">
+    <button type="submit" class="btn btn-primary" >수정</button>
+    </form><br>
+        <hr>
+        <div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;" onClick="closeModal();">
+            <span class="pop_bt modalCloseBtn" style="font-size: 13pt;">닫기
+            </span>
+        </div>
+    </div>
+</div>
 </div>
 {% block footer %}
 {% include 'footer.html' %}
@@ -104,48 +124,31 @@ document.addEventListener("DOMContentLoaded", function (event) {
     navActivePage();
 });
 
-function popup(){
-            var check =document.form1;
+function book_search(elm, n) {
+    $.ajax({
+        url: "{% url 'seller:book_modify_ajax' 1 %}".replace("1",n),
+        data: {'csrfmiddlewaretoken': '{{csrf_token}}'},
+        dataType: "json",
+        type: "GET",
+        success: function(response){
+            //책정보
+            $("#name").attr('value',response.book_info.name);
+            $("#inven").attr('value',response.book_info.inven);
+            $("#price").attr('value',response.book_info.price);
+            $("#book_msg").attr('value',response.book_info.book_msg);
+            $("#store_id").attr('value',response.book_info.store_id);
+            $("#isbn").attr('value',response.book_info.isbn);
+        },
+        error: function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        },
+    });
 
-            window.open('', 'POP');
-
-            check.action="{% url 'seller:book_modify' %}";
-
-            check.target='POP';
-
-            check.submit();
-        }
-function open_pop(store_id, isbn){
-    var frmPop= document.frmPopup;
-    var url = "{% url 'seller:book_modify' %}";
-    var name = "상품 정보 및 재고 수정";
-    var option = "width = 600, height = 600, top = 100, left = 200, location = no";
-    window.open(url, name, option);
-
-    frmPop.action = url;
-    frmPop.target = "상품 정보 및 재고 수정";
-    frmPop.store_id.value = document.getElementById("store_id");
-    frmPop.isbn.value = document.getElementById("isbn");
-    frmPop.method="post";
-    frmPop.submit();
-
+    $("#modal").show();
 }
-var openWin;
-
-function openChild(){
-    // window.name = "부모창 이름";
-    window.name = "parentForm";
-    // window.open("open할 window", "자식창 이름", "팝업창 옵션");
-    var url = "{% url 'seller:book_modify' %}";
-    var option = "width = 600, height = 600, top = 100, left = 200, location = no";
-    openWin = window.open(url, "childForm", option);
-
-    openWin.document.getElementById("cInput").value = document.getElementById("pInput").value;
-    }
-
-function setChildText(){
-    openWin.document.getElementById("cInput").value = document.getElementById("pInput").value;
-}
+function closeModal() {
+    $('.searchModal').hide();
+};
 
 </script>
 
