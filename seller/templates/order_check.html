@@ -58,35 +58,13 @@
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-12">
-                                <table class="order_detail">
-                                    <caption style="font-weight:bold; font-size:20px;">상품 정보</caption>
-                                    <tr class="order_detail_tr">
-                                        <td class="order_detail_th" width="120">ISBN</td>
-                                        <td class="order_detail_td" id="isbn" name="isbn" width="200"></td>
-                                    </tr>
-                                    <tr class="order_detail_tr">
-                                        <td class="order_detail_th" width="120">책 제목</td>
-                                        <td class="order_detail_td" width="200">
-                                            <p id="book_name" name="book_name"></p>
-                                            <img width="180" height="200" id="book_img" name="book_img" src="">
-                                        </td>
-                                    </tr>
-                                    <tr class="order_detail_tr">
-                                        <td class="order_detail_th" width="120">작가</td>
-                                        <td class="order_detail_td" id="author" name="author" width="200"></td>
-                                    </tr>
-                                    <tr class="order_detail_tr">
-                                        <td class="order_detail_th" width="120">출판사</td>
-                                        <td class="order_detail_td" id="publisher" name="publisher" width="200"></td>
-                                    </tr>
-                                    <tr class="order_detail_tr">
-                                        <td class="order_detail_th" width="120">주문량</td>
-                                        <td class="order_detail_td" id="quantity" name="quantity" width="200"></td>
-                                    </tr>
-                                </table>
+                                <p style="font-weight:bold; font-size:25px;">주문상품 정보</p>
+                                <div id="book_info" name="book_info">
+
+                                </div>
 
                                 <table class="order_detail">
-                                    <caption style="font-weight:bold; font-size:20px;">주문자 정보</caption>
+                                    <p style="font-weight:bold; font-size:25px;">주문자 정보</p>
                                     <tr class="order_detail_tr">
                                         <td class="order_detail_th" width="120">주문자</td>
                                         <td class="order_detail_td" id="order_name" name="order_name" width="300"></td>
@@ -166,12 +144,24 @@
             type: "GET",
             success: function(response){
                 //책정보
-                $("#isbn").text(response.order_detail.isbn);
-                $("#book_img").attr("src", response.order_detail.book_img);
-                $("#book_name").text(response.order_detail.book_name);
-                $("#author").text(response.order_detail.author);
-                $("#publisher").text(response.order_detail.publisher);
-                $("#quantity").text(response.order_detail.quantity+"권");
+                var book_info = "";
+                for(i=0; response.book_data.length; i++){
+                    if(i==response.book_data.length){
+                            break;
+                        }
+                    var data = "<div class='order_book'><img class='book_img' width='180' height='200' src='"+ response.book_data[i].book_img +"'>";
+                    data += "<table class='book_content'> <tr><td class='book_content_td'>ISBN</td><td>"+ response.book_data[i].isbn +"</td></tr>";
+                    data += "<tr><td class='book_content_td'>제목</td><td>"+ response.book_data[i].book_name +"</td></tr>";
+                    data += "<tr><td class='book_content_td'>작가</td><td>"+ response.book_data[i].author +"</td></tr>";
+                    data += "<tr><td class='book_content_td'>출판사</td><td>"+ response.book_data[i].publisher +"</td></tr>";
+                    data += "<tr><td class='book_content_td'>주문수량</td><td>"+ response.book_data[i].quantity +"권</td></tr></table></div>"
+
+
+                    data += "<hr>"
+                    book_info += data;
+                }
+
+                $("#book_info").html(book_info);
 
                 //주문자 정보
                 $("#order_name").text(response.order_detail.order_name);
