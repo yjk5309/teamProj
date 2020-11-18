@@ -2,6 +2,7 @@ from .common import *
 
 @login_required
 def OrderDetailView(request,order_num):
+    order_status = execute_and_get("SELECT order_status FROM order_products WHERE order_num = (%s)", (order_num,))
 
     orderDetailSql = "SELECT a.order_num, b.first_name, a.order_name, a.order_address, " \
                      "a.order_p_num, a.order_memo, a.payment, sum(c.purchased_price), a.buy_date, " \
@@ -23,7 +24,7 @@ def OrderDetailView(request,order_num):
                     'due_date':data[0][9],
                     }
 
-    productSql = "SELECT a.book_name, c.store_name, b.purchased_price, a.book_img, b.order_status, b.quantity " \
+    productSql = "SELECT a.book_name, c.store_name, b.purchased_price, a.book_img, b.order_status, b.quantity, b.id " \
                  "FROM book AS a " \
                  "JOIN order_products AS b " \
                  "ON a.isbn = b.isbn " \
@@ -44,6 +45,7 @@ def OrderDetailView(request,order_num):
             'book_img': data[3],
             'order_status':data[4],
             'quantity':data[5],
+            'order_id':data[6]
         }
         products.append(row)
 
@@ -65,4 +67,5 @@ def OrderDetailView(request,order_num):
         }
         account_info.append(row)
 
-    return render(request, 'order_detail.html', {'order_detail':order_detail, 'products':products, 'account_info':account_info})
+    return render(request, 'order_detail.html', {'order_detail':order_detail, 'products':products,
+                                                 'account_info':account_info, 'order_status':order_status[0][0]})
