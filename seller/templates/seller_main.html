@@ -21,15 +21,15 @@
                     <td>N개</td>
                 </tr>
                 <tr>
-                    <th scope="row">배송 & 구매확정전</th>
+                    <th scope="row" onclick="location.href='{% url 'seller:delivery_check' %}'">배송 & 구매확정전</th>
                     <td>N개</td>
                 </tr>
                 <tr>
-                    <th scope="row">구매확정 & 정산대기</th>
+                    <th scope="row" onclick="location.href='{% url 'seller:settlement_check' %}'">정산 조회</th>
                     <td>N개</td>
                 </tr>
                 <tr>
-                    <th scope="row">정산완료</th>
+                    <th scope="row">월별 정산서</th>
                     <td>N개</td>
                 </tr>
                 <tr>

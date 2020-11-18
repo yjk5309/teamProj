@@ -12,6 +12,7 @@ urlpatterns = [
     re_path(r'^book_register/$', BookRegisterView, name='book_register'),
     re_path(r'^delivery/$', DeliveryCheckView, name='delivery_check'),
     re_path(r'^delivery-ajax/(?P<order_num>\d+)/$', DeliveryCheckAjaxView, name='delivery_check_ajax'),
+    re_path(r'^settlement/$', SettlementCheckView, name='settlement_check'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
