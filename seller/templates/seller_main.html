@@ -3,17 +3,14 @@
 {% block head %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/seller_main.css' %}">
 {% endblock head %}
-
 {% block title %}
 판매자 홈 | alleybookstore
 {% endblock title %}
-
 {% block _nav %}
   {% include '_seller_nav.html' %}
 {% endblock _nav %}
-
 {% block body %}
-    {% if store_manager == user.username %}
+    {% if user.is_authenticated %}
     <div class="seller_flex">
         <div class="seller_main">
             <b style="color:purple; margin-left:10px; font-size:20px">| <b style="color:orange">판매 현황</b>
@@ -60,7 +57,6 @@
                 </tr>
             </table>
         </div>
-
         <div class="seller_main">
             <b style="color:purple; margin-left:10px; font-size:20px">| <b style="color:orange">반품 접수 내역</b>
            </b>
@@ -109,30 +105,18 @@
     <div class="not_login_flex" style="margin-bottom:50px">
         <div class="seller_main" style="margin-left:500px; text-align:center">
             <br><b style="font-size:30px"># ALLEY BOOKSTORE Shop Manger</b><br>
-            {% if user.user_type == 3 %}
-                <button class="button" onclick="location.href='{% url 'seller_accounts:bookstore_register' %}'">서점등록</button>
-            {% else %}
-                <b><b style="color:red">판매자전용</b> 페이지입니다.</b><br>
-                <b>판매자가입 페이지로 이동하시려면 아래의 버튼을 눌러주세요.</b><br>
-                <button class="button" onclick="location.href='{% url 'seller_accounts:seller_register' %}'">판매자 가입</button>
-            {% endif %}
+            <button class="button">서점등록</button>
             <div><img class="seller_main_img" width="500px" height="400px" src="{% static 'images/not_login_main.jpg' %}"></div>
         </div>
     </div>
     {% endif %}
-
-
 {% block footer %}
 {% include 'footer.html' %}
 {% endblock footer  %}
-
 <script>
   document.addEventListener("DOMContentLoaded", function (event) {
     navActivePage();
   });
 </script>
-
-
 <script type="text/javascript" src="./main.41beeca9.js"></script>
-
 {% endblock body %}
