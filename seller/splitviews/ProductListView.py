@@ -1,5 +1,6 @@
 from .common import *
 
+@login_required
 def ProductListView (request):
     user = request.user
     idSql = "SELECT id FROM bookstore WHERE seller_id = (%s)"

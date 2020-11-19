@@ -1,5 +1,6 @@
 from .common import *
 
+@login_required
 def SearchBookInManageView (request):
     tab = 'search_book'
     user = request.user
