@@ -1,5 +1,6 @@
 from .common import *
 
+@login_required
 def DeliveryCheckView(request):
     user = request.user
     id_sql = "SELECT id FROM bookstore WHERE seller_id = (%s)"
