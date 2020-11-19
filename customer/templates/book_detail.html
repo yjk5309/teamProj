@@ -100,9 +100,14 @@
     </div>
     <div class="text-center mt-3">
         <h3 align="left">책소개</h3>
-
+        <br>
         <div class="book_msg">
-            <p> {{ book.book_msg }}  </p>
+            {% if book.detail_img == None %}
+                <img width="300" height="330" src="{% static 'images/default_img.jpg' %}">
+            {% else %}
+                <img width="300" height="330" src="{{ book.detail_img }}">
+            {% endif %}
+            <br><br><p>{{ book.book_msg }}</p>
         </div><hr><br>
         <div class="review">
             <h3 align="left" id="review_list">리뷰</h3><br>

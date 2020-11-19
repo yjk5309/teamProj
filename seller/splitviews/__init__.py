@@ -4,3 +4,6 @@ from .SearchBookInManageView import *
 from .ProductDeleteView import *
 from .ProductModifyView import *
 from .AjaxGetProductInfoView import *
+from .ProductRegisterView import *
+from .SearchBookAjaxView import *
+from .BookRegisterView import *
