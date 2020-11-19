@@ -20,10 +20,6 @@
             </b>
             <table class="type04">
                 <tr>
-                    <th scope="row">등록상품</th>
-                    <td>{{selling_info.product_count}}개</td>
-                </tr>
-                <tr>
                     <th scope="row">주문 확인 요청</th>
                     <td>N개</td>
                 </tr>
@@ -47,19 +43,15 @@
         </div>
 
         <div class="seller_main">
-            <b style="color:purple; margin-left:10px; font-size:20px">| <b style="color:orange">게시판</b>
+            <b style="color:purple; margin-left:10px; font-size:20px">| <b style="color:orange">상품 관리</b>
            </b>
             <table class="type04">
                 <tr>
-                    <th scope="row">서점 공지사항</th>
+                    <th scope="row">상품 등록</th>
                     <td>N개</td>
                 </tr>
                 <tr>
-                    <th scope="row">판매 평가</th>
-                    <td>N개</td>
-                </tr>
-                <tr>
-                    <th scope="row">Q&A</th>
+                    <th scope="row"><a href="{% url 'seller:product_list' %}">상품 및 재고 관리</a></th>
                     <td>N개</td>
                 </tr>
                 <tr>
@@ -91,23 +83,19 @@
 
     <div class="seller_flex" style="margin-bottom:50px">
         <div class="seller_main">
-            <b style="color:purple; margin-left:10px; font-size:20px">| <b style="color:orange">??????????</b>
+            <b style="color:purple; margin-left:10px; font-size:20px">| <b style="color:orange">게시판</b>
            </b>
             <table class="type04">
                 <tr>
-                    <th scope="row">???</th>
+                    <th scope="row">서점 공지사항</th>
                     <td>N개</td>
                 </tr>
                 <tr>
-                    <th scope="row">???</th>
+                    <th scope="row">판매 평가</th>
                     <td>N개</td>
                 </tr>
                 <tr>
-                    <th scope="row">???</th>
-                    <td>N개</td>
-                </tr>
-                <tr>
-                    <th scope="row">???</th>
+                    <th scope="row">Q&A</th>
                     <td>N개</td>
                 </tr>
                 <tr>
