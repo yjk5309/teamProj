@@ -25,9 +25,9 @@
                         <form class="mt-3" method="post" enctype="multipart/form-data" action='{% url "seller:settlement_check" %}'>{% csrf_token %}
                               <select id="settlement_status" name="settlement_status">
                                 <option value="">정산 상태별</option>
-                                <option value="Null">구매 확정</option>
-                                <option value="False">정산 대기</option>
-                                <option value="True">정산 완료</option>
+                                <option value="구매 확정">구매 확정</option>
+                                <option value="정산 대기">정산 대기</option>
+                                <option value="정산 완료">정산 완료</option>
                               </select>
                             <button class="btn btn-primary" type="submit">조회</button>
                         </form>
