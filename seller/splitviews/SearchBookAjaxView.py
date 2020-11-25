@@ -1,5 +1,6 @@
 from .common import *
 
+@login_required
 def SearchBookAjaxView(request):
     title = request.GET.get('search_book_name')
     publisher = request.GET.get('search_book_publisher')

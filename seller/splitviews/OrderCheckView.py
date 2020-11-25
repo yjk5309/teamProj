@@ -1,5 +1,6 @@
 from .common import *
 
+@login_required
 def OrderCheckView(request):
     user = request.user
 

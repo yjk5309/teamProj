@@ -1,9 +1,12 @@
 from .common import *
 
+@login_required
 def OrderDetailView(request, order_num):
     user = request.user
 
-    order_products = execute_and_get("SELECT isbn, quantity FROM order_products WHERE order_num = (%s)", (order_num,))
+    store_id = execute_and_get("SELECT id FROM bookstore WHERE seller_id = (%s)", (user.username,))
+
+    order_products = execute_and_get("SELECT isbn, quantity FROM order_products WHERE order_num = (%s) AND store_id = (%s)", (order_num, store_id[0][0],))
 
     order_info = execute_and_get("SELECT order_name, order_address, order_p_num, order_email, order_memo " +
                                  "FROM order_info WHERE order_num = (%s)", (order_num,))
