@@ -9,3 +9,6 @@ from .SearchBookAjaxView import *
 from .BookRegisterView import *
 from .DeliveryCheckView import *
 from .DeliveryCheckAjaxView import *
+from .NoticeForCustomerView import *
+from .NoticeDeleteView import *
+from .AjaxGetNoticeView import *
