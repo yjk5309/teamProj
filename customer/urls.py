@@ -1,5 +1,7 @@
 from django.urls import re_path
 from .splitviews import *
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'customer'
 
@@ -39,3 +41,4 @@ urlpatterns = [
     re_path(r'^product-return/(?P<order_id>\d+)/$', ProductReturnView, name='product_return'),
 ]
 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

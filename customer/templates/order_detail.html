@@ -73,7 +73,7 @@
                 <td width="180">{{book.store_name}}</td>
                 <td width="120">{{book.order_status}}</td>
                 {% if book.order_status == "배송 완료" or book.order_status == "구매확정" %}
-                    <td width="60"><button class="order_confirm_button1" type="button" onclick="location.href='{% url 'customer:product_return' book.order_id %}'">반품신청</button></td>
+                    <td width="60"><button class="order_confirm_button1" type="button" onclick="location.href='{% url 'customer:product_return' book.order_product_id %}'">반품신청</button></td>
                 {% else %}
                     <td width="60"><button class="none_button" onclick="#"></button></td>
                 {% endif %}

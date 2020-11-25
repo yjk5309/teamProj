@@ -1,5 +1,6 @@
 from .common import *
 
+@login_required
 def OrderCancelView(request, order_num):
     order_status = execute_and_get("SELECT order_status FROM order_products WHERE order_num = (%s)", (order_num,))
 

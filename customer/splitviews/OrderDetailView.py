@@ -45,7 +45,7 @@ def OrderDetailView(request,order_num):
             'book_img': data[3],
             'order_status':data[4],
             'quantity':data[5],
-            'order_id':data[6]
+            'order_product_id':data[6]
         }
         products.append(row)
 
