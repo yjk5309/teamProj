@@ -31,9 +31,8 @@ def BookStoreRegisterView(request):
                        "address, store_num, store_email, store_msg, bookstore_img, seller_id, business_num) " \
                        "VALUES ((%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s),(%s))"
             execute(orderSql, (store_name, repre_name, address, store_number, store_email, store_msg, store_img_url, user, business_num,))
-
-            messages.success(request, "서점 등록에 성공하였습니다.")
-            return redirect('customer:main')
+            messages.success(request, "서점 정보 등록에 성공하였습니다. 배송정보를 입력해주세요.")
+            return redirect('seller_account:shipping_info_register')
 
         else:
             messages.error(request, "이미 등록된 사업자번호입니다.")
