@@ -17,7 +17,11 @@
 <div class="container">
     <div align="center">
         <div class="content">
-        <h4 align="left">현재 등록되어있는 공지사항입니다</h4>
+            <div align="left">
+            <h4>현재 등록되어있는 공지사항입니다</h4>
+            <p style="width:450px;">- 고객분들이 참고할 중요한 내용들을 공지사항으로 등록해주세요
+            - 공지사항은 한 건당 100자까지 입력할 수 있습니다</p>
+            </div>
         <div style="margin-top:30px;">
                 <table>
                     <tr>
@@ -42,7 +46,7 @@
     <div class="form">
         <form class="mt-3" method="post" action='{% url "seller:notice" %}' enctype="multipart/form-data">{% csrf_token %}
             <input type="hidden" id="notice_id" name="notice_id" value="">
-            <textarea cols="90" rows="5" id="notice" name="notice" value="" placeholder="공지사항을 써주세요." rows="4" required></textarea>
+            <textarea cols="90" rows="5" id="notice" name="notice" value="" required></textarea>
             <button id="btn" type="submit" class="btn btn-primary"><span>등록</span></button>
         </form>
     </div>
@@ -64,7 +68,7 @@ function notice_modify(elm, n) {
         dataType: "json",
         type: "GET",
         success: function(response){
-            $("#notice").attr('value',response.notice_info.notice);
+            $("#notice").val(response.notice_info.notice);
             $("#notice_id").attr('value',response.notice_info.notice_id);
 
         },
