@@ -28,11 +28,16 @@
                 </tr>
                 {% for data in bank %}
                 <tr class="order_history_tr">
-                    <td class="order_history_td" width="190">{{ data.order_num }}</a></td>
+                    <td class="order_history_td" width="190">{{ data.order_num }}</td>
                     <td class="order_history_td" width="250">{{ data.purchased_price }} 원</td>
                 </tr>
                 {% endfor %}
+                <tr class="order_history_tr">
+                    <th class="order_history_td" width="190">합계</th>
+                    <td class="order_history_td" width="250">{{ bank_sum }} 원</td>
+                </tr>
             </table>
+            <br>
             <h4>카드결제 내역</h4>
             <table class="order_history">
                 <tr class="order_history_tr">
@@ -41,13 +46,18 @@
                 </tr>
                 {% for data in card %}
                 <tr class="order_history_tr">
-                    <td class="order_history_td" width="190">{{ data.order_num }}</a></td>
+                    <td class="order_history_td" width="190">{{ data.order_num }}</td>
                     <td class="order_history_td" width="250">{{ data.purchased_price }} 원</td>
                 </tr>
                 {% endfor %}
+                <tr class="order_history_tr">
+                    <th class="order_history_td" width="190">합계</th>
+                    <td class="order_history_td" width="250">{{ card_sum }} 원</td>
+                </tr>
             </table>
+            <hr>
             <h4>정산금액</h4>
-            <p></p>
+            <p>총 합계 {{ sum }} 원 - 수수료 {{ commission }} 원 = 정산 후 금액 {{ result }} 원 </p>
         </div>
     </div>
 </div>
