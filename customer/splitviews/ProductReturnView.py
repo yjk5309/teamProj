@@ -32,4 +32,6 @@ def ProductReturnView(request, order_id):
         execute("INSERT INTO product_return(user_id, order_product_id, return_reason, product_img)"+
                 " VALUES ((%s), (%s), (%s), (%s))", (user.username, order_id, return_reason, product_img_url,))
 
+        execute("UPDATE order_products SET order_status = '반품 접수중' WHERE id = (%s)", (order_id,))
+
         return redirect('customer:mypage')
