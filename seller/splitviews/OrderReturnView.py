@@ -6,7 +6,7 @@ def OrderReturnView(requet):
     store_id = execute_and_get("SELECT id FROM bookstore WHERE seller_id = (%s)", (user.username,))
 
     return_product = execute_and_get("SELECT b.user_id, b.order_product_id, b.return_reason, b.product_img, " +
-                                     "a.delivery_compl_time, a.order_num, a.purchased_price, b.id, a.order_status " +
+                                     "a.delivery_compl_time, a.order_num, a.purchased_price, b.id, a.order_status, b.time " +
                                      "FROM order_products as a JOIN product_return as b ON a.id = b.order_product_id "+
                                      "WHERE a.store_id = (%s)", (store_id[0][0],))
 
@@ -22,6 +22,7 @@ def OrderReturnView(requet):
                'purchased_price': data[6],
                'return_id': data[7],
                'order_status': data[8],
+               'time': data[9],
                }
 
         products.append(row)
