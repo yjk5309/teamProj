@@ -13,7 +13,7 @@
           <li><a href="{% url 'seller:order_check' %}" title="">주문확인 요청</a></li>
           <li><a href="#" title="">판매관리</a></li>
           <li><a href="#" title="">정산조회</a></li>
-          <li><a href="#" title="">반품관리</a></li>
+          <li><a href="{% url 'seller:order_return' %}" title="">반품관리</a></li>
           {% if user.is_authenticated %}
             <li>
               <p>

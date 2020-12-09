@@ -13,6 +13,8 @@ urlpatterns = [
     re_path(r'^order/$', OrderCheckView, name='order_check'),
     re_path(r'^pay-check-ajax/(?P<order_num>\d+)/$', PayCheckAjaxView, name='pay_check_ajax'),
     re_path(r'^order-detail-ajax/(?P<order_num>\d+)/$', OrderDetailView, name='order_detail_ajax'),
+    re_path(r'^order-return/$', OrderReturnView, name='order_return'),
+    re_path(r'^order-return-check-ajax/(?P<return_id>\d+)/$', OrderReturnCheckAjaxView, name='order_return_check_ajax'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
