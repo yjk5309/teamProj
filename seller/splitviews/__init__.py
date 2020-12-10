@@ -6,3 +6,4 @@ from .DeliveryCheckView import *
 from .DeliveryCheckAjaxView import *
 from .SettlementCheckView import *
 from .MonthlySettlementView import *
+from .ReviewManageView import *

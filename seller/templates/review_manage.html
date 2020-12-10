@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/order.css' %}">
+{% endblock head %}
+
+{% block title %}
+리뷰 관리 | alleybookstore
+{% endblock title %}
+
+{% block _nav %}
+  {% include '_seller_nav.html' %}
+{% endblock _nav %}
+
+{% block body %}
+<div class="container">
+<div id="review_order" name="review_order">
+            {% for review in lately_review %}
+            <div class="review_list">
+                <p id="review_title" name="review_title"> {{ review.title }} &nbsp;&nbsp</p>
+                        <b style="color:gold; align:right" id="review_score" name="review_score" >
+                            {% if review.evaluate_score == 2 %}★☆☆☆☆
+                            {% elif review.evaluate_score == 4 %}★★☆☆☆
+                            {% elif review.evaluate_score == 6 %}★★★☆☆
+                            {% elif review.evaluate_score == 8 %}★★★★☆
+                            {% elif review.evaluate_score == 10 %}★★★★★
+                            {% endif %} &nbsp;&nbsp;
+                        </b><br>
+                        <p id="review_user" name="review_user">{{ review.user_id }} &nbsp;&nbsp;</p>
+            </div>
+            <p id="review_content" name="review_content"> {{ review.content }} </p>
+            {% endfor %}
+            </div>
+</div>
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript">
+
+
+</script>
+
+{% endblock body %}

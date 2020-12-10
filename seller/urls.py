@@ -14,6 +14,7 @@ urlpatterns = [
     re_path(r'^delivery-ajax/(?P<order_num>\d+)/$', DeliveryCheckAjaxView, name='delivery_check_ajax'),
     re_path(r'^settlement/$', SettlementCheckView, name='settlement_check'),
     re_path(r'^monthly-settlement/$', MonthlySettlementView, name='monthly_settlement'),
+    re_path(r'^review/$', ReviewManageView, name='review_manage'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
