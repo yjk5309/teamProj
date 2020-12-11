@@ -2,14 +2,6 @@
     display: flex;
 }
 
-.form {
-    background-color:#E6E6FA;
-    border-radius:5px;
-    margin-bottom:30px;
-    padding-top:30px;
-    padding-bottom:10px;
-}
-
 .book_table {
     border-collapse: separate;
     border-spacing: 1px;
