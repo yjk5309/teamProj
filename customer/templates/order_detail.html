@@ -80,7 +80,22 @@
             </tr>
         </table>
         {% endfor %}
-<br>
+          <br>
+          {% if is_return_reject == 1 %}
+            <table>
+                <tr>
+                    <td width="100px" style="font-weight:bold">책 이름</td>
+                    <td style="font-weight:bold">환불 거절사유</td>
+                </tr>
+                {% for data in return_reject_info %}
+                    <tr>
+                        <td>{{data.book_name}}</td>
+                        <td>{{data.reject_reason}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <br>
+          {% endif %}
         <table>
           <tr>
             <th>총 주문 금액</th>

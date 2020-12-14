@@ -71,5 +71,24 @@ def OrderDetailView(request,order_num):
         }
         account_info.append(row)
 
+    return_reject_datas = \
+        execute_and_get("SELECT a.reject_reason, b.isbn " +
+                        "FROM product_return as a JOIN order_products as b ON a.order_product_id = b.id " +
+                        "WHERE b.order_num = (%s)", (order_num,))
+
+    return_reject_info = []
+    for data in return_reject_datas:
+        book_name = execute_and_get("SELECT book_name FROM book WHERE isbn = (%s)", (data[1],))
+        row = {
+            'reject_reason': data[0],
+            'book_name': book_name[0][0],
+        }
+        return_reject_info.append(row)
+
+    is_return_reject = 0
+    if len(return_reject_info) != 0:
+        is_return_reject = 1
+
     return render(request, 'order_detail.html', {'order_detail':order_detail, 'products':products,
-                                                 'account_info':account_info, 'order_status':order_status[0][0]})
+                                                 'account_info':account_info, 'order_status':order_status[0][0], 'return_reject_info': return_reject_info,
+                                                 'is_return_reject': is_return_reject})
