@@ -7,3 +7,5 @@ from .PayCheckAjaxView import *
 from .OrderDetailView import *
 from .OrderReturnView import *
 from .OrderRetrunCheckAjaxView import *
+from .OrderReturnRejectView import *
+from .OrderReturnRejectComplAjaxView import *

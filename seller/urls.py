@@ -15,6 +15,8 @@ urlpatterns = [
     re_path(r'^order-detail-ajax/(?P<order_num>\d+)/$', OrderDetailView, name='order_detail_ajax'),
     re_path(r'^order-return/$', OrderReturnView, name='order_return'),
     re_path(r'^order-return-check-ajax/(?P<return_id>\d+)/$', OrderReturnCheckAjaxView, name='order_return_check_ajax'),
+    re_path(r'^order-return-reject/(?P<return_id>\d+)/$', OrderReturnRejectView, name='order_return_reject'),
+    re_path(r'^order-return-reject-compl-ajax/(?P<return_id>\d+)/$', OrderReturnRejectCompAjaxlView, name='order_return_reject_compl_ajax'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
