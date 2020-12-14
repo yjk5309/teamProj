@@ -50,16 +50,26 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
     $('.tab_menu_btn').on('click',function(){
-  //버튼 색 제거,추가
-  $('.tab_menu_btn').removeClass('on');
-  $(this).addClass('on')
+      //버튼 색 제거,추가
+      $('.tab_menu_btn').removeClass('on');
+      $(this).addClass('on')
 
-  //컨텐츠 제거 후 인덱스에 맞는 컨텐츠 노출
-  var idx = $('.tab_menu_btn').index(this);
+      //컨텐츠 제거 후 인덱스에 맞는 컨텐츠 노출
+      var idx = $('.tab_menu_btn').index(this);
 
-  $('.tab_box').hide();
-  $('.tab_box').eq(idx).show();
-});
+      $('.tab_box').hide();
+      $('.tab_box').eq(idx).show();
+    });
+
+  function order_decision(elm, n){
+        if (confirm("제품수령 완료 및 구매확정을 완료하시겠습니까?") == true){
+            location.href = "/order-decision/" + n;
+        }else{
+            alert('취소되었습니다.');
+            event.preventDefault();
+        }
+    }
+
 </script>
 
 {% block footer %}

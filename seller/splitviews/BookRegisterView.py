@@ -1,5 +1,6 @@
 from .common import *
 
+@login_required
 def BookRegisterView(request):
     if request.method == "GET":
         return render(request, 'book_register.html')
