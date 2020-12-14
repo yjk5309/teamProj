@@ -46,5 +46,17 @@ def SearchBookInStoreView (request):
         messages.error(request, '검색 키워드를 하나 이상 입력해주세요')
         return redirect('customer:bookstore_detail', store_id)
 
+    notice_sql = "SELECT notice, date FROM omp3.notice WHERE store_id = (%s) ORDER BY date desc limit 3"
+
+    datas = execute_and_get(notice_sql,(store_id,))
+
+    notices = []
+    for data in datas:
+        row = {
+            'notice':data[0],
+            'date':data[1],
+            }
+        notices.append(row)
+
     return render(request, 'bookstore_detail.html', {'tab':tab,'books':books,'search_book':search_book,
-                                                     'store':store, 'is_favorite':is_favorite,})
+                                                     'store':store, 'is_favorite':is_favorite,'notices':notices})

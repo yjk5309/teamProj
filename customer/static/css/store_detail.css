@@ -123,3 +123,9 @@
 .search {
     padding:20px;
 }
+
+.notice {
+    background-color:#E6E6FA;
+    padding: 20px 0 20px 0 ;
+    border-top: 4px dashed #bcbcbc;
+}
