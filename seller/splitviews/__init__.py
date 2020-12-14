@@ -12,5 +12,8 @@ from .PayCheckAjaxView import *
 from .OrderDetailView import *
 from .DeliveryCheckView import *
 from .DeliveryCheckAjaxView import *
+from .NoticeForCustomerView import *
+from .NoticeDeleteView import *
+from .AjaxGetNoticeView import *
 from .SettlementCheckView import *
 from .MonthlySettlementView import *
