@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="searchModal">
+            <div class="search-modal-content">
+                <div class="page-header">
+                    <h3>책의 정보를 수정합니다</h3>
+                </div>
+<form class="mt-3" method="post" action="" enctype="multipart/form-data">{% csrf_token %}
+    <input type="text" id="cInput">
+
+            <div class="form-group">
+                <input type="text" class="form-control" id="name" name="name" value="{{book_info.book_name}}" required readonly>
+            </div>
+            <div class="form-group">
+              <input type="number" class="form-control" id="inven" name="inven" placeholder="등록수량" value="{{book_info.quantity}}" required>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" id="price" name="price" placeholder="판매가격" value="{{book_info.price}}" required>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" id="book_msg" name="book_msg" placeholder="책 소개" value="{{book_info.book_msg}}" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="button" >상품 등록</button>
+</form>
+            </div>
+</div>
+{% endblock body %}
