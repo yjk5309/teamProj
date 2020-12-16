@@ -25,6 +25,9 @@ urlpatterns = [
     re_path(r'^notice-modify-ajax/(?P<notice_id>\d+)/$', AjaxGetNoticeView, name='notice_modify_ajax'),
     re_path(r'^settlement/$', SettlementCheckView, name='settlement_check'),
     re_path(r'^monthly-settlement/$', MonthlySettlementView, name='monthly_settlement'),
+    re_path(r'^frequent-question/$', FrequentQuestionView, name='frequent_question'),
+    re_path(r'^frequent-question-delete/(?P<faq_id>\d+)/$', FrequentQuestionDeleteView, name='frequent_question_delete'),
+    re_path(r'^frequent-question-modify/(?P<faq_id>\d+)/$', FrequentQuestionModifyView, name='frequent_question_modify'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -17,3 +17,6 @@ from .NoticeDeleteView import *
 from .AjaxGetNoticeView import *
 from .SettlementCheckView import *
 from .MonthlySettlementView import *
+from .FrequentQuestionView import *
+from .FrequentQuestionDeleteView import *
+from .FrequentQuestionModifyView import *
