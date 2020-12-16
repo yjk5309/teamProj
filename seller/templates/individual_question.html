@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/order.css' %}">
+{% endblock head %}
+
+{% block title %}
+1:1 문의 | alleybookstore
+{% endblock title %}
+
+{% block _nav %}
+  {% include '_seller_nav.html' %}
+{% endblock _nav %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center align-items-center">
+        <h3>● 1:1 문의현황</h3><br>
+        <b style="font-size: 20px">답변 완료: {{ question_count.answered_question_counts }}개&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;답변 미완료: {{ question_count.un_answered_question_counts }}개</b><hr>
+            <div>
+                <table>
+                    {% for data in question_info %}
+                    <tr>
+                        <th style="font-size:20px; font-weight:bold;">[{{ data.customer_id }}]&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th style="font-size:20px; font-weight:bold">Q . {{ data.title }}</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="font-size:17px; font-weight:bold">▶ {{ data.content }}</td>
+
+                    </tr>
+                    <tr>
+                        <td><button class="after_button">답변하기</button></td>
+                        {% if data.answer_complete == 1 %}
+                        <td style="font-size:17px; font-weight:bold; color:blue">{{ data.answer }}</td>
+                        {% elif data.answer_complete == 0 %}
+                        <td style="font-size:17px; font-weight:bold; color:red">답변 미완료</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>ㅡㅡㅡㅡㅡㅡㅡㅡ</td>
+                        <td>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+    </div>
+</div>
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript">
+
+</script>
+
+{% endblock body %}

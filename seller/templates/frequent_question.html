@@ -16,6 +16,11 @@ Q&A | alleybookstore
 <div class="container">
     <div class="row justify-content-center align-items-center">
         <div align="center" style="margin-top:30px;">
+            <div align="left">
+                <p style="font-weight:bold; font-size: 20px;">● 1:1 문의  ▶  답변 미완료 : {{ un_answered_question }}개
+                    <a onclick="location.href='{% url 'seller:individual_question' store_id %}'" style="font-weight:bold; font-size: 20px;">[바로가기]</a>
+                </p>
+            </div><hr>
             <div class="card">
                   <h4 class="card-header">FAQ 등록</h4>
                 <div class="card-body">
@@ -35,7 +40,7 @@ Q&A | alleybookstore
             </div>
         </div><hr>
         <div>
-            <h3>FAQ 목록</h3><br>
+            <h3>| FAQ 등록현황</h3><br>
             {% for data in question_info %}
                 <h4 id="title_{{data.id}}" name="title_{{data.id}}" style="font-weight:bold; display:flex">
                     <b>● {{ data.title }}</b>
@@ -43,7 +48,7 @@ Q&A | alleybookstore
                     <button style="font-size:15px; font-weight:bold" onclick="FAQ_modify(this, '{{ data.id }}')">수정</button>
                     <button style="font-size:15px; font-weight:bold" onclick="FAQ_delete(this, '{{ data.id }}')">삭제</button>
                 </h4>
-                <p style="display:None" id="content_{{data.id}}" name="content_{{data.id}}">{{ data.content }}</p>
+                <p style="display:None; font-weight:bold; font-size:15px" id="content_{{data.id}}" name="content_{{data.id}}">A . {{ data.content }}</p>
                 <hr>
             {% endfor %}
         </div>
@@ -101,10 +106,10 @@ Q&A | alleybookstore
     }
 
     function detail_view(elm){
-        if ($(elm).parent().next().attr("style") == "display:None"){
-            $(elm).parent().next().attr("style", "display:visible");
-        }else if ($(elm).parent().next().attr("style") == "display:visible")
-            $(elm).parent().next().attr("style", "display:None");
+        if ($(elm).parent().next().attr("style") == "display:None; font-weight:bold; font-size:15px"){
+            $(elm).parent().next().attr("style", "display:visible; font-weight:bold; font-size:15px");
+        }else if ($(elm).parent().next().attr("style") == "display:visible; font-weight:bold; font-size:15px")
+            $(elm).parent().next().attr("style", "display:None; font-weight:bold; font-size:15px");
     }
 
     function FAQ_delete(elm, n){
