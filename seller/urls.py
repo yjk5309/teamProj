@@ -15,6 +15,8 @@ urlpatterns = [
     re_path(r'^settlement/$', SettlementCheckView, name='settlement_check'),
     re_path(r'^monthly-settlement/$', MonthlySettlementView, name='monthly_settlement'),
     re_path(r'^review/$', ReviewManageView, name='review_manage'),
+    re_path(r'^review-answer/$', ReviewAnswerView, name='review_answer'),
+    re_path(r'^review-answer-ajax/(?P<review_id>\d+)/$', AjaxGetReviewAnswerView, name='answer_modify_ajax'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
