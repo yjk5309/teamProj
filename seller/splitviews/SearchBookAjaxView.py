@@ -1,5 +1,6 @@
 from .common import *
 
+@login_required
 def SearchBookAjaxView(request):
     title = request.GET.get('search_book_name')
     publisher = request.GET.get('search_book_publisher')
@@ -8,11 +9,11 @@ def SearchBookAjaxView(request):
     search_datas = execute_and_get("SELECT isbn, book_name, author, publisher FROM book " +
                    " WHERE book_name LIKE '%" + title + "%' AND publisher LIKE '%" + publisher + "%' AND author LIKE '%" + author + "%'")
 
-    registered_book = 1
+    is_registered = 1
     if len(search_datas) == 0:
-        registered_book = 0
+        is_registered = 0
     elif title == "" and author == "" and publisher == "":
-        registered_book = -1
+        is_registered = -1
 
     search_result = []
     for search_data in search_datas:
@@ -22,4 +23,4 @@ def SearchBookAjaxView(request):
                 'publisher': search_data[3],}
         search_result.append(data)
 
-    return HttpResponse(json.dumps({'search_result': search_result, 'registered_book': registered_book}), content_type="application/json")
+    return HttpResponse(json.dumps({'search_result': search_result, 'is_registered': is_registered}), content_type="application/json")

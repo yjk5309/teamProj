@@ -1,5 +1,6 @@
 from .common import *
 
+@login_required
 def ProductRegisterView(request):
     if request.method == 'GET':
         return render(request, 'product_register.html')

@@ -57,14 +57,14 @@ def execute(sql, data = None) -> tuple :
     finally:
         connection.close()
 
-def fileUpload(user, book_img):
-    fileName, extension = os.path.splitext(book_img.name)
+def fileUpload(user, img):
+    fileName, extension = os.path.splitext(img.name)
 
     newFileName = str(uuid.uuid4()) + extension
 
     filePath = os.path.join('image', user.username, newFileName)
 
-    default_storage.save(filePath, book_img)
+    default_storage.save(filePath, img)
 
     book_img_url = default_storage.url(filePath)
 

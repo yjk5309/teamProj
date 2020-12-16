@@ -85,5 +85,18 @@ def BookStoreDetailView (request, store_id):
             }
         lately_books.append(row)
 
+    notice_sql = "SELECT notice, date FROM omp3.notice WHERE store_id = (%s) ORDER BY date desc limit 3"
+
+    datas = execute_and_get(notice_sql,(store_id,))
+
+    notices = []
+    for data in datas:
+        row = {
+            'notice':data[0],
+            'date':data[1],
+            }
+        notices.append(row)
+
     return render(request, 'bookstore_detail.html',{'store':store, 'is_favorite':is_favorite,
-                                                    'books':books, 'like_books':like_books, 'lately_books':lately_books})
+                                                    'books':books, 'like_books':like_books, 'lately_books':lately_books,
+                                                    'notices':notices})
