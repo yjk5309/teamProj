@@ -17,8 +17,8 @@
             </b>
             <table class="type04">
                 <tr>
-                    <th scope="row">주문 확인 요청</th>
-                    <td>N개</td>
+                    <th scope="row" onclick="location.href='{% url 'seller:order_check' %}'">주문확인 요청</th>
+                    <td></td>
                 </tr>
                 <tr>
                     <th scope="row" onclick="location.href='{% url 'seller:delivery_check' %}'">배송 & 구매확정전</th>
@@ -44,15 +44,11 @@
            </b>
             <table class="type04">
                 <tr>
-                    <th scope="row">상품 등록 신청</th>
+                    <th scope="row">상품 등록</th>
                     <td>N개</td>
                 </tr>
                 <tr>
-                    <th scope="row">상품 등록 신청 현황</th>
-                    <td>N개</td>
-                </tr>
-                <tr>
-                    <th scope="row">상품 및 재고 관리</th>
+                    <th scope="row"><a href="{% url 'seller:product_list' %}">상품 및 재고 관리</a></th>
                     <td>N개</td>
                 </tr>
                 <tr>
@@ -87,7 +83,7 @@
            </b>
             <table class="type04">
                 <tr>
-                    <th scope="row">서점 공지사항</th>
+                    <th scope="row" onclick="location.href='{% url 'seller:notice' %}'">서점 공지사항</th>
                     <td>N개</td>
                 </tr>
                 <tr>

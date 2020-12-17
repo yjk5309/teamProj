@@ -1,5 +1,6 @@
 from .common import *
 
+@login_required
 def BookReviewModifyView(request, review_id):
     user = request.user
 

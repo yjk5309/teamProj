@@ -1,5 +1,6 @@
 from .common import *
 
+@login_required
 def DeliveryCheckAjaxView(request, order_num):
     user = request.user
     id_sql = "SELECT id FROM bookstore WHERE seller_id = (%s)"
