@@ -41,6 +41,7 @@ def OrderDetailView(request,order_num):
 
         return_possible = execute_and_get("SELECT return_possible FROM order_products WHERE id = (%s)",
                                           (data[6],))
+
         row = {
             'book_name': data[0],
             'store_name': data[1],
