@@ -58,39 +58,45 @@
                 {% endfor %}
             </div>
         </div>
+        <div id="top" style="height:100px;">
+        </div>
 <hr>
         <h3>리뷰 최신순</h3>
         {% for review in lately_review %}
-        <div class="review">
-            <p>{{ review.title }}</p>
-            <b style="color:gold; align:right" id="review_score" name="review_score" >
-                {% if review.evaluate_score == 2 %}★☆☆☆☆
-                {% elif review.evaluate_score == 4 %}★★☆☆☆
-                {% elif review.evaluate_score == 6 %}★★★☆☆
-                {% elif review.evaluate_score == 8 %}★★★★☆
-                {% elif review.evaluate_score == 10 %}★★★★★
-                {% endif %}
-            </b>
-            <p>{{ review.user_id }}</p>
-            <p>{{ review.date }}</p>
-        </div>
-        <p> {{ review.content }} </p>
+        <div>
+            <div class="review">
+                <p>{{ review.title }}</p>
+                <b style="color:gold; align:right" id="review_score" name="review_score" >
+                    {% if review.evaluate_score == 2 %}★☆☆☆☆
+                    {% elif review.evaluate_score == 4 %}★★☆☆☆
+                    {% elif review.evaluate_score == 6 %}★★★☆☆
+                    {% elif review.evaluate_score == 8 %}★★★★☆
+                    {% elif review.evaluate_score == 10 %}★★★★★
+                    {% endif %}
+                </b>
+                <p>{{ review.user_id }}</p>
+                <p>{{ review.date }}</p>
+            </div>
+            <p> {{ review.content }} </p>
             {% if review.answer == None %}
-            <form class="mt-3" method="post" enctype="multipart/form-data" action='{% url "seller:review_answer" %}'>{% csrf_token %}
-                <textarea cols="50" rows="3" name="answer" placeholder="리뷰에 대한 답변을 달아주세요"></textarea>
-                <input type="hidden" name="review_id" value="{{ review.id }}">
-                <button class="button-2" type="submit">작성</button>
-            </form>
+            <button class="button" onclick="modal(this)" type="button">답변 달기</button>
             {% else %}
             <p style="margin-left:50px;">→ 답변: {{ review.answer }}</p>
-            <form class="mt-3" method="post" enctype="multipart/form-data" action='{% url "seller:review_answer" %}'>{% csrf_token %}
-                <textarea cols="50" rows="3" id="answer" name="answer" placeholder="리뷰에 대한 답변을 달아주세요"></textarea>
-                <input type="hidden" id="review_id" name="review_id" value="{{ review.id }}">
-                <button class="button-2" onclick="modify(this, '{{ review.id }}')">수정</button>
-                <button class="button-2" type="submit">작성</button>
-            </form>
+            <button class="button" onclick="modify(this, '{{ review.id }}')" type="button">수정</button>
             {% endif %}
+            <div>
+                <div id="modal" class="modal">
+                    <form class="mt-3" method="post" enctype="multipart/form-data" action='{% url "seller:review_answer" %}'>{% csrf_token %}
+                        <textarea cols="50" rows="3" id="answer" name="answer" placeholder="리뷰에 대한 답변을 달아주세요"></textarea>
+                        <input type="hidden" id="review_id" name="review_id" value="{{ review.id }}">
+                        <button class="button-2" type="submit">작성</button>
+                    </form>
+                    <button class="button" onclick="closeModal()" type="button">닫기</button>
+                </div>
+            </div>
+        </div>
         {% endfor %}
+        <a class="top" href="#top">TOP</a>
     </div>
 </div>
 
@@ -101,6 +107,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script type="text/javascript">
+function modal(elm) {
+    $(elm).parent().children().children().show();
+}
+
+function closeModal() {
+    $('.modal').hide();
+};
 
 function modify(elm, n) {
     $.ajax({
@@ -110,8 +123,8 @@ function modify(elm, n) {
         type: "GET",
         success: function(response){
             $("#answer").val(response.answer_info.answer);
-            $("#review_id").attr('value',response.answer_info.review_id);
-
+            $("#review_id").attr('value',response.answer_info.id);
+            $(elm).parent().children().children().show();
         },
         error: function(request,status,error){
             alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

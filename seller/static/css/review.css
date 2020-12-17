@@ -46,3 +46,11 @@
 .modal {
     display: none; /* Hidden by default */
 }
+
+.top{
+    display:scroll;
+    position:fixed;
+    bottom:30px;
+    right:95px;
+    font-size:30px;
+}
