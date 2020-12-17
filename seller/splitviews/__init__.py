@@ -21,3 +21,6 @@ from .NoticeDeleteView import *
 from .AjaxGetNoticeView import *
 from .SettlementCheckView import *
 from .MonthlySettlementView import *
+from .ReviewManageView import *
+from .ReviewAnswerView import *
+from .AjaxGetReviewAnswerView import *
