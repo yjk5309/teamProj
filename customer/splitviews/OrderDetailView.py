@@ -39,8 +39,9 @@ def OrderDetailView(request,order_num):
         price = execute_and_get("SELECT price FROM book_inven WHERE book_isbn = (%s) AND store_id = (%s)",
                                 (data[4], data[5],))
 
-        delivery_compl_time = execute_and_get("SELECT delivery_compl_time < DATE_ADD(now(), INTERVAL -14 DAY) FROM order_products WHERE id = (%s)",
-                                              (data[6],))
+        return_possible = execute_and_get("SELECT return_possible FROM order_products WHERE id = (%s)",
+                                          (data[6],))
+
         row = {
             'book_name': data[0],
             'store_name': data[1],
@@ -49,7 +50,7 @@ def OrderDetailView(request,order_num):
             'order_status':data[4],
             'quantity':data[5],
             'order_product_id': data[6],
-            'delivery_compl_time': delivery_compl_time[0][0]
+            'return_possible': return_possible[0][0]
         }
         products.append(row)
 
