@@ -122,7 +122,7 @@ function modify(elm, n) {
         dataType: "json",
         type: "GET",
         success: function(response){
-            $("#answer").val(response.answer_info.answer);
+            $(elm).next().children().children().children().val(response.answer_info.answer);
             $("#review_id").attr('value',response.answer_info.id);
             $(elm).parent().children().children().show();
         },
