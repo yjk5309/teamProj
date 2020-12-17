@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.core.files.storage import default_storage
 
 import string
 import random
@@ -55,3 +56,16 @@ def execute(sql, data = None) -> tuple :
 
     finally:
         connection.close()
+
+def fileUpload(user, img):
+    fileName, extension = os.path.splitext(img.name)
+
+    newFileName = str(uuid.uuid4()) + extension
+
+    filePath = os.path.join('image', user.username, newFileName)
+
+    default_storage.save(filePath, img)
+
+    book_img_url = default_storage.url(filePath)
+
+    return book_img_url

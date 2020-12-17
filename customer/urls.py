@@ -1,5 +1,7 @@
 from django.urls import re_path
 from .splitviews import *
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'customer'
 
@@ -35,5 +37,8 @@ urlpatterns = [
     re_path(r'^bookstore/book-list/$', SearchBookInStoreView, name='search_book_in_store'),
     re_path(r'^mypage_basket/$', CustomerBasketView, name='mypage_basket'),
     re_path(r'^order-decision/(?P<order_num>\d+)/$', OrderDecisionView, name='order_decision'),
+    re_path(r'^order-cancel/(?P<order_num>\d+)/$', OrderCancelView, name='order_cancel'),
+    re_path(r'^product-return/(?P<order_id>\d+)/$', ProductReturnView, name='product_return'),
 ]
 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
