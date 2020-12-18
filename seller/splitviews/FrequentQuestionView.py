@@ -17,10 +17,10 @@ def FrequentQuestionView(request):
             }
             question_info.append(row)
 
-        un_answered_question = execute_and_get("SELECT COUNT(*) FROM individual_question WHERE store_id = (%s) AND answer_complete = (%s)",
+        unanswered_question_count = execute_and_get("SELECT COUNT(*) FROM individual_question WHERE store_id = (%s) AND answer_complete = (%s)",
                                                      (store_id[0][0], 0,))
 
-        return render(request, ('frequent_question.html'), {'question_info': question_info, 'un_answered_question': un_answered_question[0][0],
+        return render(request, ('frequent_question.html'), {'question_info': question_info, 'unanswered_question_count': unanswered_question_count[0][0],
                                                             'store_id': store_id[0][0]})
 
     if request.method == "POST":

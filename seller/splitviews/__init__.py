@@ -21,3 +21,4 @@ from .FrequentQuestionView import *
 from .FrequentQuestionDeleteView import *
 from .FrequentQuestionModifyView import *
 from .IndividualQuestionView import *
+from .IndividualQuestionAnswerView import *

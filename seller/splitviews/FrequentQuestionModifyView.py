@@ -8,7 +8,7 @@ def FrequentQuestionModifyView(request, faq_id):
     title = request.POST.get('modal_title')
     content = request.POST.get('modal_content')
 
-    execute_and_get("UPDATE frequent_question SET title = (%s), content = (%s) WHERE id = (%s) AND store_id = (%s)",
-                    (title, content, faq_id, store_id[0][0]))
+    execute_and_get("UPDATE frequent_question SET title = (%s), content = (%s) WHERE id = (%s)",
+                    (title, content, faq_id,))
 
     return redirect('seller:frequent_question')

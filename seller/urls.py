@@ -28,7 +28,8 @@ urlpatterns = [
     re_path(r'^frequent-question/$', FrequentQuestionView, name='frequent_question'),
     re_path(r'^frequent-question-delete/(?P<faq_id>\d+)/$', FrequentQuestionDeleteView, name='frequent_question_delete'),
     re_path(r'^frequent-question-modify/(?P<faq_id>\d+)/$', FrequentQuestionModifyView, name='frequent_question_modify'),
-    re_path(r'^IndividualQuestion/(?P<store_id>\d+)/$', IndividualQuestionView, name='individual_question'),
+    re_path(r'^individual-question/(?P<store_id>\d+)/$', IndividualQuestionView, name='individual_question'),
+    re_path(r'^individual-question-answer/(?P<question_id>\d+)/$', IndividualQuestionAnswerView, name='individual_question_answer'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

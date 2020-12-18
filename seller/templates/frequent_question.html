@@ -17,7 +17,7 @@ Q&A | alleybookstore
     <div class="row justify-content-center align-items-center">
         <div align="center" style="margin-top:30px;">
             <div align="left">
-                <p style="font-weight:bold; font-size: 20px;">● 1:1 문의  ▶  답변 미완료 : {{ un_answered_question }}개
+                <p style="font-weight:bold; font-size: 20px;">● 1:1 문의  ▶  답변 미완료 : {{ unanswered_question_count }}개
                     <a onclick="location.href='{% url 'seller:individual_question' store_id %}'" style="font-weight:bold; font-size: 20px;">[바로가기]</a>
                 </p>
             </div><hr>
@@ -43,12 +43,12 @@ Q&A | alleybookstore
             <h3>| FAQ 등록현황</h3><br>
             {% for data in question_info %}
                 <h4 id="title_{{data.id}}" name="title_{{data.id}}" style="font-weight:bold; display:flex">
-                    <b>● {{ data.title }}</b>
+                    <b>{{ data.title }}</b>
                     &nbsp;&nbsp;<a onclick="detail_view(this)">▼</a>&nbsp;&nbsp;
                     <button style="font-size:15px; font-weight:bold" onclick="FAQ_modify(this, '{{ data.id }}')">수정</button>
                     <button style="font-size:15px; font-weight:bold" onclick="FAQ_delete(this, '{{ data.id }}')">삭제</button>
                 </h4>
-                <p style="display:None; font-weight:bold; font-size:15px" id="content_{{data.id}}" name="content_{{data.id}}">A . {{ data.content }}</p>
+                <p style="display:None; font-weight:bold; font-size:15px" id="content_{{data.id}}" name="content_{{data.id}}">{{ data.content }}</p>
                 <hr>
             {% endfor %}
         </div>
