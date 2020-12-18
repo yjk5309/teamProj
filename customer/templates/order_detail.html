@@ -84,7 +84,6 @@
           {% if is_return_reject == 1 %}
             <table>
                 <tr>
-<<<<<<< HEAD
                     <td width="120px" style="font-weight:bold">책 이름</td>
                     <td style="font-weight:bold; margin-left: 100px">환불 거절사유</td>
                 </tr>
@@ -96,16 +95,7 @@
                         {% elif data.reject_reason == None %}
                         <td style="color:red">답변 미완료</td>
                         {% endif %}
-=======
-                    <td width="100px" style="font-weight:bold">책 이름</td>
-                    <td style="font-weight:bold">환불 거절사유</td>
                 </tr>
-                {% for data in return_reject_info %}
-                    <tr>
-                        <td>{{data.book_name}}</td>
-                        <td>{{data.reject_reason}}</td>
->>>>>>> 8b445c02899dab32e1b43b4d9d92a404b20b0ab6
-                    </tr>
                 {% endfor %}
             </table>
             <br>
