@@ -10,6 +10,10 @@ from .BookRegisterView import *
 from .OrderCheckView import *
 from .PayCheckAjaxView import *
 from .OrderDetailView import *
+from .OrderReturnView import *
+from .OrderRetrunCheckAjaxView import *
+from .OrderReturnRejectView import *
+from .OrderReturnRejectComplAjaxView import *
 from .DeliveryCheckView import *
 from .DeliveryCheckAjaxView import *
 from .NoticeForCustomerView import *
@@ -22,3 +26,6 @@ from .FrequentQuestionDeleteView import *
 from .FrequentQuestionModifyView import *
 from .IndividualQuestionView import *
 from .IndividualQuestionAnswerView import *
+from .ReviewManageView import *
+from .ReviewAnswerView import *
+from .AjaxGetReviewAnswerView import *

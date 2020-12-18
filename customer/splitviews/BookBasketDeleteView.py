@@ -1,5 +1,6 @@
 from .common import *
 
+@login_required
 def BookBasketDeleteView(request, book_isbn):
     tab = 'basket'
 
