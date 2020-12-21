@@ -148,6 +148,10 @@
                 {% endif %}
             </div>
             <p id="review_content" name="review_content"> {{ review.content }} </p>
+            {% if review.answer == None %}
+            {% else %}
+            <p style="margin-left:50px;">→ 답변: {{ review.answer }}</p>
+            {% endif %}
             {% endfor %}
             </div>
 

@@ -18,7 +18,7 @@ def BookDetailView(request, book_isbn, store_id):
                                    " FROM review WHERE book_name= (%s) AND store_id = (%s)",
                                    (book_datas[0][0], store_id,))
 
-    review_list = execute_and_get("SELECT user_id, title, content, evaluate_score, id FROM review WHERE book_name= (%s) AND store_id= (%s) ORDER BY CAST(evaluate_score AS signed integer) DESC",
+    review_list = execute_and_get("SELECT user_id, title, content, evaluate_score, id, answer FROM review WHERE book_name= (%s) AND store_id= (%s) ORDER BY CAST(evaluate_score AS signed integer) DESC",
                         (book_datas[0][0], store_id,))
 
     book = {'book_name': book_datas[0][0],
@@ -44,6 +44,7 @@ def BookDetailView(request, book_isbn, store_id):
             'content': review_data[2],
             'evaluate_score': review_data[3],
             'id': review_data[4],
+            'answer': review_data[5],
         }
         review.append(review_row)
 
