@@ -39,6 +39,8 @@ urlpatterns = [
     re_path(r'^order-decision/(?P<order_num>\d+)/$', OrderDecisionView, name='order_decision'),
     re_path(r'^order-cancel/(?P<order_num>\d+)/$', OrderCancelView, name='order_cancel'),
     re_path(r'^product-return/(?P<order_id>\d+)/$', ProductReturnView, name='product_return'),
+    re_path(r'^frequently-question/(?P<store_id>\d+)/$', FrequentQuestionView, name='frequent_question'),
+    re_path(r'^individual-question/(?P<store_id>\d+)/$', IndividualQuestionView, name='individual_question'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

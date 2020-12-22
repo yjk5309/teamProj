@@ -85,7 +85,7 @@ def BookStoreDetailView (request, store_id):
             }
         lately_books.append(row)
 
-    notice_sql = "SELECT notice, date FROM omp3.notice WHERE store_id = (%s) ORDER BY date desc limit 3"
+    notice_sql = "SELECT notice, date FROM notice WHERE store_id = (%s) ORDER BY date desc limit 3"
 
     datas = execute_and_get(notice_sql,(store_id,))
 
