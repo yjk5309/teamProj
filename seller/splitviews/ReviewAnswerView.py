@@ -1,5 +1,6 @@
 from .common import *
 
+@csrf_exempt
 @login_required
 def ReviewAnswerView(request):
     answer = request.POST.get('answer')
