@@ -39,6 +39,7 @@
             <p>주소 | {{ store.address }}<br>
                 번호 | {{ store.store_num }}<br>
                 소개 | {{ store.store_msg }}<br></p>
+            <button style="font-weight:bold; font-size:20px; margin-left:-10px" onclick="location.href='{% url 'customer:frequent_question' store.store_id %}'">▶ 1:1 문의하기</button>
         </div>
     </div>
 </div>

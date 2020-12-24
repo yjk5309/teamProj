@@ -31,3 +31,5 @@ from .SearchBookInStoreView import *
 from .OrderDecisionView import *
 from .OrderCancelView import *
 from .ProductReturnView import *
+from .FrequentQuestionView import *
+from .IndividualQuestionView import *
