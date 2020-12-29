@@ -31,4 +31,4 @@ def IndividualQuestionView(request, store_id):
         }
         question_info.append(row)
 
-    return render(request, 'individual_question.html', {'question_count': question_count, 'question_info': question_info})
+    return render(request, 'seller_individual_question.html', {'question_count': question_count, 'question_info': question_info})

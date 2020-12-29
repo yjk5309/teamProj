@@ -139,7 +139,7 @@
                     }
                 }else if (response.is_registered == 0) {
                     total_result = "<b>검색하신 책의 정보가 존재하지 않습니다.</b>";
-                    total_result += "<p>관리자에게 도서등록을 요청한 후에 상품등록이 가능합니다. <a onclick=\"location.href='/seller/book_register'\">[바로가기]</a></p>";
+                    total_result += "<p>관리자에게 도서등록을 요청한 후에 상품등록이 가능합니다. <a onclick=\"location.href='/seller/book-register/'\">[바로가기]</a></p>";
                 }else if (response.is_registered == -1){
                     total_result = "<b>검색할 키워드를 입력해주세요.</b>";
                 }
