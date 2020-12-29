@@ -15,4 +15,7 @@ def BookLikeView(request, book_isbn, store_id):
         execute("DELETE FROM like_list WHERE user_id = (%s) AND book_isbn = (%s) AND store_id = (%s)",
                               (user.username, book_isbn, store_id,))
 
-    return HttpResponse(json.dumps({'is_like': is_like[0][0]}), content_type="application/json")
+    update_is_like = execute_and_get("SELECT exists (SELECT * FROM like_list WHERE user_id = (%s) AND book_isbn = (%s) AND store_id = (%s))",
+        (user.username, book_isbn, store_id,))
+
+    return HttpResponse(json.dumps({'is_like': is_like[0][0], 'update_is_like': update_is_like[0][0]}), content_type="application/json")
