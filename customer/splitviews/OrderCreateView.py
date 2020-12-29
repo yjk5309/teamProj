@@ -50,6 +50,8 @@ def OrderCreateView (request):
                         listSql = "INSERT INTO order_products(order_num, store_id, isbn, purchased_price, order_status, quantity) " \
                                   "VALUES ((%s),(%s),(%s),(%s),(%s),(%s))"
                         execute(listSql,(order_num, store_id, isbn, int(price[i])*int(quantity[i]), '결제 완료', quantity[i],))
+                        inven_sql = "UPDATE book_inven SET inven = inven-(%s) WHERE book_isbn = (%s) and store_id = (%s)"
+                        execute(inven_sql, (int(quantity[i]), isbn, store_id,))
 
                     execute("UPDATE book_inven SET inven = inven-(%s) WHERE book_name = (%s) AND store_id = (%s)",
                             (quantity[i], book[i], store_id))
@@ -71,6 +73,8 @@ def OrderCreateView (request):
                     listSql = "INSERT INTO order_products(order_num, store_id, isbn, purchased_price, order_status, quantity) " \
                               "VALUES ((%s),(%s),(%s),(%s),(%s),(%s))"
                     execute(listSql, (order_num, store_id, isbn, int(price[0])*int(quantity[0]), '결제 완료', quantity,))
+                    inven_sql = "UPDATE book_inven SET inven = inven-(%s) WHERE book_isbn = (%s) and store_id = (%s)"
+                    execute(inven_sql, (int(quantity[0]), isbn, store_id,))
 
                 execute("UPDATE book_inven SET inven = inven-(%s) WHERE book_name = (%s) AND store_id = (%s)",
                         (quantity, book, store_id))

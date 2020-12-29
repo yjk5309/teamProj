@@ -123,7 +123,7 @@ function modify(elm, n) {
         type: "GET",
         success: function(response){
             $(elm).next().children().children().children().val(response.answer_info.answer);
-            $("#review_id").attr('value',response.answer_info.id);
+            $(elm).next().children().children().children().next().attr('value',response.answer_info.id);
             $(elm).parent().children().children().show();
         },
         error: function(request,status,error){

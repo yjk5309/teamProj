@@ -35,18 +35,9 @@ table.type04 th {
     vertical-align: top;
     border-bottom: 1px solid #ccc;
 }
-table.type04 td {
-    width: 100px;
-    padding: 10px;
-    vertical-align: top;
-    border-bottom: 1px solid #ccc;
-    text-align: right;
-}
 
 .seller_flex {
     margin: 0 auto;
-    width: 1500px;
-    height: 400px;
     display:flex;
     align: center;
 }
