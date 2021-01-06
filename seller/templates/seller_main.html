@@ -37,7 +37,7 @@
            </b>
             <table class="type04">
                 <tr>
-                    <th scope="row">상품 등록</th>
+                    <th scope="row" onclick="location.href='{% url 'seller:product_register' %}'">상품 등록</th>
                 </tr>
                 <tr>
                     <th scope="row" onclick="location.href='{% url 'seller:product_list' %}'">상품 및 재고 관리</th>
@@ -49,10 +49,10 @@
            </b>
             <table class="type04">
                 <tr>
-                    <th scope="row">신규 접수</th>
+                    <th scope="row" onclick="location.href='{% url 'seller:order_return' 'new' %}'">신규 접수</th>
                 </tr>
                 <tr>
-                    <th scope="row">반품 완료</th>
+                    <th scope="row" onclick="location.href='{% url 'seller:order_return' 'complete' %}'">반품 완료</th>
                 </tr>
             </table>
         </div>
