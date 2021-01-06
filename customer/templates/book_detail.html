@@ -210,13 +210,13 @@
             dataType: "json",
             type: "POST",
             success: function(response) {
-                if (response.is_like == false) {
-                    $(elm).attr("onclick", "like(this, '" + n + "')");
+                if (response.update_is_like == true) {
+                    $(elm).attr("onclick", "like(this, '" + n + "', '" + m + "')");
                     $(elm).attr("class", "button");
                     alert("찜 목록에 추가되었습니다.");
                 }
-                else if (response.is_like == true){
-                    $(elm).attr("onclick", "like(this, '" + n + "')");
+                else if (response.update_is_like == false){
+                    $(elm).attr("onclick", "like(this, '" + n + "', '" + m + "')");
                     $(elm).attr("class", "like_button");
                     alert("찜 목록에서 삭제되었습니다.");
                 }
