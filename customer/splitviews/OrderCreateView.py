@@ -53,6 +53,9 @@ def OrderCreateView (request):
                         inven_sql = "UPDATE book_inven SET inven = inven-(%s) WHERE book_isbn = (%s) and store_id = (%s)"
                         execute(inven_sql, (int(quantity[i]), isbn, store_id,))
 
+                    execute("UPDATE book_inven SET inven = inven-(%s) WHERE book_name = (%s) AND store_id = (%s)",
+                            (quantity[i], book[i], store_id))
+
             else:
                 storeIdSql = "SELECT id FROM bookstore where store_name=(%s)"
                 store_id = execute_and_get(storeIdSql, (store,))
@@ -72,5 +75,8 @@ def OrderCreateView (request):
                     execute(listSql, (order_num, store_id, isbn, int(price[0])*int(quantity[0]), '결제 완료', quantity,))
                     inven_sql = "UPDATE book_inven SET inven = inven-(%s) WHERE book_isbn = (%s) and store_id = (%s)"
                     execute(inven_sql, (int(quantity[0]), isbn, store_id,))
+
+                execute("UPDATE book_inven SET inven = inven-(%s) WHERE book_name = (%s) AND store_id = (%s)",
+                        (quantity, book, store_id))
 
             return redirect('customer:order_confirm', order_num = order_num)
